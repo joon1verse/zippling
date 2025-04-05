@@ -1,0 +1,17 @@
+/* app/globals.css */
+
+/* Tailwind's base styles (reset, etc.) */
+@tailwind base;
+/* Tailwind's component classes */
+@tailwind components;
+/* Tailwind's utility classes */
+@tailwind utilities;
+
+/* (선택) 직접 추가할 전역 스타일 */
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  /* 여기서 배경 색 등을 지정해도 됨 */
+}

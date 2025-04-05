@@ -1,4 +1,8 @@
 {
-  "hello": "こんにちは！",
-  "description": "こちらは日本語の説明です。"
+  "hello": "一か所で簡単に見つけよう！",
+  "description": "Zipplingは複数の信頼できるサイトからルームシェア・ホームステイ情報を集約し、スムーズに探せるようにサポートします。",
+  "chooseCity": "Choose a City",
+  "chooseCityPlaceholder": "Please choose the city...",
+  "vancouver": "Vancouver",
+  "selectedCity": "Currently selected city is"
 }
