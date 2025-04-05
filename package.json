@@ -1,0 +1,18 @@
+{
+    "name": "my-multilingual-app",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module", // ESM 환경 사용
+    "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start"
+    },
+    "dependencies": {
+      "next": "^13.3.0",      // 예시 버전
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "next-intl": "^2.0.0"   // next-intl 설치
+    }
+  }
+  
