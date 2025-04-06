@@ -28,7 +28,7 @@ export async function uploadToSupabase(bucket, path, localFilePath) {
 */
 
 // 📄 supabaseUploader.js 2.0
-// 📄 supabaseUploader.js
+
 import { createClient } from '@supabase/supabase-js';
 import fs from 'fs';
 
