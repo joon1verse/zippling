@@ -12,9 +12,9 @@ export const SOURCE_MAP = [
       source: 'Vancouver Craigslist',
     },
     {
-      tag: 'montreal',
-      urlPattern: 'montrealcafe',
-      source: 'Daum Cafe - MontrealLife',
+      tag: 'vancouver',
+      urlPattern: 'jpcanada.com',
+      source: 'JP Canada',
     },
     // ✅ 필요 시 확장 가능
   ];

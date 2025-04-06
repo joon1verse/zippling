@@ -37,7 +37,6 @@ async function crawlCraigslist() {
       const li = $(el);
       const anchor = li.find('a');
       const title = anchor.find('.title').text().trim();
-      console.log('[🔍 제목 확인]', title);
       const link = anchor.attr('href');
       const price = li.find('.price').first().text().trim();
 
@@ -54,8 +53,6 @@ async function crawlCraigslist() {
 
         const hasMale = maleKeywords.some(keyword => new RegExp(`\\b${keyword}\\b`).test(lowerTitle));
         const hasFemale = femaleKeywords.some(keyword => new RegExp(`\\b${keyword}\\b`).test(lowerTitle));
-
-        console.log('[👨‍🦱 hasMale]', hasMale, '[👩‍🦰 hasFemale]', hasFemale);
       
         const tags = [];
       

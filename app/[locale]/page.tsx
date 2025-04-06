@@ -17,7 +17,7 @@ export default function HomePage() {
   return (
     <>
       {/* 💬 메인 슬로건 */}
-      <section className="w-full flex flex-col items-center px-4 py-12">
+      <section className="w-full flex flex-col items-center px-4 pt-4 pb-8">
         <div className="text-center mb-0 px-4">
           <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl mb-4">
             {t('hello')}
