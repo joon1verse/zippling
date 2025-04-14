@@ -1,0 +1,23 @@
+name: Run All Crawlers Every 15 Minutes
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # ← 15분 간격으로 실행
+  workflow_dispatch:        # ← 수동 실행 허용 (Actions 메뉴에서 'Run workflow' 버튼)
+
+jobs:
+  run-crawlers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run all crawlers
+        run: node utilities/crawler/runAllCrawlers.js
