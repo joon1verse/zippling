@@ -84,6 +84,13 @@ async function crawlCraigslist() {
   }
 }
 
-// cron job 실행 시 직접 호출
-crawlCraigslist();
+export async function runCraigslist() {
+  const start = Date.now();
+  console.log('🟢 [Craigslist] 시작');
 
+  await crawlCraigslist(); // 기존 메인 함수 그대로 호출
+
+  const end = Date.now();
+  const durationSec = ((end - start) / 1000).toFixed(2);
+  console.log(`✅ [Craigslist] 완료 — 실행 시간: ${durationSec}초`);
+}

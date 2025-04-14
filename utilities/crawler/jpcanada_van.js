@@ -16,7 +16,7 @@ const getTimestamp = () => {
 };
 
 // (jpcanada-3) 크롤링 메인 함수
-async function crawlJPCanadaVan() {
+async function crawlJPcanadaVan() {
   const timestamp = getTimestamp();
   const outputFileName = `jpcanada_van_${timestamp}.json`;
 
@@ -85,5 +85,13 @@ async function crawlJPCanadaVan() {
   }
 }
 
-// ✅ Cron Job 실행을 위한 직접 실행
-crawlJPCanadaVan();
+export async function runJPcanada() {
+  const start = Date.now();
+  console.log('🟢 [JPCanada] 시작');
+
+  await crawlJPcanadaVan();
+
+  const end = Date.now();
+  const durationSec = ((end - start) / 1000).toFixed(2);
+  console.log(`✅ [JPCanada] 완료 — 실행 시간: ${durationSec}초`);
+}
