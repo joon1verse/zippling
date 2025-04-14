@@ -1,1 +1,34 @@
-node_modules
+# ✅ 환경 변수 (절대 커밋 금지!)
+.env
+.env.*
+
+# ✅ 의존성 캐시/빌드 산출물
+node_modules/
+dist/
+.next/
+out/
+coverage/
+
+# ✅ 로그 및 디버그 파일
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# ✅ VSCode 및 기타 에디터 설정
+.vscode/
+.idea/
+
+# ✅ 운영체제 생성 파일
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ✅ 테스트 결과
+*.lcov
+
+# ✅ 잠재적 민감 정보 (예: API 키, 토큰 파일 등)
+*.pem
+*.key
+*.crt
