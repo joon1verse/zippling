@@ -85,10 +85,7 @@ function parseRelativeTime(str) {
 
 // 📌 Puppeteer로 HTML 로딩
 async function fetchHtmlWithPuppeteer(url) {
-  const browser = await puppeteer.launch({
-    headless: 'new', // puppeteer v20+라면 'new' 추천
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
+  const browser = await puppeteer.launch({ headless: 'new' });
   const page = await browser.newPage();
   await page.setUserAgent(
     'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile Safari/604.1'
@@ -155,7 +152,7 @@ export async function crawlUvanU() {
   }
 }
 
-export async function runUvanU() {
+export async function runUvanu() {
   const start = Date.now();
   console.log('🟢 [Uvanu] 시작');
 
