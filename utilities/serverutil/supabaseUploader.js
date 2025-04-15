@@ -1,31 +1,3 @@
-/* 📄 supabaseUploader.js — Supabase 업로드 유틸
-import supabase from './supabaseClient.js';
-import fs from 'fs';
-
-export async function uploadToSupabase(bucket, path, localFilePath) {
-  try {
-    const fileBuffer = fs.readFileSync(localFilePath);
-
-    const { data, error } = await supabase.storage
-      .from(bucket)
-      .upload(path, fileBuffer, {
-        upsert: true, // 덮어쓰기 허용
-        contentType: 'application/json',
-      });
-
-    if (error) {
-      console.error('❌ 업로드 실패:', error.message);
-      return null;
-    }
-
-    console.log(`✅ Supabase 업로드 완료: ${bucket}/${path}`);
-    return data;
-  } catch (err) {
-    console.error('❌ 파일 읽기 오류:', err.message);
-    return null;
-  }
-}
-*/
 
 // 📄 supabaseUploader.js 2.0
 

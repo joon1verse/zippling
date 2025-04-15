@@ -3,7 +3,7 @@
 import axios from 'axios';
 import { load } from 'cheerio';
 import { getSourceInfo } from '../sourceMap.js';
-import { uploadToSupabase } from '../supabaseUploader.js';
+import { uploadToSupabase } from '../serverutil/supabaseUploader.js';
 
 // (jpcanada-1) 대상 URL
 const TARGET_URL = 'https://bbs.jpcanada.com/listing.php?bbs=3';

@@ -3,7 +3,7 @@
 import axios from 'axios';
 import { load } from 'cheerio';
 import { getSourceInfo } from '../sourceMap.js';
-import { uploadToSupabase } from '../supabaseUploader.js';
+import { uploadToSupabase } from '../serverutil/supabaseUploader.js';
 
 // 대상 URL (Vancouver Room 리스트)
 const TARGET_URL = 'https://vancouver.craigslist.org/search/vancouver-bc/roo?lat=49.2584&lon=-123.0338&search_distance=7';

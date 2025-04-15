@@ -2,7 +2,7 @@
 
 import puppeteer from 'puppeteer';
 import { getSourceInfo } from '../sourceMap.js';
-import { uploadToSupabase } from '../supabaseUploader.js';
+import { uploadToSupabase } from '../serverutil/supabaseUploader.js';
 
 // ▶ 대상 URL
 const TARGET_URL = 'https://m.cafe.daum.net/ourvancouver/4Nd0';
