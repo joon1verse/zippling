@@ -1,8 +1,8 @@
-name: Run All Crawlers Every 15 Minutes
+name: Run All Crawlers - 20min / Vancouver 08:00~24:00
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/20 0-7,16-23 * * *'  # ✅ 20분 주기, Vancouver 기준 08시~24시
   workflow_dispatch:
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
-          path: ~/.npm            # ✅ npm 캐시 경로
+          path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
@@ -30,7 +30,7 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm ci               # ✅ npm ci는 캐시에 최적화됨
+        run: npm ci
 
       - name: Run all crawlers
         run: node utilities/crawler/runAllCrawlers.js
