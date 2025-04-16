@@ -1,4 +1,4 @@
-name: Merge Vancouver Crawldata - 35min / Vancouver 08:00~24:00
+name: Merge Vancouver Crawldata - 30min / Vancouver 08:00~24:00
 
 on:
   schedule:
