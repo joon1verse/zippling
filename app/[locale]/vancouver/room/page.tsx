@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { formatDistanceToNow } from 'date-fns';
 import { AlertTriangle, Globe, Mars, Venus, Info } from 'lucide-react';
+import { supabase } from '@server/supabasePublicClient.js';   // 👈 새 client
 
 const PAGE_SIZE = 20;
 
@@ -15,10 +16,22 @@ export default function VancouverRoomPage() {
   const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
   const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
 
+  /* 🚀 Supabase fetch */
   useEffect(() => {
-    fetch('/data/vancouver_crawldata.json')
-      .then((res) => res.json())
-      .then((data) => setListings(data));
+    async function load() {
+      const { data, error } = await supabase
+        .from('vancouver_roomlistings')
+        .select('*')
+        .order('postedAt', { ascending: false })
+        .limit(1000);
+
+      if (error) {
+        console.error('DB fetch error:', error.message);
+        return;
+      }
+      setListings(data ?? []);
+    }
+    load();
   }, []);
 
   const toggleFilter = (tag: string, type: 'region' | 'gender') => {

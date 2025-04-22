@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    
     "lib": [
       "dom",
       "dom.iterable",
@@ -20,7 +21,13 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "baseUrl": ".", // 프로젝트 루트 기준
+    "paths": {
+      "@server/*": ["utilities/serverutil/*"],
+      "@client/*": ["utilities/clientutil/*"],      // 필요시
+      "@components/*": ["components/*"]
+    }
   },
   "include": [
     "next-env.d.ts",
@@ -30,5 +37,6 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  
 }
