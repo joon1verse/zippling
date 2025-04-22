@@ -80,7 +80,7 @@ async function crawlCraigslist() {
     console.log(`✅ 크롤링 데이터 ${rawPosts.length}개 Supabase 직접 업로드 완료`);
 
   } catch (err) {
-    console.error('❌ 크롤링 중 오류 발생:', err.message);
+    console.error('❌ 크롤링 중 오류 발생:', err);
   }
 }
 

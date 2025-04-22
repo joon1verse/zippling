@@ -139,7 +139,11 @@ export async function crawlUvanU() {
     }
 
     const jsonData = JSON.stringify(rawPosts, null, 2);
-    await uploadToSupabase('zippling-data', `rawdata/vancouver/${outputFileName}`, jsonData);
+    await uploadToSupabase(
+      'zippling-data',
+      `rawdata/vancouver/${outputFileName}`, 
+      jsonData
+    );
 
     console.log(`✅ 크롤링 데이터 ${rawPosts.length}개 Supabase 직접 업로드 완료`);
   } catch (err) {
