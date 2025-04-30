@@ -16,10 +16,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/layout.js"
     ],
-    "/[locale]/vancouver/page": [
+    "/[locale]/vancouver/room/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/vancouver/page.js"
+      "static/chunks/app/[locale]/vancouver/room/page.js"
     ]
   }
 }

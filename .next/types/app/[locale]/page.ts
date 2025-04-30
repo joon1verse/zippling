@@ -1,4 +1,4 @@
-// File: Z:\repository\zippling\app\[locale]\page.tsx
+// File: C:\Users\user\Desktop\KimHJ\freespace\zippling\app\[locale]\page.tsx
 import * as entry from '../../../../app/[locale]/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

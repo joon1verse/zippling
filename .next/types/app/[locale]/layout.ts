@@ -1,4 +1,4 @@
-// File: Z:\repository\zippling\app\[locale]\layout.tsx
+// File: C:\Users\user\Desktop\KimHJ\freespace\zippling\app\[locale]\layout.tsx
 import * as entry from '../../../../app/[locale]/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

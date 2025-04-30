@@ -4,156 +4,156 @@ import { useEffect, useState, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { formatDistanceToNow } from 'date-fns';
 import { AlertTriangle, Globe, Mars, Venus, Info } from 'lucide-react';
-import type { RoomPost } from '@server/types.ts'; // ✅ types.ts 위치 (alias 적용됨)
+import type { RoomPost } from '@server/types';
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE   = 20;
+const BLOCK_SIZE  = 5;   // 페이지 버튼을 5개씩 묶어 표시
 
 export default function VancouverRoomPage() {
   const t = useTranslations();
-  const [listings, setListings] = useState<RoomPost[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState('');
+
+  /* ───────────── state ───────────── */
+  const [listings, setListings]         = useState<RoomPost[]>([]);
+  const [currentPage, setCurrentPage]   = useState(1);
+  const [searchQuery, setSearchQuery]   = useState('');
   const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
   const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
 
-  // ✅ Supabase 데이터 로딩 (동적 import, useEffect 필수)
+  /* ──────────── fetch ──────────── */
   useEffect(() => {
-    const fetchData = async () => {
-      const { supabase } = await import('@server/supabasePublicClient');
+    (async () => {
+      const { createClient } = await import('@supabase/supabase-js');
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
+
       const { data, error } = await supabase
         .from('vancouver_roomlistings')
         .select('*')
-        .order('crawledAt', { ascending: false })
-        .limit(100);
+        .limit(1000);
 
-      if (error) {
-        console.error('Supabase fetch error:', error.message);
-        return;
-      }
+      if (error) { console.error(error.message); return; }
 
-      setListings(data || []);
-    };
+      // tag 문자열 → 배열 변환
+      const normalized = (data ?? []).map((row: any) => ({
+        ...row,
+        tag: Array.isArray(row.tag)
+          ? row.tag
+          : typeof row.tag === 'string'
+            ? row.tag.replace(/[{}"]/g, '').split(',').filter(Boolean)
+            : []
+      })) as RoomPost[];
 
-    fetchData();
+      // 클라이언트 정렬: postedAt 존재 우선 → crawledAt desc
+      normalized.sort((a, b) => {
+        if (!!a.postedAt !== !!b.postedAt) return !!b.postedAt ? 1 : -1;
+        const aTime = new Date(a.postedAt ?? a.crawledAt ?? 0).getTime();
+        const bTime = new Date(b.postedAt ?? b.crawledAt ?? 0).getTime();
+        return bTime - aTime;
+      });
+
+      setListings(normalized);
+    })();
   }, []);
 
+  /* ─────── 검색·필터 ─────── */
   const toggleFilter = (tag: string, type: 'region' | 'gender') => {
-    if (type === 'region') {
-      setSelectedRegions((prev) =>
-        prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-      );
-    } else {
-      setSelectedGenders((prev) =>
-        prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-      );
-    }
+    const setter = type === 'region' ? setSelectedRegions : setSelectedGenders;
+    setter(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
+    setCurrentPage(1);
   };
 
   const filteredListings = useMemo(() => {
-    return listings.filter((post) => {
-      const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesRegion =
-        selectedRegions.length === 0 || selectedRegions.some((tag) => post.tag.includes(tag));
-      const matchesGender =
-        selectedGenders.length === 0 || selectedGenders.some((tag) => post.tag.includes(tag));
-      return matchesSearch && matchesRegion && matchesGender;
+    return listings.filter(p => {
+      const search  = p.title.toLowerCase().includes(searchQuery.toLowerCase());
+      const region  = selectedRegions.length === 0 || selectedRegions.some(t => p.tag.includes(t));
+      const gender  = selectedGenders.length === 0 || selectedGenders.some(t => p.tag.includes(t));
+      return search && region && gender;
     });
   }, [listings, searchQuery, selectedRegions, selectedGenders]);
 
-  const paginated = filteredListings.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
-  const totalPages = Math.ceil(filteredListings.length / PAGE_SIZE);
+  /* ─────── 페이지네이션 데이터 ─────── */
+  const totalPages   = Math.ceil(filteredListings.length / PAGE_SIZE);
+  const paginated    = filteredListings.slice((currentPage - 1)*PAGE_SIZE, currentPage*PAGE_SIZE);
+
+  const currentBlock = Math.floor((currentPage - 1) / BLOCK_SIZE);
+  const blockStart   = currentBlock * BLOCK_SIZE + 1;
+  const blockEnd     = Math.min(blockStart + BLOCK_SIZE - 1, totalPages);
+
+  /* ─────── UI 헬퍼 ─────── */
+  const renderTime = (p: RoomPost) =>
+    formatDistanceToNow(new Date(p.postedAt ?? p.crawledAt ?? Date.now()), { addSuffix: true });
 
   const renderGender = (tags: string[]) => {
-    if (tags.includes('female')) {
-      return (
-        <div className="flex items-center gap-1 text-pink-500 font-medium">
-          <Venus className="w-4 h-4" />
-          <span>{t('female')}</span>
-        </div>
-      );
-    }
-    if (tags.includes('male')) {
-      return (
-        <div className="flex items-center gap-1 text-blue-500 font-medium">
-          <Mars className="w-4 h-4" />
-          <span>{t('male')}</span>
-        </div>
-      );
-    }
+    if (tags.includes('female')) return (
+      <span className="flex items-center gap-1 text-pink-500 font-medium">
+        <Venus className="w-4 h-4" />{t('female')}
+      </span>);
+    if (tags.includes('male')) return (
+      <span className="flex items-center gap-1 text-blue-500 font-medium">
+        <Mars className="w-4 h-4" />{t('male')}
+      </span>);
     return null;
   };
 
   const renderSourceTag = (tags: string[]) => {
-    if (tags.includes('korea')) return t('site.korea');
+    if (tags.includes('korea'))  return t('site.korea');
     if (tags.includes('canada')) return t('site.canada');
-    if (tags.includes('japan')) return t('site.japan');
+    if (tags.includes('japan'))  return t('site.japan');
     return '';
   };
 
+  /* ─────────── JSX ─────────── */
   return (
     <main className="px-4 py-8 max-w-4xl mx-auto">
-      {/* ✅ 공지문 */}
+      {/* 공지 */}
       <div className="bg-yellow-50 border border-yellow-300 text-yellow-800 p-4 rounded-md mb-6">
-        <div className="flex items-start gap-3">
-          <AlertTriangle className="w-5 h-5 mt-1 text-yellow-700 shrink-0" />
-          <p className="text-sm whitespace-pre-line leading-relaxed">
-            {t('roompage_disclaimer')}
-          </p>
+        <div className="flex gap-3">
+          <AlertTriangle className="w-5 h-5 mt-1 text-yellow-700" />
+          <p className="text-sm whitespace-pre-line leading-relaxed">{t('roompage_disclaimer')}</p>
         </div>
       </div>
 
       <h1 className="text-xl font-bold mb-4">🏠 {t('roomListTitle')}</h1>
 
-      {/* ✅ 검색창 + 필터 2열 그리드 UI */}
+      {/* 검색 + 필터 */}
       <section className="bg-white border p-4 rounded-xl shadow-sm mb-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* 🔍 검색창 */}
           <input
             type="text"
             placeholder={t('roompage_searchbar')}
             value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              setCurrentPage(1);
-            }}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+            onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+            className="w-full px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-teal-500"
           />
-
-          {/* 🧰 필터 영역 (레이블 제거 + 구분만) */}
-          <div className="flex flex-col gap-3 text-sm text-gray-700">
-            {/* 🌍 Region 그룹 */}
+          <div className="flex flex-col gap-3 text-sm">
+            {/* Region */}
             <div className="flex flex-wrap gap-2">
-              {['korea', 'canada', 'japan'].map((region) => {
-                const selected = selectedRegions.includes(region);
+              {['korea','canada','japan'].map(r => {
+                const sel = selectedRegions.includes(r);
                 return (
-                  <button
-                    key={region}
-                    type="button"
-                    onClick={() => toggleFilter(region, 'region')}
-                    className={`px-3 py-1 rounded-full border transition text-sm
-                      ${selected ? 'bg-teal-500 text-white border-teal-500' : 'bg-white text-gray-700 border-gray-300'}
-                      hover:border-teal-500 hover:text-teal-600`}
-                  >
-                    {t(`site.${region}`)}
+                  <button key={r} onClick={() => toggleFilter(r,'region')}
+                    className={`px-3 py-1 rounded-full border transition
+                      ${sel ? 'bg-teal-500 text-white border-teal-500'
+                            : 'bg-white text-gray-700 border-gray-300'}
+                      hover:border-teal-500 hover:text-teal-600`}>
+                    {t(`site.${r}`)}
                   </button>
                 );
               })}
             </div>
-
-            {/* 🚻 Gender 그룹 */}
+            {/* Gender */}
             <div className="flex flex-wrap gap-2">
-              {['male', 'female'].map((gender) => {
-                const selected = selectedGenders.includes(gender);
+              {['male','female'].map(g => {
+                const sel = selectedGenders.includes(g);
                 return (
-                  <button
-                    key={gender}
-                    type="button"
-                    onClick={() => toggleFilter(gender, 'gender')}
-                    className={`px-3 py-1 rounded-full border transition text-sm
-                      ${selected ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-gray-700 border-gray-300'}
-                      hover:border-blue-500 hover:text-blue-600`}
-                  >
-                    {t(gender)}
+                  <button key={g} onClick={() => toggleFilter(g,'gender')}
+                    className={`px-3 py-1 rounded-full border transition
+                      ${sel ? 'bg-blue-500 text-white border-blue-500'
+                            : 'bg-white text-gray-700 border-gray-300'}
+                      hover:border-blue-500 hover:text-blue-600`}>
+                    {t(g)}
                   </button>
                 );
               })}
@@ -162,24 +162,73 @@ export default function VancouverRoomPage() {
         </div>
       </section>
 
-      {/* ✅ 게시글 목록 */}
+      {/* 리스트 */}
       <ul className="space-y-6">
-        {paginated.map((post, idx) => (
-          <li key={idx} className="p-4 border rounded shadow hover:shadow-md transition min-w-full">
+        {paginated.map(post => (
+          <li key={post.id} className="p-4 border rounded shadow hover:shadow-md transition">
             <div className="flex justify-between items-start mb-1">
-              <a href={post.link} target="_blank" className="text-blue-700 font-semibold underline text-sm">
+              <a href={post.link} target="_blank" rel="noreferrer"
+                 className="text-blue-700 underline text-sm font-semibold">
                 {post.title}
               </a>
-              <span className="text-sm text-gray-500">
-                {formatDistanceToNow(new Date(post.crawledAt ?? post.postedAt), { addSuffix: true })}
-              </span>
+              <span className="text-sm text-gray-500">{renderTime(post)}</span>
             </div>
-            {/* tags rendering 생략(동일) */}
+            <div className="flex justify-between items-end mt-2 text-sm">
+              <div className="flex flex-wrap gap-4 items-center">
+                <span className="flex items-center gap-1 text-green-700 font-medium">
+                  <Globe className="w-4 h-4" />{renderSourceTag(post.tag)}
+                </span>
+                {renderGender(post.tag)}
+              </div>
+              {post.source && (
+                <span className="flex items-center gap-1 text-xs italic text-gray-700">
+                  <Info className="w-4 h-4 text-gray-600" />{post.source}
+                </span>
+              )}
+            </div>
           </li>
         ))}
       </ul>
 
-      {/* ✅ 페이지네이션 (동일) */}
+      {/* 페이지네이션 */}
+      {totalPages > 1 && (
+        <div className="flex justify-center gap-2 mt-10 items-center">
+          {/* ≪ 첫 블록 */}
+          {currentBlock > 0 && (
+            <>
+              <button onClick={() => setCurrentPage(1)}
+                className="px-2 py-1 rounded bg-gray-200 text-gray-700">≪</button>
+              <button onClick={() => setCurrentPage(blockStart - 1)}
+                className="px-2 py-1 rounded bg-gray-200 text-gray-700">&lt;</button>
+            </>
+          )}
+
+          {/* 번호 */}
+          {Array.from({ length: blockEnd - blockStart + 1 }).map((_, i) => {
+            const n = blockStart + i;
+            return (
+              <button key={n} onClick={() => setCurrentPage(n)}
+                className={`px-3 py-1 rounded ${
+                  currentPage === n
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-200 text-gray-700'
+                }`}>
+                {n}
+              </button>
+            );
+          })}
+
+          {/* ＞ 마지막 블록 */}
+          {blockEnd < totalPages && (
+            <>
+              <button onClick={() => setCurrentPage(blockEnd + 1)}
+                className="px-2 py-1 rounded bg-gray-200 text-gray-700">&gt;</button>
+              <button onClick={() => setCurrentPage(totalPages)}
+                className="px-2 py-1 rounded bg-gray-200 text-gray-700">≫</button>
+            </>
+          )}
+        </div>
+      )}
     </main>
   );
 }
