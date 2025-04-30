@@ -46,8 +46,8 @@ async function crawlJPcanadaVan() {
       const postedAt = dateMatch ? new Date(dateMatch[0].replace(' ', 'T')).toISOString() : null;
 
       const lowerTitle = title.toLowerCase();
-      const maleKeywords = ['남성', '남자', '男性', 'man', 'male', 'boy'];
-      const femaleKeywords = ['여성', '여자', '女性', 'woman', 'female', 'girl'];
+      const maleKeywords = ['남성', '남자', '男性', 'man', 'male', 'boy', 'boys'];
+      const femaleKeywords = ['여성', '여자', '女性', 'woman', 'female', 'girl', 'girls'];
 
       const hasMale = maleKeywords.some(keyword => new RegExp(`\\b${keyword}\\b`, 'i').test(lowerTitle));
       const hasFemale = femaleKeywords.some(keyword => new RegExp(`\\b${keyword}\\b`, 'i').test(lowerTitle));

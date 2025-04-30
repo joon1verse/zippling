@@ -29,9 +29,10 @@ export default function VancouverRoomPage() {
       );
 
       const { data, error } = await supabase
-        .from('vancouver_roomlistings')
-        .select('*')
-        .limit(1000);
+      .from('vancouver_roomlistings')
+      .select('*')
+      .order('event_time', { ascending: false })   // ← 단일 정렬키
+      .limit(1000);
 
       if (error) { console.error(error.message); return; }
 
@@ -45,13 +46,6 @@ export default function VancouverRoomPage() {
             : []
       })) as RoomPost[];
 
-      // 클라이언트 정렬: postedAt 존재 우선 → crawledAt desc
-      normalized.sort((a, b) => {
-        if (!!a.postedAt !== !!b.postedAt) return !!b.postedAt ? 1 : -1;
-        const aTime = new Date(a.postedAt ?? a.crawledAt ?? 0).getTime();
-        const bTime = new Date(b.postedAt ?? b.crawledAt ?? 0).getTime();
-        return bTime - aTime;
-      });
 
       setListings(normalized);
     })();
@@ -83,7 +77,7 @@ export default function VancouverRoomPage() {
 
   /* ─────── UI 헬퍼 ─────── */
   const renderTime = (p: RoomPost) =>
-    formatDistanceToNow(new Date(p.postedAt ?? p.crawledAt ?? Date.now()), { addSuffix: true });
+    formatDistanceToNow(new Date(p.event_time), { addSuffix: true });  
 
   const renderGender = (tags: string[]) => {
     if (tags.includes('female')) return (
@@ -109,11 +103,13 @@ export default function VancouverRoomPage() {
     <main className="px-4 py-8 max-w-4xl mx-auto">
       {/* 공지 */}
       <div className="bg-yellow-50 border border-yellow-300 text-yellow-800 p-4 rounded-md mb-6">
-        <div className="flex gap-3">
-          <AlertTriangle className="w-5 h-5 mt-1 text-yellow-700" />
-          <p className="text-sm whitespace-pre-line leading-relaxed">{t('roompage_disclaimer')}</p>
-        </div>
-      </div>
+  <div className="flex items-start gap-3">
+    <AlertTriangle className="w-6 h-6 text-yellow-600 mt-1 shrink-0" />
+    <p className="text-sm leading-relaxed whitespace-pre-line">
+      {t('roompage_disclaimer')}
+    </p>
+  </div>
+</div>
 
       <h1 className="text-xl font-bold mb-4">🏠 {t('roomListTitle')}</h1>
 
