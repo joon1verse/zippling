@@ -1,30 +1,25 @@
-// 📄 jpcanada_van.js — JPCanada Vancouver 크롤러 (서버리스 Cron Job 버전)
-
 import axios from 'axios';
 import { load } from 'cheerio';
 import { getSourceInfo } from '../sourceMap.js';
 import { uploadToSupabase } from '../serverutil/supabaseUploader.js';
+// [추가]
+import { zonedTimeToUtc } from 'date-fns-tz';
 
-// (jpcanada-1) 대상 URL
 const TARGET_URL = 'https://bbs.jpcanada.com/listing.php?bbs=3';
 
-// (jpcanada-2) 타임스탬프 생성 함수
 const getTimestamp = () => {
   const now = new Date();
   const pad = (n) => n.toString().padStart(2, '0');
   return `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}`;
 };
 
-// (jpcanada-3) 크롤링 메인 함수
 async function crawlJPcanadaVan() {
   const timestamp = getTimestamp();
   const outputFileName = `jpcanada_van_${timestamp}.json`;
 
   try {
     const { data: html } = await axios.get(TARGET_URL, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
-      },
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' },
     });
 
     const $ = load(html);
@@ -43,7 +38,11 @@ async function crawlJPcanadaVan() {
 
       const postDetail = cell.find('span.post-detail').html();
       const dateMatch = postDetail?.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/);
-      const postedAt = dateMatch ? new Date(dateMatch[0].replace(' ', 'T')).toISOString() : null;
+      // [수정: 현지 밴쿠버 시간을 UTC로 변환]
+      let postedAt = null;
+      if (dateMatch) {
+        postedAt = zonedTimeToUtc(dateMatch[0], 'America/Vancouver').toISOString();
+      }
 
       const lowerTitle = title.toLowerCase();
       const maleKeywords = ['남성', '남자', '男性', 'man', 'male', 'boy', 'boys'];
@@ -71,14 +70,7 @@ async function crawlJPcanadaVan() {
     });
 
     const jsonData = JSON.stringify(rawPosts, null, 2);
-
-    // ✅ Supabase 직접 업로드
-    await uploadToSupabase(
-      'zippling-data',
-      `rawdata/vancouver/${outputFileName}`,
-      jsonData
-    );
-
+    await uploadToSupabase('zippling-data', `rawdata/vancouver/${outputFileName}`, jsonData);
     console.log(`✅ 크롤링 데이터 ${rawPosts.length}개 Supabase 직접 업로드 완료`);
   } catch (err) {
     console.error('❌ 크롤링 중 오류 발생:', err.message);

@@ -12,9 +12,9 @@
   "male": "Male",
   "female": "Female",
   "site": {
-    "korea": "Korea Site",
-    "canada": "Local Site",
-    "japan": "Japan Site"
+    "korea": "KR Site",
+    "canada": "CA Site",
+    "japan": "JP Site"
   },
   "roompage_searchbar": "Search by title...",
   "roompage_disclaimer": "Zippling only connects listings from trusted platforms. We respect the ownership of original content and do not display full post details. Please visit the source site to verify all important information. Zippling is not involved in any contracts and holds no responsibility for issues caused by user negligence."
