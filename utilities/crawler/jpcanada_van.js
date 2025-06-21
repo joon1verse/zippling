@@ -2,8 +2,8 @@ import axios from 'axios';
 import { load } from 'cheerio';
 import { getSourceInfo } from '../sourceMap.js';
 import { uploadToSupabase } from '../serverutil/supabaseUploader.js';
-// [추가]
-import { zonedTimeToUtc } from 'date-fns-tz';
+// [수정: date-fns-tz에서 toDate만 import]
+import { toDate } from 'date-fns-tz'; // ✅
 
 const TARGET_URL = 'https://bbs.jpcanada.com/listing.php?bbs=3';
 
@@ -38,10 +38,11 @@ async function crawlJPcanadaVan() {
 
       const postDetail = cell.find('span.post-detail').html();
       const dateMatch = postDetail?.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/);
-      // [수정: 현지 밴쿠버 시간을 UTC로 변환]
+      // [수정: 밴쿠버 현지 시각을 UTC로 변환]
       let postedAt = null;
       if (dateMatch) {
-        postedAt = zonedTimeToUtc(dateMatch[0], 'America/Vancouver').toISOString();
+        // toDate(로컬시각문자열, { timeZone }) → UTC Date 객체 반환, .toISOString()으로 변환
+        postedAt = toDate(dateMatch[0], { timeZone: 'America/Vancouver' }).toISOString();
       }
 
       const lowerTitle = title.toLowerCase();
