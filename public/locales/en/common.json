@@ -16,6 +16,8 @@
     "canada": "CA Site",
     "japan": "JP Site"
   },
+
+  
   "roompage_searchbar": "Search by title...",
   "roompage_disclaimer": "Zippling only connects listings from trusted platforms. We respect the ownership of original content and do not display full post details. Please visit the source site to verify all important information. Zippling is not involved in any contracts and holds no responsibility for issues caused by user negligence.",
   "main_van_what_do": "What would you like to do in Vancouver?",
@@ -26,5 +28,7 @@
   "main_van_post_resume": "Post Resume",
   "main_van_post_resume_desc": "Share your experience and skills.",
   "main_van_flea_market": "Flea Market",
-  "main_van_flea_market_desc": "Buy and sell used goods."
+  "main_van_flea_market_desc": "Buy and sell used goods.",
+  "main_van_community": "Community",
+  "main_van_community_desc": "Share information and chat with locals."
 }
