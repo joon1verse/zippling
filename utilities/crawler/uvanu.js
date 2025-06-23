@@ -55,6 +55,8 @@ function getGenderTag(title) {
 }
 
 // ▶ 게시글 시간( ~분 전, ~시간 전 등 ) 파싱
+
+/* 롤백용 코드
 function parseRelativeTime(str) {
   const now = new Date();
   if (str.includes(':')) {
@@ -62,6 +64,23 @@ function parseRelativeTime(str) {
     const d = new Date(now);
     d.setHours(h, m, 0, 0);
     return d.toISOString();
+  }
+  const mm = str.match(/(\d+)분/);
+  const hh = str.match(/(\d+)시간/);
+  if (mm) return new Date(now.getTime() - parseInt(mm[1],10)*60000).toISOString();
+  if (hh) return new Date(now.getTime() - parseInt(hh[1],10)*3600000).toISOString();
+  return now.toISOString();
+}
+*/
+
+function parseRelativeTime(str) {
+  const now = new Date();
+  // KST hh:mm → UTC 변환
+  if (str.includes(':')) {
+    const [h, m] = str.split(':').map(Number);
+    const kstDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 0);
+    const utcTime = kstDate.getTime() - (9 * 60 * 60 * 1000);
+    return new Date(utcTime).toISOString();
   }
   const mm = str.match(/(\d+)분/);
   const hh = str.match(/(\d+)시간/);
