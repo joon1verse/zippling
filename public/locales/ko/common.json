@@ -1,21 +1,37 @@
 {
   "hello": "한 곳에서 쉽게 찾아보세요",
-  "description": "Zippling은 여러 신뢰할 수 있는 플랫폼의 룸쉐어 및 홈스테이 정보를 한 곳에 모아, 더 빠르고 간편한 검색을 도와줍니다.",
+  "description": "Zippling은 여러 신뢰할 수 있는 플랫폼의 룸 쉐어 및 홈스테이 목록을 한데 모아 검색을 더 빠르고 간편하게 해줍니다.",
+
   "chooseCity": "도시 선택",
-  "chooseCityPlaceholder": "도시를 선택해주세요...",
-  "vancouver": "밴쿠버",
+  "chooseCityPlaceholder": "도시를 선택하세요...",
   "selectedCity": "현재 선택된 도시는",
-  "whyZipplingTitle": "Zippling은 왜 만들어졌을까요?",
-  "whyZipplingDescription": "Zippling은 밴쿠버에서의 힘든 집 구하기 경험에서 출발했습니다.\n개발자로서, 그리고 외국인으로서 낯선 문화와 시스템 속에서 많은 어려움을 겪었습니다.\n\n사람들 간의 소통 방식이나 기준이 다를 때, 정보의 장벽은 자연스럽게 생깁니다.\nZippling은 그 장벽을 허물고, 더 나은 선택을 도와주기 위해 태어났습니다.",
-  "torontoComing": "토론토 (준비 중)",
-  "roomListTitle": "밴쿠버 방 리스트",
-  "male": "남성",
-  "female": "여성",
+  "vancouver": "밴쿠버",
+  "torontoComing": "토론토 (출시 예정)",
+
+  "whyZipplingTitle": "Zippling을 만든 이유",
+  "whyZipplingDescription": "Zippling은 밴쿠버에서 주거지를 찾느라 겪은 실제 경험을 바탕으로 탄생했습니다.\\n개발자이자 외국인으로서 저를 포함한 많은 사람들이 새로운 문화의 주거 시스템을 이해하는 데 어려움을 겪었습니다.\\n\\n서로의 문화적 규범이나 소통 방식을 이해하지 못하면 정보의 장벽이 자연스레 생깁니다.\\nZippling은 이러한 장벽을 허물고 자신 있게 더 나은 선택을 할 수 있도록 돕기 위해 만들어졌습니다.",
+
   "site": {
-    "korea": "한국 사이트",
-    "canada": "현지 사이트",
-    "japan": "일본 사이트"
+    "korea": "KR 사이트",
+    "canada": "CA 사이트",
+    "japan": "JP 사이트"
   },
-  "roompage_searchbar": "Search by title...",
-  "roompage_disclaimer": "Zippling은 각 나라의 사이트를 연결해주는 기능만을 제공합니다. Zippling은 원본이 게시된 사이트의 저작권 및 소유권을 존중하며, 게시글의 세부 내용을 직접 제공하지 않습니다. 문제를 방지하기 위해 반드시 원본 사이트에서 전체 내용을 확인하시기 바랍니다. Zippling은 계약에 일절 관여하지 않으며, 이용자의 부주의로 인한 문제에 대해서도 책임을 지지 않습니다."
+
+  "roomListTitle": "밴쿠버 룸 목록",
+  "roompage_searchbar": "제목으로 검색...",
+  "roompage_disclaimer": "Zippling은 신뢰할 수 있는 플랫폼의 게시물만 연결합니다. 원본 콘텐츠의 저작권을 존중하며 전체 게시물을 표시하지 않습니다. 중요한 정보는 원본 사이트에서 확인하세요. Zippling은 계약에 관여하지 않으며 사용자 과실로 발생한 문제에 대해 책임을 지지 않습니다.",
+
+  "main_van_what_do": "밴쿠버에서 무엇을 하고 싶으세요?",
+  "main_van_room": "숙소",
+  "main_van_room_desc": "방 또는 룸메이트를 찾거나 제안하세요.",
+  "main_van_find_job": "일자리 찾기",
+  "main_van_find_job_desc": "현지 일자리 목록을 둘러보세요.",
+  "main_van_post_resume": "이력서 등록",
+  "main_van_post_resume_desc": "경험과 스킬을 공유하세요.",
+  "main_van_flea_market": "플리마켓",
+  "main_van_flea_market_desc": "중고 물품을 사고파세요.",
+  "main_van_community": "커뮤니티",
+  "main_van_community_desc": "정보를 공유하고 현지인과 대화하세요.",
+  "main_van_hot_deal": "핫딜",
+  "main_van_hot_deal_desc": "최신 특가 상품을 확인하세요."
 }
