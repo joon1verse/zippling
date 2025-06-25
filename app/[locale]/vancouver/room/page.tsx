@@ -201,7 +201,7 @@ export default function VancouverRoomPage() {
       </div>
       {/* 2. 가격, 시간, 태그 */}
       <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400 mt-0.5">
-        {post.price && <span className="text-gray-600">{`￦${post.price}`}</span>}
+        {post.price && <span className="text-gray-600">{`CA${post.price}`}</span>}
         <span>{renderTime(post)}</span>
         <span>· {renderSourceTag(post.tag)}</span>
         <span className="flex gap-1 items-center">{renderGender(post.tag)}</span>

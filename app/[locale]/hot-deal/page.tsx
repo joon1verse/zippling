@@ -102,7 +102,7 @@ export default function HotDealPage() {
             {/* 본문 */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <span className="font-semibold truncate text-base group-hover:underline">{p.title}</span>
+                <span className="font-semibold truncate text-sm group-hover:underline">{p.title}</span>
               </div>
               <p className="text-sm text-gray-600 truncate">{p.content}</p>
               <div className="flex gap-4 text-xs text-gray-400 mt-0.5">
