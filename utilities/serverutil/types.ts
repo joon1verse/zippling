@@ -1,12 +1,40 @@
-// utilities/serverutil/types.ts
-export type RoomPost = {
-  id: string;
-  title: string;
-  link: string;
-  tag: string[];
-  source?: string | null;
-  price?: string | null;
-  postedAt?: string | null;
-  crawledAt?: string | null;
-  event_time: string;        
-};
+/** AUTO-GENERATED TYPES **/
+export type Json = string | number | boolean | null | { [key: string]: Json } | Json[];
+
+export interface Database {
+  public: {
+    Tables: {
+      "vancouver_roomlistings": {
+        Row: {
+          id: any;
+          title: any;
+          link: any;
+          price: any | null;
+          tag: any | null;
+          source: any | null;
+          postedAt: string | null;
+          crawledAt: string | null;
+          event_time: string | null;
+        };
+        Insert: Partial<Omit<Database["public"]["Tables"]["vancouver_roomlistings"]["Row"], "id" | "created_at">>;
+        Update: Partial<Database["public"]["Tables"]["vancouver_roomlistings"]["Row"]>;
+      };
+      "hot_deal_posts": {
+        Row: {
+          id: number;
+          title: any;
+          content: any | null;
+          thumbnail_url: any | null;
+          created_at: string;
+          user_id: any;
+          user_nickname: any;
+        };
+        Insert: Partial<Omit<Database["public"]["Tables"]["hot_deal_posts"]["Row"], "id" | "created_at">>;
+        Update: Partial<Database["public"]["Tables"]["hot_deal_posts"]["Row"]>;
+      };
+    };
+    Views: {};
+    Functions: {};
+    Enums: {};
+  };
+}

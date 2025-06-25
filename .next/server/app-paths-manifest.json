@@ -1,6 +1,6 @@
 {
-  "/[locale]/signin/page": "app/[locale]/signin/page.js",
-  "/[locale]/vancouver/room/page": "app/[locale]/vancouver/room/page.js",
+  "/[locale]/page": "app/[locale]/page.js",
+  "/[locale]/hot-deal/write/page": "app/[locale]/hot-deal/write/page.js",
   "/[locale]/hot-deal/page": "app/[locale]/hot-deal/page.js",
-  "/[locale]/page": "app/[locale]/page.js"
+  "/[locale]/vancouver/room/page": "app/[locale]/vancouver/room/page.js"
 }

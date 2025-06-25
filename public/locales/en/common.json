@@ -42,5 +42,22 @@
   "main_van_community": "Community",
   "main_van_community_desc": "Share information and chat with locals.",
   "main_van_hot_deal": "Hot Deals",
-  "main_van_hot_deal_desc": "Discover the latest special offers."
+  "main_van_hot_deal_desc": "Discover the latest special offers.",
+  
+  "hotDeals": "Hot Deals",
+  "hotDealsSubtitle": "This is a hot deal page",
+  "loading": "Loading…",
+  "noDealsYet": "No hot deals yet.",
+
+  "writeHotDeal": "Write Hot Deal",
+  "editHotDeal": "Edit Hot Deal",
+  "errorPrefix": "Error:",
+  "titleLabel": "Title",
+  "contentLabel": "Content",
+  "thumbnailUrlLabel": "Thumbnail URL",
+  "thumbnailUrlPlaceholder": "https://example.com/image.png",
+  "thumbnailUrlHelp": "비워두면 기본 이미지가 사용됩니다.",
+  "saving": "Saving…",
+  "save": "Save",
+  "update": "Update"
 }
