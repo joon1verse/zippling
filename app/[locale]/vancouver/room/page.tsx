@@ -188,7 +188,7 @@ export default function VancouverRoomPage() {
           href={post.link ?? '#'}
           target="_blank"
           rel="noreferrer"
-          className="font-semibold text-base group-hover:underline text-blue-700 truncate flex-1 min-w-0"
+          className="font-semibold text-sm group-hover:underline text-blue-700 truncate flex-1 min-w-0"
         >
           {post.title}
         </a>
