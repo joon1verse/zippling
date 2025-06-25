@@ -10,7 +10,7 @@ export default function HomePage() {
 
   const handleCityClick = (city: string, disabled: boolean) => {
     if (!disabled) {
-      router.push(`/${locale}/${city}/room`);
+      router.push(`/${locale}/${city}`);
     }
   };
 

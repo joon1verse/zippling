@@ -49,7 +49,7 @@ export default function VancouverHubPage() {
 
         {/* 2) Hot Deal — 하단 왼쪽 1col × 1row */}
         <div
-          onClick={() => navigate('hot-deal')}
+          onClick={() => router.push(`/${locale}/hot-deal`)}
           className="
             cursor-pointer
             md:col-start-1 md:row-start-2
