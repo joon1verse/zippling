@@ -6,7 +6,7 @@ import Image from "next/image";
 import { createBrowserSupabase } from "@server/supabaseBrowserClient";
 import type { Database } from "@server/types";
 import { useTranslations } from "next-intl";
-import { Edit2, Trash2, Flame } from "lucide-react";
+import { Edit2, Trash2 } from "lucide-react";
 
 const NO_THUMB_URL = "/images/no_thumb.png";
 
@@ -52,6 +52,16 @@ export default function HotDealPage() {
     }
   };
 
+  // 날짜 포맷 함수 (간략 표기)
+  const formatDate = (dateStr: string) =>
+    new Date(dateStr).toLocaleString(locale, {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
   if (loading) {
     return <p className="py-20 text-center text-base">{t("loading")}</p>;
   }
@@ -64,68 +74,58 @@ export default function HotDealPage() {
   }
 
   return (
-    <div className="pt-16 px-4 lg:px-0 max-w-5xl mx-auto">
-      <h1 className="flex items-center text-3xl font-bold mb-1">
-        {t("hotDeals")} <span className="ml-2">🔥</span>
-      </h1>
-      <p className="text-base text-gray-600 mb-6">{t("hotDealsSubtitle")}</p>
+    <div className="pt-14 px-2 w-full max-w-screen-lg mx-auto">
+      <div className="flex items-center gap-3 mb-2">
+        <h1 className="text-2xl font-bold tracking-tight">{t("hotDeals")}</h1>
+        <span className="text-2xl">🔥</span>
+      </div>
+      <p className="text-sm text-gray-500 mb-4">{t("hotDealsSubtitle")}</p>
 
-      <ul className="space-y-4">
+      {/* 리스트 */}
+      <ul className="divide-y divide-gray-200 bg-white rounded-2xl border shadow-sm overflow-hidden">
         {posts.map((p) => (
           <li
             key={p.id}
-            className="relative bg-white rounded-xl p-6 hover:shadow-lg transition-shadow"
+            className="flex items-center px-3 py-2 gap-4 hover:bg-gray-50 transition group"
           >
-            <div className="grid grid-cols-[auto,1fr,auto] grid-rows-[auto,auto,auto] gap-x-4 gap-y-1 items-start">
-              {/* 썸네일 */}
-              <div className="col-start-1 row-span-3 w-24 h-20 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center border">
-                <Image
-                  src={p.thumbnail_url || NO_THUMB_URL}
-                  alt={p.thumbnail_url ? p.title : `Thumbnail for ${p.title}`}
-                  width={96}
-                  height={80}
-                  className="object-cover w-full h-full"
-                  priority
-                />
+            {/* 썸네일 */}
+            <div className="flex-shrink-0 w-16 h-16 bg-gray-100 border rounded-lg overflow-hidden flex items-center justify-center">
+              <Image
+                src={p.thumbnail_url || NO_THUMB_URL}
+                alt={p.thumbnail_url ? p.title : `Thumbnail for ${p.title}`}
+                width={64}
+                height={64}
+                className="object-cover w-full h-full"
+                priority
+              />
+            </div>
+            {/* 본문 */}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="font-semibold truncate text-base group-hover:underline">{p.title}</span>
               </div>
-
-              {/* 제목 */}
-              <h2 className="row-start-1 col-start-2 text-lg font-semibold truncate">
-                {p.title}
-              </h2>
-
-              {/* 수정/삭제 버튼 */}
-              <div className="row-start-1 col-start-3 justify-self-end flex space-x-2">
-                {/* [수정1] Edit2: 쿼리스트링 기반으로 수정 라우팅 */}
-                <Edit2
-                  size={18}
-                  className="cursor-pointer hover:text-teal-600"
-                  onClick={() => router.push(`/${locale}/hot-deal/write?id=${p.id}`)}
-                />
-                <Trash2
-                  size={18}
-                  className="cursor-pointer hover:text-red-600"
-                  onClick={() => handleDelete(p.id)}
-                />
+              <p className="text-sm text-gray-600 truncate">{p.content}</p>
+              <div className="flex gap-4 text-xs text-gray-400 mt-0.5">
+                <time>{formatDate(p.created_at)}</time>
+                <span className="ml-2">by {p.user_nickname || t("anonymous")}</span>
               </div>
-
-              {/* 내용 */}
-              <p className="row-start-2 col-start-2 text-sm text-gray-600 line-clamp-2">
-                {p.content}
-              </p>
-
-              {/* 날짜 */}
-              <time className="row-start-3 col-start-2 text-xs text-gray-400">
-                {new Date(p.created_at).toLocaleString(locale, {
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                })}
-              </time>
-
-              {/* 작성자 */}
-              <span className="row-start-3 col-start-3 justify-self-end text-xs text-gray-400">
-                by {p.user_nickname || t("anonymous")}
-              </span>
+            </div>
+            {/* 버튼 */}
+            <div className="flex flex-col items-end gap-1">
+              <button
+                aria-label="Edit"
+                onClick={() => router.push(`/${locale}/hot-deal/write?id=${p.id}`)}
+                className="text-teal-600 hover:text-teal-700 p-1"
+              >
+                <Edit2 size={18} />
+              </button>
+              <button
+                aria-label="Delete"
+                onClick={() => handleDelete(p.id)}
+                className="text-red-500 hover:text-red-700 p-1"
+              >
+                <Trash2 size={18} />
+              </button>
             </div>
           </li>
         ))}

@@ -4,12 +4,12 @@ export const SOURCE_MAP = [
     {
       tag: 'vancouver',
       urlPattern: 'ourvancouver',
-      source: 'Daum Cafe - UvanU 우밴유',
+      source: 'UvanU 우밴유',
     },
     {
       tag: 'vancouver',
       urlPattern: 'vancouver.craigslist',
-      source: 'Vancouver Craigslist',
+      source: 'Craigslist',
     },
     {
       tag: 'vancouver',

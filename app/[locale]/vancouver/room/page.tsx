@@ -1,34 +1,24 @@
 'use client';
 
-// ===========================
-// Vancouver Room Listings Page
-// ===========================
-
 import { useEffect, useState, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { formatDistanceToNow } from 'date-fns';
 import { AlertTriangle, Globe, Mars, Venus, Info } from 'lucide-react';
-// [1️⃣] Supabase 타입 임포트 (공식 추천 방식)
 import type { Database } from '@server/types';
 
-// [2️⃣] vancouver_roomlistings Row 타입 선언
 type RoomPost = Database['public']['Tables']['vancouver_roomlistings']['Row'];
 
-// 페이지네이션 설정값
 const PAGE_SIZE = 20;
-const BLOCK_SIZE = 5; // 페이지 버튼을 5개씩 묶어 표시
+const BLOCK_SIZE = 5;
 
 export default function VancouverRoomPage() {
   const t = useTranslations();
-
-  // ───────────── state ─────────────
   const [listings, setListings] = useState<RoomPost[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
   const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
 
-  // ──────────── fetch ────────────
   useEffect(() => {
     (async () => {
       const { createClient } = await import('@supabase/supabase-js');
@@ -48,7 +38,6 @@ export default function VancouverRoomPage() {
         return;
       }
 
-      // [3️⃣] tag 컬럼 문자열 → 배열로 표준화 (프론트에서만 변환)
       const normalized = (data ?? []).map((row) => ({
         ...row,
         tag: Array.isArray(row.tag)
@@ -62,7 +51,6 @@ export default function VancouverRoomPage() {
     })();
   }, []);
 
-  // ─────── 검색·필터 ───────
   const toggleFilter = (tag: string, type: 'region' | 'gender') => {
     const setter = type === 'region' ? setSelectedRegions : setSelectedGenders;
     setter((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
@@ -80,7 +68,6 @@ export default function VancouverRoomPage() {
     });
   }, [listings, searchQuery, selectedRegions, selectedGenders]);
 
-  // ─────── 페이지네이션 데이터 ───────
   const totalPages = Math.ceil(filteredListings.length / PAGE_SIZE);
   const paginated = filteredListings.slice(
     (currentPage - 1) * PAGE_SIZE,
@@ -91,7 +78,6 @@ export default function VancouverRoomPage() {
   const blockStart = currentBlock * BLOCK_SIZE + 1;
   const blockEnd = Math.min(blockStart + BLOCK_SIZE - 1, totalPages);
 
-  // ─────── UI 헬퍼 ───────
   const renderTime = (p: RoomPost) =>
     p.event_time
       ? formatDistanceToNow(new Date(p.event_time), { addSuffix: true })
@@ -101,14 +87,14 @@ export default function VancouverRoomPage() {
     if (tags.includes('female'))
       return (
         <span className="flex items-center gap-1 text-pink-500 font-medium">
-          <Venus className="w-4 h-4" />
+          <Venus className="w-3 h-3" />
           {t('female')}
         </span>
       );
     if (tags.includes('male'))
       return (
         <span className="flex items-center gap-1 text-blue-500 font-medium">
-          <Mars className="w-4 h-4" />
+          <Mars className="w-3 h-3" />
           {t('male')}
         </span>
       );
@@ -122,9 +108,8 @@ export default function VancouverRoomPage() {
     return '';
   };
 
-  // ─────────── JSX ───────────
   return (
-    <main className="px-4 py-8 max-w-4xl mx-auto">
+    <main className="w-full max-w-screen-lg mx-auto px-2 py-6">
       {/* 공지 */}
       <div className="bg-yellow-50 border border-yellow-300 text-yellow-800 p-4 rounded-md mb-6">
         <div className="flex items-start gap-3">
@@ -135,7 +120,9 @@ export default function VancouverRoomPage() {
         </div>
       </div>
 
-      <h1 className="text-xl font-bold mb-4">🏠 {t('roomListTitle')}</h1>
+      <header className="mb-4 flex flex-col gap-1">
+        <h1 className="text-2xl font-bold tracking-tight">🏠 {t('roomListTitle')}</h1>
+      </header>
 
       {/* 검색 + 필터 */}
       <section className="bg-white border p-4 rounded-xl shadow-sm mb-6">
@@ -151,7 +138,6 @@ export default function VancouverRoomPage() {
             className="w-full px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-teal-500"
           />
           <div className="flex flex-col gap-3 text-sm">
-            {/* Region */}
             <div className="flex flex-wrap gap-2">
               {['korea', 'canada', 'japan'].map((r) => {
                 const sel = selectedRegions.includes(r);
@@ -160,11 +146,9 @@ export default function VancouverRoomPage() {
                     key={r}
                     onClick={() => toggleFilter(r, 'region')}
                     className={`px-3 py-1 rounded-full border transition
-                      ${
-                        sel
-                          ? 'bg-teal-500 text-white border-teal-500'
-                          : 'bg-white text-gray-700 border-gray-300'
-                      }
+                      ${sel
+                        ? 'bg-teal-500 text-white border-teal-500'
+                        : 'bg-white text-gray-700 border-gray-300'}
                       hover:border-teal-500 hover:text-teal-600`}
                   >
                     {t(`site.${r}`)}
@@ -172,7 +156,6 @@ export default function VancouverRoomPage() {
                 );
               })}
             </div>
-            {/* Gender */}
             <div className="flex flex-wrap gap-2">
               {['male', 'female'].map((g) => {
                 const sel = selectedGenders.includes(g);
@@ -181,11 +164,9 @@ export default function VancouverRoomPage() {
                     key={g}
                     onClick={() => toggleFilter(g, 'gender')}
                     className={`px-3 py-1 rounded-full border transition
-                      ${
-                        sel
-                          ? 'bg-blue-500 text-white border-blue-500'
-                          : 'bg-white text-gray-700 border-gray-300'
-                      }
+                      ${sel
+                        ? 'bg-blue-500 text-white border-blue-500'
+                        : 'bg-white text-gray-700 border-gray-300'}
                       hover:border-blue-500 hover:text-blue-600`}
                   >
                     {t(g)}
@@ -197,47 +178,43 @@ export default function VancouverRoomPage() {
         </div>
       </section>
 
-      {/* 리스트 */}
-      <ul className="space-y-6">
-        {paginated.map((post) => (
-          <li
-            key={post.id}
-            className="p-4 border rounded shadow hover:shadow-md transition"
-          >
-            <div className="flex justify-between items-start mb-1">
-              <a
-                href={post.link ?? '#'}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-700 underline text-sm font-semibold"
-              >
-                {post.title}
-              </a>
-              <span className="text-sm text-gray-500">{renderTime(post)}</span>
-            </div>
-            <div className="flex justify-between items-end mt-2 text-sm">
-              <div className="flex flex-wrap gap-4 items-center">
-                <span className="flex items-center gap-1 text-green-700 font-medium">
-                  <Globe className="w-4 h-4" />
-                  {renderSourceTag(post.tag)}
-                </span>
-                {renderGender(post.tag)}
-              </div>
-              {post.source && (
-                <span className="flex items-center gap-1 text-xs italic text-gray-700">
-                  <Info className="w-4 h-4 text-gray-600" />
-                  {post.source}
-                </span>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
+      {/* 리스트 (게시판 row 스타일, 여백 최소화) */}
+      <ul className="divide-y divide-gray-200 bg-white rounded-2xl border shadow-sm overflow-hidden">
+  {paginated.map((post) => (
+    <li key={post.id} className="px-3 py-2 hover:bg-gray-50 transition group">
+      {/* 1. 제목-출처 flex-row 한 줄! */}
+      <div className="flex flex-row items-center w-full">
+        <a
+          href={post.link ?? '#'}
+          target="_blank"
+          rel="noreferrer"
+          className="font-semibold text-base group-hover:underline text-blue-700 truncate flex-1 min-w-0"
+        >
+          {post.title}
+        </a>
+        {post.source && (
+          <span className="flex items-center gap-1 text-xs italic text-gray-500 flex-shrink-0 ml-3">
+            <Info className="w-3.5 h-3.5 text-gray-400" />
+            {post.source}
+          </span>
+        )}
+      </div>
+      {/* 2. 가격, 시간, 태그 */}
+      <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400 mt-0.5">
+        {post.price && <span className="text-gray-600">{`￦${post.price}`}</span>}
+        <span>{renderTime(post)}</span>
+        <span>· {renderSourceTag(post.tag)}</span>
+        <span className="flex gap-1 items-center">{renderGender(post.tag)}</span>
+      </div>
+    </li>
+  ))}
+</ul>
+
+
 
       {/* 페이지네이션 */}
       {totalPages > 1 && (
         <div className="flex justify-center gap-2 mt-10 items-center">
-          {/* ≪ 첫 블록 */}
           {currentBlock > 0 && (
             <>
               <button
@@ -254,26 +231,21 @@ export default function VancouverRoomPage() {
               </button>
             </>
           )}
-
-          {/* 번호 */}
           {Array.from({ length: blockEnd - blockStart + 1 }).map((_, i) => {
             const n = blockStart + i;
             return (
               <button
                 key={n}
                 onClick={() => setCurrentPage(n)}
-                className={`px-3 py-1 rounded ${
-                  currentPage === n
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-200 text-gray-700'
-                }`}
+                className={`px-3 py-1 rounded ${currentPage === n
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-200 text-gray-700'
+                  }`}
               >
                 {n}
               </button>
             );
           })}
-
-          {/* ＞ 마지막 블록 */}
           {blockEnd < totalPages && (
             <>
               <button
