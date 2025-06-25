@@ -11,11 +11,12 @@ import { createBrowserSupabase } from "@server/supabaseBrowserClient";
 import type { Database } from "@server/types";
 import { useTranslations } from "next-intl";
 
+// [1] 타입 정의
 type HotDealPost = Database["public"]["Tables"]["hot_deal_posts"]["Row"];
 
 export default function WritePage() {
   const { locale } = useParams() as { locale: string };
-  const t = useTranslations();                                  // 공통 네임스페이스
+  const t = useTranslations(); // [2] 번역 네임스페이스 호출
   const searchParams = useSearchParams();
   const router = useRouter();
   const supabase = createBrowserSupabase();
@@ -29,6 +30,7 @@ export default function WritePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // [3] 수정모드 - 기존 글 정보 가져오기
   useEffect(() => {
     if (!isEdit) return;
     (async () => {
@@ -50,6 +52,7 @@ export default function WritePage() {
     })();
   }, [isEdit, idParam, supabase]);
 
+  // [4] 저장/수정 submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -95,16 +98,16 @@ export default function WritePage() {
     <div className="pt-16 px-4 max-w-2xl mx-auto">
       {/* 제목 */}
       <h1 className="text-3xl font-bold mb-6">
-        {isEdit 
-          ? t("editHotDeal")             // 번역키: "editHotDeal"
-          : t("writeHotDeal")            // 번역키: "writeHotDeal"
+        {isEdit
+          ? t("editHotDeal")          // [A] "Edit Hot Deal"
+          : t("writeHotDeal")         // [B] "Write Hot Deal"
         }
       </h1>
 
       {/* 에러 메시지 */}
       {error && (
         <p className="mb-4 text-red-600">
-          {t("errorPrefix")} {error}     
+          {t("errorPrefix")} {error}  {/* [C] "Error:" */}
         </p>
       )}
 
@@ -112,7 +115,7 @@ export default function WritePage() {
         {/* 타이틀 입력 */}
         <div>
           <label className="block mb-1 font-medium">
-            {t("titleLabel")}              
+            {t("titleLabel")}         {/* [D] "Title" */}
           </label>
           <input
             type="text"
@@ -126,7 +129,7 @@ export default function WritePage() {
         {/* 내용 입력 */}
         <div>
           <label className="block mb-1 font-medium">
-            {t("contentLabel")}            
+            {t("contentLabel")}       {/* [E] "Content" */}
           </label>
           <textarea
             value={content}
@@ -139,17 +142,17 @@ export default function WritePage() {
         {/* 썸네일 URL 입력 */}
         <div>
           <label className="block mb-1 font-medium">
-            {t("thumbnailUrlLabel")}       
+            {t("thumbnailUrlLabel")}  {/* [F] "Thumbnail URL" */}
           </label>
           <input
             type="url"
             value={thumbnailUrl}
             onChange={(e) => setThumbnailUrl(e.target.value)}
-            placeholder={t("thumbnailUrlPlaceholder")} // 번역키: "thumbnailUrlPlaceholder"
+            placeholder={t("thumbnailUrlPlaceholder")} // [G] "Paste image address (optional)"
             className="w-full border rounded px-3 py-2"
           />
           <p className="text-sm text-gray-500 mt-1">
-            {t("thumbnailUrlHelp")}        
+            {t("thumbnailUrlHelp")}   {/* [H] "If empty, a default image will be shown." */}
           </p>
         </div>
 
@@ -160,10 +163,10 @@ export default function WritePage() {
           className="mt-4 bg-teal-600 text-white px-6 py-2 rounded hover:bg-teal-700 disabled:opacity-50"
         >
           {loading
-            ? t("saving")                 // 번역키: "saving"
+            ? t("saving")             // [I] "Saving..."
             : isEdit
-            ? t("update")                 // 번역키: "update"
-            : t("save")                   // 번역키: "save"
+            ? t("update")             // [J] "Update"
+            : t("save")               // [K] "Save"
           }
         </button>
       </form>
