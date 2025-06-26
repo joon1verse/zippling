@@ -1,19 +1,20 @@
-// app/layout.tsx
+// app/[locale]/layout.tsx
 import "../globals.css";
 import type { ReactNode } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { Nunito } from "next/font/google";
 
-import Header from "./header";
-import SupabaseProvider from "@server/supabaseProvider"; // ← 변경된 경로
+// 변경: Header 대신 HeaderWithTopbar를 import
+import HeaderWithTopbar from "./header_with_topbar";
+import SupabaseProvider from "@server/supabaseProvider";
 
 export function generateStaticParams() {
   return [{ locale: "en" }, { locale: "ko" }, { locale: "ja" }];
 }
 
 const nunito = Nunito({
-  weight: ["400","600","700"],
+  weight: ["400", "600", "700"],
   subsets: ["latin"],
 });
 
@@ -36,7 +37,8 @@ export default async function LocaleLayout({
       <body className="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <SupabaseProvider>
-            <Header locale={locale} />
+            {/* 변경: 기존 <Header>를 <HeaderWithTopbar>로 교체 */}
+            <HeaderWithTopbar locale={locale} />
 
             <main className="flex-grow container mx-auto px-4 py-8 flex flex-col items-center">
               {children}

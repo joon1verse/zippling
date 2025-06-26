@@ -10,7 +10,15 @@
 
   "whyZipplingTitle": "Zippling이 만들어진 이유?",
   "whyZipplingDescription": "Zippling은 밴쿠버에서 집을 구하며 직접 겪은 시행착오에서 시작됐습니다.\n개발자이자 외국인으로서 저 역시 새로운 문화의 낯선 주거 시스템에 어려움을 겪었습니다.\n\n서로의 생활방식과 소통 방식이 다르면, 정보의 장벽이 자연스럽게 생깁니다.\nZippling은 이 장벽을 허물고 모두가 더 좋은 선택을 할 수 있도록 돕고자 시작되었습니다.",
-
+  
+  "header": {
+   "about": "About Us",
+   "contact": "Contact Us",
+    "login": "Log in",
+   "logout": "Log out",
+   "signup": "Sign Up"
+  },
+  
   "site": {
     "korea": "한국 사이트",
     "canada": "캐나다 사이트",
@@ -18,7 +26,7 @@
   },
 
  "signin": {
-   "title": "관리자 로그인",
+   "title": "Welcome to Zippling!",
    "email": "이메일",
    "password": "비밀번호",
    "loginButton": "로그인",

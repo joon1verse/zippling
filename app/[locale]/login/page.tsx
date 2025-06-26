@@ -36,15 +36,15 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-16 flex items-start justify-center">
+    <div className="min-h-screen bg-gray-50 pt-2 flex items-start justify-center">
       <div className="w-full px-12 flex justify-center">
-        <div className="mt-12 w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <div className="mt-8 w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden">
           {/* 헤더 그라데이션 */}
-          <div className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-center py-6">
-            <h1 className="text-3xl font-bold">{t('title')}</h1>
+          <div className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-center py-4">
+            <h1 className="text-2xl font-bold">{t('title')}</h1>
           </div>
 
-          <div className="p-8 space-y-4">
+          <div className="px-8 py-4 space-y-4">
             {error && (
               <div className="bg-red-100 text-red-800 px-4 py-2 rounded-lg text-base">
                 {t('error', { message: error })}
@@ -63,7 +63,7 @@ export default function SignInPage() {
                   placeholder="you@example.com"
                   required
                   className="
-                    w-full px-8 py-3 text-base
+                    w-full pl-4 pr-14 py-2 text-base
                     border border-gray-300 rounded-lg
                     focus:outline-none focus:ring-2 focus:ring-teal-300
                     transition
@@ -82,7 +82,7 @@ export default function SignInPage() {
                   placeholder="••••••••"
                   required
                   className="
-                    w-full px-8 py-3 text-base
+                    w-full pl-4 pr-14 py-2 text-base
                     border border-gray-300 rounded-lg
                     focus:outline-none focus:ring-2 focus:ring-teal-300
                     transition
@@ -94,7 +94,7 @@ export default function SignInPage() {
                 type="submit"
                 disabled={loading}
                 className="
-                  w-full py-3 bg-teal-600 hover:bg-teal-700
+                  w-full py-3 bg-teal-600 hover:bg-teal-700 !mt-6 !mb-3
                   text-white text-lg font-semibold
                   rounded-lg transition
                   disabled:opacity-50

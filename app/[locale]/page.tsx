@@ -17,7 +17,7 @@ export default function HomePage() {
   return (
     <>
       {/* 💬 메인 슬로건 */}
-      <section className="w-full flex flex-col items-center px-4 pt-4 pb-8">
+      <section className="w-full flex flex-col items-center px-4 pt-1 pb-4">
         <div className="text-center mb-0 px-4">
           <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl mb-4">
             {t('hello')}
@@ -29,7 +29,7 @@ export default function HomePage() {
       </section>
 
       {/* 🏙️ 도시 선택 영역 */}
-      <section className="w-full mb-2 px-4 py-8 bg-white text-center">
+      <section className="w-full mb-4 px-4 py-4 bg-white text-center">
         {/* 안내 문구 */}
         <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-8 underline underline-offset-4 decoration-teal-500">
           {t('chooseCity')}
@@ -76,7 +76,7 @@ export default function HomePage() {
       <div className="w-full h-8 bg-gradient-to-b from-transparent to-gray-100" />
 
       {/* 📖 소개 섹션 */}
-      <section className="text-center px-4 py-20 bg-gray-50">
+      <section className="text-center px-4 py-10 bg-gray-50">
         <h2 className="text-4xl font-bold text-gray-800 mb-6">
           {t('whyZipplingTitle')}
         </h2>

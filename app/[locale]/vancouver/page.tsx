@@ -14,7 +14,7 @@ export default function VancouverHubPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-2">
       {/* 페이지 제목 */}
       <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6 text-center">
         {t('main_van_what_do')}

@@ -74,7 +74,7 @@ export default function HotDealPage() {
   }
 
   return (
-    <div className="pt-14 px-2 w-full max-w-screen-lg mx-auto">
+    <div className="pt-2 px-2 w-full max-w-screen-lg mx-auto">
       <div className="flex items-center gap-3 mb-2">
         <h1 className="text-2xl font-bold tracking-tight">{t("hotDeals")}</h1>
         <span className="text-2xl">🔥</span>

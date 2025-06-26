@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
 
     if (!session) {
       const locale = pathname.split('/')[1];
-      return NextResponse.redirect(new URL(`/${locale}/signin`, request.url));
+      return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
     }
 
     // 세션이 유효하면 갱신된 쿠키가 담긴 response 그대로 리턴

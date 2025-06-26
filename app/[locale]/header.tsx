@@ -10,7 +10,7 @@ interface HeaderProps {
 
 export default function Header({ locale }: HeaderProps) {
   return (
-    <header className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-md">
+    <header className="relative z-20 bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-md">
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         <Logo locale={locale} />
         <LanguageDropdown currentLocale={locale} />
@@ -63,7 +63,7 @@ function LanguageDropdown({ currentLocale }: { currentLocale: string }) {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-32 bg-white text-gray-800 rounded shadow-md z-10">
+        <div className="absolute right-0 mt-2 w-32 bg-white text-gray-800 rounded shadow-md z-40">
           {languages.map(lang => (
             <button
               key={lang.code}

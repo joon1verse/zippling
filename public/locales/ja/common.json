@@ -10,7 +10,15 @@
 
   "whyZipplingTitle": "Zipplingが作られた理由",
   "whyZipplingDescription": "Zipplingはバンクーバーで住まい探しに苦労した実体験から生まれました。\n開発者であり外国人として、私も新しい文化の住まい探しに多くの困難がありました。\n\n異なる文化やコミュニケーション方法は、自然と情報の壁を作ります。\nZipplingはこの壁をなくし、誰もが安心して良い選択ができるようサポートするために生まれました。",
-
+  
+  "header": {
+   "about": "About Us",
+   "contact": "Contact Us",
+    "login": "Log in",
+   "logout": "Log out",
+   "signup": "Sign Up"
+  },
+  
   "site": {
     "korea": "韓国サイト",
     "canada": "カナダサイト",
@@ -18,7 +26,7 @@
   },
 
  "signin": {
-   "title": "管理者ログイン",
+   "title": "Welcome to Zippling!",
    "email": "メールアドレス",
    "password": "パスワード",
    "loginButton": "ログイン",

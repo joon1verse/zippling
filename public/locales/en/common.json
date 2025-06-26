@@ -10,6 +10,14 @@
 
   "whyZipplingTitle": "Why was Zippling created?",
   "whyZipplingDescription": "Zippling was created based on real experiences of struggling to find housing in Vancouver.\nAs a developer and as a foreigner myself, I — along with many others — faced difficulties navigating unfamiliar housing systems in a new culture.\n\nWhen people don't understand each other's norms or ways of communication, a barrier of information naturally arises.\nZippling was born to break down that barrier and help others make better choices with confidence.",
+  
+  "header": {
+   "about": "About Us",
+   "contact": "Contact Us",
+    "login": "Log in",
+   "logout": "Log out",
+   "signup": "Sign Up"
+  },
 
   "site": {
     "korea": "KR Site",
@@ -18,10 +26,10 @@
   },
   
  "signin": {
-   "title": "Admin Sign In",
+   "title": "Welcome to Zippling!",
    "email": "Email",
    "password": "Password",
-    "loginButton": "Sign In",
+   "loginButton": "Log In",
    "loggingIn": "Signing in…",
    "error": "Error: {message}"
  },
