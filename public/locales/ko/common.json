@@ -34,6 +34,24 @@
    "error": "오류: {message}"
  },
 
+   "signup": {
+    "title": "Sign Up",
+    "fullName": "Full Name",
+    "nickname": "Nickname",
+    "email": "Email",
+    "birthdate": "Birthdate (optional)",
+    "phone": "Phone Number (optional)",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "requiredFieldsNote": "* indicates required",
+    "signupButton": "Sign Up",
+    "signingUp": "Signing Up...",
+    "passwordMismatch": "Passwords do not match.",
+    "successMessage": "Welcome! You’re now signed up.",
+    "checkEmail": "Check your email for verification link",
+    "error": "Error: {message}"
+  },
+
   "roomListTitle": "밴쿠버 방 매물 목록",
   "roompage_searchbar": "제목으로 검색...",
   "roompage_disclaimer": "Zippling은 신뢰할 수 있는 외부 플랫폼의 매물만 연결합니다. 원본 콘텐츠의 소유권을 존중하며, 전체 글을 제공하지 않습니다. 모든 중요한 정보는 반드시 출처 사이트에서 직접 확인하세요. Zippling은 계약 당사자가 아니며, 사용자 부주의로 인한 문제에 책임지지 않습니다.",

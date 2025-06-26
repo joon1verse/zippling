@@ -34,6 +34,24 @@
    "error": "エラー: {message}"
  },
 
+   "signup": {
+    "title": "Sign Up",
+    "fullName": "Full Name",
+    "nickname": "Nickname",
+    "email": "Email",
+    "birthdate": "Birthdate (optional)",
+    "phone": "Phone Number (optional)",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "requiredFieldsNote": "* indicates required",
+    "signupButton": "Sign Up",
+    "signingUp": "Signing Up...",
+    "passwordMismatch": "Passwords do not match.",
+    "successMessage": "Welcome! You’re now signed up.",
+    "checkEmail": "Check your email for verification link",
+    "error": "Error: {message}"
+  },
+
   "roomListTitle": "バンクーバーの部屋リスト",
   "roompage_searchbar": "タイトルで検索...",
   "roompage_disclaimer": "Zipplingは信頼できる外部プラットフォームの情報のみを掲載します。元のコンテンツの権利を尊重し、全ての詳細は提供していません。重要な情報は必ず元サイトでご確認ください。Zipplingは契約当事者ではなく、ユーザーの過失による問題には責任を負いません。",
