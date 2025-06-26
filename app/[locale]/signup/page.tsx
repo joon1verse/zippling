@@ -1,3 +1,4 @@
+// app/[locale]/signup/page.tsx
 'use client';
 
 import { useState } from 'react';
@@ -10,16 +11,16 @@ export default function SignUpPage() {
   const { locale } = useParams() as { locale: string };
   const supabase = useSupabaseClient();
 
-  const [fullName, setFullName] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [email, setEmail] = useState('');
-  const [birthdate, setBirthdate] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPwd, setConfirmPwd] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError]     = useState<string | null>(null);
-  const [step,  setStep]      = useState<'form'|'checkEmail'>('form');
+  const [fullName, setFullName]       = useState('');
+  const [nickname, setNickname]       = useState('');
+  const [email, setEmail]             = useState('');
+  const [birthdate, setBirthdate]     = useState('');
+  const [phone, setPhone]             = useState('');
+  const [password, setPassword]       = useState('');
+  const [confirmPwd, setConfirmPwd]   = useState('');
+  const [loading, setLoading]         = useState(false);
+  const [error, setError]             = useState<string | null>(null);
+  const [step, setStep]               = useState<'form'|'checkEmail'>('form');
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,21 +31,23 @@ export default function SignUpPage() {
     }
 
     setLoading(true);
-    // ① Auth 가입 + metadata 저장(나중에 callback 페이지에서 읽음)
+
+    // 절대경로를 환경변수에서 가져오도록 수정
+    const redirectTo = `${process.env.NEXT_PUBLIC_APP_URL}/${locale}/signup/callback`;
+
     const { error: signUpError } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/${locale}/signup/callback`,
+        emailRedirectTo: redirectTo,
         data: { full_name: fullName, user_nickname: nickname, birthdate, phone }
       }
     });
-    setLoading(false);
 
+    setLoading(false);
     if (signUpError) {
       setError(signUpError.message);
     } else {
-      // ② 인증 메일 확인 단계로 이동
       setStep('checkEmail');
     }
   };
