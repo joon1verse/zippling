@@ -12,44 +12,34 @@ export default function SignUpCallbackPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-
-  console.log('📥 location.href:', window.location.href);
-  console.log('📥 location.hash:', window.location.hash);
-  console.log('📥 location.search:', window.location.search);
+    // 디버깅 로그
+    console.log('📥 location.href   =', window.location.href);
+    console.log('📥 location.hash   =', window.location.hash);
+    console.log('📥 location.search =', window.location.search);
 
     (async () => {
-      // 1) URL 해시에서 토큰 파싱
-      const hash = window.location.hash.substring(1); // e.g. "access_token=…&refresh_token=…"
-      const params = new URLSearchParams(hash);
-      const access_token  = params.get('access_token');
-      const refresh_token = params.get('refresh_token');
-
-      if (!access_token || !refresh_token) {
-        setError('No auth tokens in URL');
+      // 1) URL 쿼리에서 code 파싱
+      const params = new URL(window.location.href).searchParams;
+      const code = params.get('code');
+      if (!code) {
+        setError('No confirmation code in URL');
         return;
       }
 
-      // 2) Supabase 클라이언트에 세션 저장
-      const { error: setErr } = await supabase.auth.setSession({
-        access_token,
-        refresh_token
-      });
-      if (setErr) {
-        setError(setErr.message);
+      // 2) code → 세션 교환
+      const { data, error: exchangeErr } = await supabase.auth.exchangeCodeForSession(code);
+      if (exchangeErr) {
+        setError(exchangeErr.message);
+        return;
+      }
+      const session = data.session;
+      if (!session) {
+        setError('Failed to exchange code for session');
         return;
       }
 
-      // 3) getUser()로 실제 유저 정보 획득
-      const {
-        data: { user },
-        error: userErr
-      } = await supabase.auth.getUser();
-      if (userErr || !user) {
-        setError(userErr?.message ?? 'No user after setting session');
-        return;
-      }
-
-      // 4) user_metadata에서 폼 데이터 꺼내기
+      // 3) user_metadata에서 폼 데이터 꺼내기
+      const user = session.user;
       const meta = user.user_metadata as {
         full_name: string;
         user_nickname: string;
@@ -57,7 +47,7 @@ export default function SignUpCallbackPage() {
         phone?: string;
       };
 
-      // 5) user_profiles 테이블에 INSERT
+      // 4) user_profiles 테이블에 INSERT
       const { error: profileErr } = await supabase
         .from('user_profiles')
         .insert({
@@ -73,7 +63,7 @@ export default function SignUpCallbackPage() {
         return;
       }
 
-      // 6) 완료 후 홈으로 리다이렉트
+      // 5) 모두 성공하면 홈으로 리다이렉트
       router.push(`/${locale}`);
     })();
   }, [supabase, router, locale]);
