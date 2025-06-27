@@ -12,6 +12,11 @@ export default function SignUpCallbackPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+
+  console.log('📥 location.href:', window.location.href);
+  console.log('📥 location.hash:', window.location.hash);
+  console.log('📥 location.search:', window.location.search);
+
     (async () => {
       // 1) URL 해시에서 토큰 파싱
       const hash = window.location.hash.substring(1); // e.g. "access_token=…&refresh_token=…"

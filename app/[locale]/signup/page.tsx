@@ -34,7 +34,7 @@ export default function SignUpPage() {
 
     // 절대경로를 환경변수에서 가져오도록 수정
     const redirectTo = `${process.env.NEXT_PUBLIC_APP_URL}/${locale}/signup/callback`;
-
+                                                                                                    console.log('➡️ emailRedirectTo:', redirectTo);
     const { error: signUpError } = await supabase.auth.signUp({
       email,
       password,
