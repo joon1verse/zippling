@@ -8,9 +8,11 @@ import { createBrowserSupabase } from '@server/supabaseBrowserClient';
 import type { User } from '@supabase/supabase-js';
 import type { Database } from '@server/types';
 import { useEffect, useState } from 'react';
+import type { Session } from '@supabase/supabase-js';
 
 interface HeaderTopbarProps {
   locale: string;
+  initialSession: Session | null;
 }
 
 export default function HeaderTopbar({ locale }: HeaderTopbarProps) {
