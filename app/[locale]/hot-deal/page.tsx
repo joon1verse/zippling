@@ -6,7 +6,8 @@ import Image from "next/image";
 import { createBrowserSupabase } from "@server/supabaseBrowserClient";
 import type { Database } from "@server/types";
 import { useTranslations } from "next-intl";
-import { Edit2, Trash2 } from "lucide-react";
+import { Edit2, Trash2, Pencil } from "lucide-react";
+
 
 const NO_THUMB_URL = "/images/no_thumb.png";
 
@@ -75,12 +76,26 @@ export default function HotDealPage() {
 
   return (
     <div className="pt-2 px-2 w-full max-w-screen-lg mx-auto">
-      <div className="flex items-center gap-3 mb-2">
-        <h1 className="text-2xl font-bold tracking-tight">{t("hotDeals")}</h1>
-        <span className="text-2xl">🔥</span>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold tracking-tight">{t("hotDeals")}</h1>
+          <span className="text-2xl">🔥</span>
+        </div>
+        {/* 글쓰기: 텍스트+아이콘, 버튼X */}
+        <div>
+          <span
+            onClick={() => router.push(`/${locale}/hot-deal/write`)}
+            className="
+              flex items-center gap-1 cursor-pointer select-none
+              text-gray-600 font-semibold text-base
+              hover:text-teal-500 hover:underline transition
+              "
+          >
+            <Pencil size={18} className="mb-[1px]" />
+            {t("HotDealwritebutton")}
+          </span>
+        </div>
       </div>
-      <p className="text-sm text-gray-500 mb-4">{t("hotDealsSubtitle")}</p>
-
       {/* 리스트 */}
       <ul className="divide-y divide-gray-200 bg-white rounded-2xl border shadow-sm overflow-hidden">
         {posts.map((p) => (
