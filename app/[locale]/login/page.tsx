@@ -1,47 +1,35 @@
 // app/[locale]/signin/page.tsx
 'use client';
-
 import { useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useSupabaseClient } from '@server/supabaseProvider';
 
 export default function SignInPage() {
-  const t        = useTranslations('signin');
-  const { locale } = useParams() as { locale: string };
-  const router  = useRouter();
-  const supabase= useSupabaseClient();
+  const t         = useTranslations('signin');
+  const { locale }= useParams<{ locale: string }>();
+  const supabase  = useSupabaseClient();
+  const router    = useRouter();
 
-  const [email, setEmail]     = useState('');
+  const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError]     = useState<string|null>(null);
+  const [error, setError]       = useState<string|null>(null);
+  const [loading, setLoading]   = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError(null);
-
-    // 1) 로그인 시도
-    const { data, error: authErr } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    setLoading(true);
+    const { data, error: authErr } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
+    if (authErr) return setError(authErr.message);
 
-    if (authErr) {
-      setError(authErr.message);
-      return;
-    }
-
-    // 2) 이메일 미확인 차단
+    // 이메일 인증 확인
     if (!data.user?.email_confirmed_at) {
       await supabase.auth.signOut();
-      setError(t('mustConfirmEmail'));
-      return;
+      return setError(t('mustConfirmEmail'));
     }
 
-    // 3) 인증된 사용자 → 메인 페이지
     router.push(`/${locale}`);
   };
 

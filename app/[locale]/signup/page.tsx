@@ -1,40 +1,106 @@
 // app/[locale]/signup/page.tsx
 'use client';
-
-import { useState } from 'react';
-import { useParams } from 'next/navigation';
+import React, { useState, useMemo } from 'react';
+import { useParams }       from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useSupabaseClient } from '@server/supabaseProvider';
 
 export default function SignUpPage() {
   const t         = useTranslations('signup');
-  const { locale }= useParams() as { locale: string };
+  const { locale }= useParams<{ locale: string }>();
   const supabase  = useSupabaseClient();
 
-  const [fullName, setFullName]       = useState('');
-  const [nickname, setNickname]       = useState('');
-  const [email, setEmail]             = useState('');
-  const [birthdate, setBirthdate]     = useState('');
-  const [phone, setPhone]             = useState('');
-  const [password, setPassword]       = useState('');
-  const [confirmPwd, setConfirmPwd]   = useState('');
-  const [loading, setLoading]         = useState(false);
-  const [error, setError]             = useState<string|null>(null);
-  const [step, setStep]               = useState<'form'|'checkEmail'>('form');
+  // form state
+  const [email,      setEmail]      = useState('');
+  const [password,   setPassword]   = useState('');
+  const [confirmPwd, setConfirmPwd] = useState('');
+  const [fullName,   setFullName]   = useState('');
+  const [nickname,   setNickname]   = useState('');
+  const [phone,      setPhone]      = useState('');
+  const [birthdate,  setBirthdate]  = useState('');
+
+  // 비밀번호 강도
+  const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
+  const [passwordValid, setPasswordValid] = useState(true);
+
+  // 한글 검증: 자음·모음(ㄱ-ㅎ,ㅏ-ㅣ) 있으면 false
+  const hasJamo = (s: string) => /[ㄱ-ㅎㅏ-ㅣ]/.test(s);
+    const hasBadChar = (s: string) =>
+    /[^\p{L}\p{N}\-_]/u.test(s);
+
+  // 필수 항목 모두 채워졌는지
+  const allRequiredFilled = useMemo(() => {
+    return (
+      email.trim().length > 0 &&
+      password.trim().length > 0 &&
+      confirmPwd.trim().length > 0 &&
+      fullName.trim().length > 0 &&
+      nickname.trim().length > 0
+    );
+  }, [email, password, confirmPwd, fullName, nickname]);
+
+    // 이름 에러 메시지
+  const nameError = useMemo(() => {
+    if (!fullName) return '';
+    if (hasJamo(fullName)) return t('nameHangulError');
+    if (hasBadChar(fullName)) return t('nameSpecialError');
+    return '';
+  }, [fullName]);
+
+  // 닉네임 에러 메시지
+  const nickError = useMemo(() => {
+    if (!nickname) return '';
+    if (hasJamo(nickname)) return t('nickHangulError');
+    if (/^[가-힣]+$/.test(nickname) && nickname.length < 2) return t('nickLenError');
+    if (hasBadChar(nickname)) return t('nickSpecialError');
+    return '';
+  }, [nickname]);
+
+  // 4) 필수 입력 + 비밀번호 검사 + 에러 없음
+    const isFormValid = useMemo(() => {
+    return (
+      email &&
+      password &&
+      confirmPwd &&
+      fullName &&
+      nickname &&
+      phone &&
+      PASSWORD_REGEX.test(password) &&
+      password === confirmPwd &&
+      !nameError &&
+      !nickError
+      
+    );
+  }, [email, password, confirmPwd, fullName, nickname, phone, nameError, nickError]);
+  const confirmPasswordError = useMemo(() => {
+  if (confirmPwd && confirmPwd !== password) {
+    return t('passwordMismatchError');
+  }
+  return '';
+  }, [password, confirmPwd]);
+
+  const [step, setStep]       = useState<'form'|'checkEmail'>('form');
+  const [loading, setLoading] = useState(false);
+  const [error, setError]     = useState<string|null>(null);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    if (password !== confirmPwd) {
-      setError(t('passwordMismatch'));
-      return;
+
+    // 비밀번호 강도·일치 재검증
+    if (!PASSWORD_REGEX.test(password)) {
+      return setError(t('passwordStrength'));
     }
+    if (password !== confirmPwd) {
+      return setError(t('passwordMismatch'));
+    }
+    if (nameError) return setError(nameError);
+    if (nickError) return setError(nickError);
+
     setLoading(true);
 
-    // ✔︎ 이메일 인증 후 callback 페이지로
-    const redirectTo = `${process.env.NEXT_PUBLIC_APP_URL}/${locale}/signup/callback`;
-    console.log('➡️ emailRedirectTo:', redirectTo);
-
+    // (B방식) 서버 검증 API 생략 — 바로 클라이언트 SDK 호출
+    const redirectTo = `${window.location.origin}/${locale}/signup/callback`;
     const { error: signUpError } = await supabase.auth.signUp({
       email,
       password,
@@ -43,12 +109,11 @@ export default function SignUpPage() {
         data: {
           full_name:     fullName,
           user_nickname: nickname,
+          phone,
           birthdate,
-          phone
         }
       }
     });
-    console.log('signUpError ▶', signUpError);
 
     setLoading(false);
     if (signUpError) {
@@ -58,136 +123,132 @@ export default function SignUpPage() {
     }
   };
 
+  // 2단계: 이메일 확인 텍스트
   if (step === 'checkEmail') {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-lg text-gray-700">{t('checkEmail')}</p>
+        <p className="text-center">{t('checkEmail')}</p>
       </div>
     );
   }
 
+  // 1단계: 가입 폼
   return (
     <div className="min-h-screen bg-gray-50 pt-2 flex items-start justify-center">
-      <div className="w-full px-12 flex justify-center">
-        <div className="mt-8 w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden">
-          {/* 헤더 그라데이션 */}
-          <div className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-center py-4">
-            <h1 className="text-2xl font-bold">{t('title')}</h1>
-          </div>
-
-          {/* 폼 */}
-          <div className="px-8 py-4 space-y-4">
-            {error && (
-              <div className="bg-red-100 text-red-800 px-4 py-2 rounded-lg">
-                {error}
-              </div>
-            )}
-            <form onSubmit={handleSignUp} className="space-y-4">
-              {/* Full Name */}
-              <div>
-                <label className="block text-gray-700 mb-1 font-medium">
-                  {t('fullName')} <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={fullName}
-                  onChange={e => setFullName(e.target.value)}
-                  required
-                  className="w-full pl-4 pr-14 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-300 transition"
-                />
-              </div>
-
-              {/* Nickname */}
-              <div>
-                <label className="block text-gray-700 mb-1 font-medium">
-                  {t('nickname')} <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={nickname}
-                  onChange={e => setNickname(e.target.value)}
-                  required
-                  className="w-full pl-4 pr-14 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-300 transition"
-                />
-              </div>
-
-              {/* Email */}
-              <div>
-                <label className="block text-gray-700 mb-1 font-medium">
-                  {t('email')} <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  required
-                  className="w-full pl-4 pr-14 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-300 transition"
-                />
-              </div>
-
-              {/* Birthdate */}
-              <div>
-                <label className="block text-gray-700 mb-1 font-medium">
-                  {t('birthdate')}
-                </label>
-                <input
-                  type="date"
-                  value={birthdate}
-                  onChange={e => setBirthdate(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-300 transition"
-                />
-              </div>
-
-              {/* Phone */}
-              <div>
-                <label className="block text-gray-700 mb-1 font-medium">
-                  {t('phone')}
-                </label>
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={e => setPhone(e.target.value)}
-                  className="w-full pl-4 pr-14 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-300 transition"
-                />
-              </div>
-
-              {/* Password */}
-              <div>
-                <label className="block text-gray-700 mb-1 font-medium">
-                  {t('password')} <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  required
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-teal-300"
-                />
-              </div>
-              {/* Confirm Password */}
-              <div>
-                <label className="block text-gray-700 mb-1 font-medium">
-                  {t('confirmPassword')} <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="password"
-                  value={confirmPwd}
-                  onChange={e => setConfirmPwd(e.target.value)}
-                  required
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-teal-300"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg mt-6 mb-3"
-              >
-                {loading ? t('signingUp') : t('signupButton')}
-              </button>
-            </form>
-          </div>
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden">
+        <div className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-center py-4">
+          <h1 className="text-2xl font-bold">{t('title')}</h1>
         </div>
+        <form onSubmit={handleSignUp} className="p-8 space-y-4">
+          {error && <div className="bg-red-100 text-red-800 p-2 rounded">{error}</div>}
+
+          {/* Email ★ */}
+          <label className="block">
+            <span className="font-medium">{t('email')} <span className="text-red-500">*</span></span>
+            <input
+              type="email"
+              className="mt-1 w-full p-2 border rounded"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+          </label>
+
+          {/* Password ★ */}
+          <label className="block">
+            <span className="font-medium">{t('password')} <span className="text-red-500">*</span></span>
+            <input
+              type="password"
+              className="mt-1 w-full p-2 border rounded"
+              value={password}
+              onChange={e => {
+                setPassword(e.target.value);
+                setPasswordValid(PASSWORD_REGEX.test(e.target.value));
+              }}
+            />
+            {!passwordValid && <p className="text-sm text-red-600">{t('passwordStrength')}</p>}
+          </label>
+
+          {/* Confirm Password ★ */}
+          <label className="block">
+            <span className="font-medium">{t('confirmPassword')} <span className="text-red-500">*</span></span>
+            <input
+              type="password"
+              className="mt-1 w-full p-2 border rounded"
+              value={confirmPwd}
+              onChange={e => setConfirmPwd(e.target.value)}
+            />
+            {confirmPasswordError && (
+              <p className="text-sm text-red-600">{confirmPasswordError}</p>
+            )}
+          </label>
+
+          {/* Full Name ★ */}
+      <label className="block">
+        <span className="font-medium">
+          {t('fullName')} <span className="text-red-500">*</span>
+        </span>
+        <input
+          type="text"
+          value={fullName}
+          onChange={e => setFullName(e.target.value)}  // ← sanitize 제거
+          required
+          className="mt-1 w-full p-2 border rounded"
+        />
+        {nameError && (
+          <p className="text-sm text-red-600">{nameError}</p>
+        )}
+      </label>
+
+      {/* Nickname ★ */}
+      <label className="block">
+        <span className="font-medium">
+          {t('nickname')} <span className="text-red-500">*</span>
+        </span>
+        <input
+          type="text"
+          value={nickname}
+          onChange={e => setNickname(e.target.value)}  // ← sanitize 제거
+          required
+          className="mt-1 w-full p-2 border rounded"
+        />
+        {nickError && (
+          <p className="text-sm text-red-600">{nickError}</p>
+        )}
+      </label>
+
+      {/* Phone Number ★ */}
+      <label className="block">
+        <span className="font-medium">{t('phone')} <span className="text-red-500">*</span></span>
+        <input
+          type="tel"
+          value={phone}
+          onChange={e => setPhone(e.target.value.replace(/\D/g, ''))}
+          required
+          className="mt-1 w-full p-2 border rounded"
+        />
+      </label>
+
+          {/* Birthdate */}
+          <label className="block">
+            <span className="text-gray-700">{t('birthdate')}</span>
+            <input
+              type="date"
+              className="mt-1 w-full p-2 border rounded"
+              value={birthdate}
+              onChange={e => setBirthdate(e.target.value)}
+            />
+          </label>
+
+          <button
+            type="submit"
+            disabled={!isFormValid || loading}
+            className={`w-full p-3 text-white font-semibold rounded ${isFormValid
+              ? 'bg-teal-600 hover:bg-teal-700'
+              : 'bg-gray-300 cursor-not-allowed'}`}
+          >
+            {loading ? t('signingUp') : t('signupButton')}
+          </button>
+        </form>
       </div>
     </div>
   );

@@ -33,23 +33,26 @@
    "loggingIn": "로그인 중…",
    "error": "오류: {message}"
  },
-
+ 
    "signup": {
-    "title": "Sign Up",
-    "fullName": "Full Name",
-    "nickname": "Nickname",
-    "email": "Email",
-    "birthdate": "Birthdate (optional)",
-    "phone": "Phone Number (optional)",
-    "password": "Password",
-    "confirmPassword": "Confirm Password",
-    "requiredFieldsNote": "* indicates required",
-    "signupButton": "Sign Up",
-    "signingUp": "Signing Up...",
-    "passwordMismatch": "Passwords do not match.",
-    "successMessage": "Welcome! You’re now signed up.",
-    "checkEmail": "Check your email for verification link",
-    "error": "Error: {message}"
+      "title": "Sign Up",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "passwordMismatch": "Passwords do not match",
+      "passwordStrength": "Password must be at least 8 characters and include uppercase, lowercase, a number, and a special character.",
+      "fullName": "Full Name",
+      "nickname": "Nickname",
+      "phone": "Phone Number",
+      "birthdate": "Birthdate",
+      "signupButton": "Sign Up",
+      "signingUp": "Signing Up…",
+      "checkEmail": "Please check your email and click the link to complete registration.",
+      "nameSpecialError": "Name can include letters, numbers, '-' and '_ ‘ only.",
+      "nickSpecialError": "Nickname can include letters, numbers, '-' and '_ ‘ only.",
+      "nameHangulError": "Only complete Hangul syllables are allowed in your name.",
+      "nickHangulError": "Only complete Hangul syllables are allowed in your nickname.",
+      "passwordMismatchError": "Passwords do not match."
   },
 
   "roomListTitle": "밴쿠버 방 매물 목록",

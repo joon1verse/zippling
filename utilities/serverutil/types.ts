@@ -32,6 +32,21 @@ export interface Database {
         Insert: Partial<Omit<Database["public"]["Tables"]["hot_deal_posts"]["Row"], "id" | "created_at">>;
         Update: Partial<Database["public"]["Tables"]["hot_deal_posts"]["Row"]>;
       };
+      "user_profiles": {
+        Row: {
+          id: any;
+          full_name: any;
+          user_nickname: any;
+          email: any;
+          birthdate: string | null;
+          phone: any | null;
+          created_at: string | null;
+        };
+            Insert: Partial<
+                            Omit<Database["public"]["Tables"]["user_profiles"]["Row"], "created_at">
+                           >;
+        Update: Partial<Database["public"]["Tables"]["user_profiles"]["Row"]>;
+      };
     };
     Views: {};
     Functions: {};
