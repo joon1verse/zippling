@@ -9,7 +9,7 @@ export default function SignUpCallbackPage() {
   const supabase = useSupabaseClient();
   const router   = useRouter();
   const { locale } = useParams() as { locale: string };
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string|null>(null);
 
   useEffect(() => {
     // 디버깅 로그
@@ -18,7 +18,7 @@ export default function SignUpCallbackPage() {
     console.log('📥 location.search =', window.location.search);
 
     (async () => {
-      // 1) URL 쿼리에서 code 파싱
+      // 1️⃣ URL에서 code 파싱
       const params = new URL(window.location.href).searchParams;
       const code = params.get('code');
       if (!code) {
@@ -26,7 +26,7 @@ export default function SignUpCallbackPage() {
         return;
       }
 
-      // 2) code → 세션 교환
+      // 2️⃣ code → 세션 교환 (code_verifier는 SDK가 자동으로 가져옵니다)
       const { data, error: exchangeErr } = await supabase.auth.exchangeCodeForSession(code);
       if (exchangeErr) {
         setError(exchangeErr.message);
@@ -38,7 +38,7 @@ export default function SignUpCallbackPage() {
         return;
       }
 
-      // 3) user_metadata에서 폼 데이터 꺼내기
+      // 3️⃣ user_metadata에서 폼 데이터 꺼내 INSERT
       const user = session.user;
       const meta = user.user_metadata as {
         full_name: string;
@@ -47,7 +47,6 @@ export default function SignUpCallbackPage() {
         phone?: string;
       };
 
-      // 4) user_profiles 테이블에 INSERT
       const { error: profileErr } = await supabase
         .from('user_profiles')
         .insert({
@@ -63,7 +62,7 @@ export default function SignUpCallbackPage() {
         return;
       }
 
-      // 5) 모두 성공하면 홈으로 리다이렉트
+      // 4️⃣ 성공 시 홈으로 이동
       router.push(`/${locale}`);
     })();
   }, [supabase, router, locale]);
