@@ -1,4 +1,3 @@
-// app/[locale]/signup/callback/page.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -12,40 +11,49 @@ export default function SignUpCallbackPage() {
   const [error, setError] = useState<string|null>(null);
 
   useEffect(() => {
-    // 디버깅 로그
-    console.log('📥 location.href   =', window.location.href);
-    console.log('📥 location.hash   =', window.location.hash);
-    console.log('📥 location.search =', window.location.search);
-
     (async () => {
-      // 1️⃣ URL에서 code 파싱
-      const params = new URL(window.location.href).searchParams;
-      const code = params.get('code');
-      if (!code) {
-        setError('No confirmation code in URL');
+      // 1) 해시 파싱
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      const access_token  = params.get('access_token');
+      const refresh_token = params.get('refresh_token');
+      if (!access_token || !refresh_token) {
+        setError('No auth tokens in URL');
         return;
       }
 
-      // 2️⃣ code → 세션 교환 (code_verifier는 SDK가 자동으로 가져옵니다)
-      const { data, error: exchangeErr } = await supabase.auth.exchangeCodeForSession(code);
-      if (exchangeErr) {
-        setError(exchangeErr.message);
-        return;
-      }
-      const session = data.session;
-      if (!session) {
-        setError('Failed to exchange code for session');
+      // 2) 세션 저장
+      const { error: sessErr } = await supabase.auth.setSession({
+        access_token,
+        refresh_token
+      });
+      if (sessErr) {
+        setError(sessErr.message);
         return;
       }
 
-      // 3️⃣ user_metadata에서 폼 데이터 꺼내 INSERT
-      const user = session.user;
-      const meta = user.user_metadata as {
+      // 3) 메타데이터 꺼내기
+      const raw = window.localStorage.getItem('pending_user_metadata');
+      if (!raw) {
+        setError('No user metadata found');
+        return;
+      }
+      const meta = JSON.parse(raw) as {
         full_name: string;
         user_nickname: string;
         birthdate?: string;
         phone?: string;
       };
+
+      // 4) 프로필 INSERT
+      const {
+        data: { user },
+        error: userErr
+      } = await supabase.auth.getUser();
+      if (userErr || !user) {
+        setError(userErr?.message ?? 'No user after login');
+        return;
+      }
 
       const { error: profileErr } = await supabase
         .from('user_profiles')
@@ -62,7 +70,8 @@ export default function SignUpCallbackPage() {
         return;
       }
 
-      // 4️⃣ 성공 시 홈으로 이동
+      // 5) 로컬스토리지 정리 & 홈으로
+      window.localStorage.removeItem('pending_user_metadata');
       router.push(`/${locale}`);
     })();
   }, [supabase, router, locale]);
