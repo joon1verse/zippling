@@ -7,32 +7,42 @@ import { useTranslations } from 'next-intl';
 import { useSupabaseClient } from '@server/supabaseProvider';
 
 export default function SignInPage() {
-  const t = useTranslations('signin');
+  const t        = useTranslations('signin');
   const { locale } = useParams() as { locale: string };
-  const router = useRouter();
-  const supabase = useSupabaseClient();
+  const router  = useRouter();
+  const supabase= useSupabaseClient();
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail]     = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError]     = useState<string|null>(null);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
-    const { error: authError } = await supabase.auth.signInWithPassword({
+    // 1) 로그인 시도
+    const { data, error: authErr } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
     setLoading(false);
 
-    if (authError) {
-      setError(authError.message);
-    } else {
-      router.push(`/${locale}`);
+    if (authErr) {
+      setError(authErr.message);
+      return;
     }
+
+    // 2) 이메일 미확인 차단
+    if (!data.user?.email_confirmed_at) {
+      await supabase.auth.signOut();
+      setError(t('mustConfirmEmail'));
+      return;
+    }
+
+    // 3) 인증된 사용자 → 메인 페이지
+    router.push(`/${locale}`);
   };
 
   return (
@@ -44,13 +54,13 @@ export default function SignInPage() {
             <h1 className="text-2xl font-bold">{t('title')}</h1>
           </div>
 
+          {/* 폼 */}
           <div className="px-8 py-4 space-y-4">
             {error && (
-              <div className="bg-red-100 text-red-800 px-4 py-2 rounded-lg text-base">
-                {t('error', { message: error })}
+              <div className="bg-red-100 text-red-800 px-4 py-2 rounded-lg">
+                {error}
               </div>
             )}
-
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
                 <label className="block text-gray-700 mb-1 font-medium text-base">
@@ -93,12 +103,7 @@ export default function SignInPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="
-                  w-full py-3 bg-teal-600 hover:bg-teal-700 !mt-6 !mb-3
-                  text-white text-lg font-semibold
-                  rounded-lg transition
-                  disabled:opacity-50
-                "
+                className="w-full py-3 bg-teal-600 hover:bg-teal-700 mt-6 mb-3 text-white font-semibold rounded-lg"
               >
                 {loading ? t('loggingIn') : t('loginButton')}
               </button>

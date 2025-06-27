@@ -1,87 +1,56 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import { useSupabaseClient } from '@server/supabaseProvider';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { useParams, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function SignUpCallbackPage() {
-  const supabase = useSupabaseClient();
-  const router   = useRouter();
+  const t = useTranslations('signup');
   const { locale } = useParams() as { locale: string };
-  const [error, setError] = useState<string|null>(null);
+  const searchParams = useSearchParams();
+  
+  const [status, setStatus] = useState<'loading'|'success'|'error'>('loading');
+  const [message, setMessage] = useState<string>('');
 
   useEffect(() => {
-    (async () => {
-      // 1) 해시 파싱
-      const hash = window.location.hash.substring(1);
-      const params = new URLSearchParams(hash);
-      const access_token  = params.get('access_token');
-      const refresh_token = params.get('refresh_token');
-      if (!access_token || !refresh_token) {
-        setError('No auth tokens in URL');
-        return;
-      }
-
-      // 2) 세션 저장
-      const { error: sessErr } = await supabase.auth.setSession({
-        access_token,
-        refresh_token
-      });
-      if (sessErr) {
-        setError(sessErr.message);
-        return;
-      }
-
-      // 3) 메타데이터 꺼내기
-      const raw = window.localStorage.getItem('pending_user_metadata');
-      if (!raw) {
-        setError('No user metadata found');
-        return;
-      }
-      const meta = JSON.parse(raw) as {
-        full_name: string;
-        user_nickname: string;
-        birthdate?: string;
-        phone?: string;
-      };
-
-      // 4) 프로필 INSERT
-      const {
-        data: { user },
-        error: userErr
-      } = await supabase.auth.getUser();
-      if (userErr || !user) {
-        setError(userErr?.message ?? 'No user after login');
-        return;
-      }
-
-      const { error: profileErr } = await supabase
-        .from('user_profiles')
-        .insert({
-          id:            user.id,
-          full_name:     meta.full_name,
-          user_nickname: meta.user_nickname,
-          email:         user.email!,
-          birthdate:     meta.birthdate ?? null,
-          phone:         meta.phone     ?? null
-        });
-      if (profileErr) {
-        setError(profileErr.message);
-        return;
-      }
-
-      // 5) 로컬스토리지 정리 & 홈으로
-      window.localStorage.removeItem('pending_user_metadata');
-      router.push(`/${locale}`);
-    })();
-  }, [supabase, router, locale]);
+    // URL에 에러 파라미터가 있으면 error, 없으면 성공으로 간주
+    const err = searchParams.get('error');
+    if (err) {
+      setStatus('error');
+      setMessage(err);
+    } else {
+      setStatus('success');
+      setMessage(t('confirmationSuccess'));
+    }
+  }, [searchParams, t]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      {error
-        ? <p className="text-red-600">{error}</p>
-        : <p className="text-gray-700">Processing…</p>
-      }
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50">
+      {status === 'loading' && (
+        <p className="text-gray-700">{t('processing')}</p>
+      )}
+      {status === 'success' && (
+        <p className="text-green-600 text-lg">{message}</p>
+      )}
+      {status === 'error' && (
+        <p className="text-red-600 text-lg">{message}</p>
+      )}
+
+      <div className="mt-8 flex space-x-4">
+        <Link
+          href={`/${locale}/login`}
+          className="px-6 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition"
+        >
+          {t('goToLogin')}
+        </Link>
+        <Link
+          href={`/${locale}`}
+          className="px-6 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition"
+        >
+          {t('goHome')}
+        </Link>
+      </div>
     </div>
   );
 }

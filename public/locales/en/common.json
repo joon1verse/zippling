@@ -49,6 +49,10 @@
     "passwordMismatch": "Passwords do not match.",
     "successMessage": "Welcome! You’re now signed up.",
     "checkEmail": "Check your email for verification link",
+    "processing": "Processing your confirmation…",
+    "confirmationSuccess": "Your email has been successfully confirmed!",
+    "goToLogin": "Go to Login",
+    "goHome": "Go to Home",
     "error": "Error: {message}"
   },
 
