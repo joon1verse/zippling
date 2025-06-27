@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Image from 'next/image'; // 이미지 사용을 위해 추가
 
 interface HeaderProps {
   locale: string;
@@ -11,7 +12,7 @@ interface HeaderProps {
 export default function Header({ locale }: HeaderProps) {
   return (
     <header className="relative z-20 bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-md">
-      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="container mx-auto px-6 py-1 flex items-center justify-between">
         <Logo locale={locale} />
         <LanguageDropdown currentLocale={locale} />
       </div>
@@ -23,9 +24,14 @@ function Logo({ locale }: { locale: string }) {
   return (
     <Link href={`/${locale}`}>
       <div className="flex items-center gap-2 cursor-pointer">
-        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M10 2L2 8h3v8h10V8h3L10 2z" />
-        </svg>
+        {/* 기존 SVG 제거하고 이미지로 교체 */}
+        <Image
+          src="/images/zippling_logo_white.png"
+          alt="Zippling Logo"
+          width={64}  // 기존 SVG w-8 = 32px
+          height={64}
+          priority
+        />
         <span className="text-2xl font-extrabold">Zippling</span>
       </div>
     </Link>

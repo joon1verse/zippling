@@ -15,3 +15,17 @@ body {
   font-family: 'Nunito', sans-serif;
   /* 여기서 배경 색 등을 지정해도 됨 */
 }
+
+/* ① article 내부 img 에만 반응형 적용 */
+article img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto; /* 가운데 정렬, 간격 조정 */
+}
+
+/* ② 페이지 전역 모든 img 에 적용하고 싶다면 아래처럼 img 셀렉터만 사용 */
+img {
+  max-width: 100%;
+  height: auto;
+}

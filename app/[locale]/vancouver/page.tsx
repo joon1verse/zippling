@@ -54,8 +54,8 @@ export default function VancouverHubPage() {
             cursor-pointer
             md:col-start-1 md:row-start-2
             p-1 rounded-2xl
-            bg-gradient-to-br from-orange-400 to-orange-500
-            hover:from-orange-500 hover:to-orange-600
+            bg-gradient-to-br from-orange-500 to-orange-600
+            hover:from-orange-600 hover:to-orange-700
             hover:shadow-lg
             transition-all duration-200
             min-h-[160px] md:min-h-[200px]
@@ -65,11 +65,11 @@ export default function VancouverHubPage() {
             relative h-full flex flex-col justify-center items-center
             bg-white rounded-xl p-4 md:p-6
           ">
-            <Flame className="w-6 h-6 md:w-8 md:h-8 mb-2 text-orange-500" />
-            <span className="text-base md:text-lg font-semibold text-orange-500 mb-1">
+            <Flame className="w-6 h-6 md:w-8 md:h-8 mb-2 text-orange-600" />
+            <span className="text-base md:text-lg font-semibold text-orange-600 mb-1">
               {t('main_van_hot_deal')}
             </span>
-            <span className="text-xs md:text-sm text-orange-500/90 text-center">
+            <span className="text-xs md:text-sm text-gray-600 text-center">
               {t('main_van_hot_deal_desc')}
             </span>
           </div>
