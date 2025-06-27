@@ -64,7 +64,6 @@ export default function SignUpPage() {
       confirmPwd &&
       fullName &&
       nickname &&
-      phone &&
       PASSWORD_REGEX.test(password) &&
       password === confirmPwd &&
       !nameError &&
@@ -124,13 +123,25 @@ export default function SignUpPage() {
   };
 
   // 2단계: 이메일 확인 텍스트
-  if (step === 'checkEmail') {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-center">{t('checkEmail')}</p>
+if (step === 'checkEmail') {
+  return (
+    <div className="pt-12 px-4 flex justify-center">
+      <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
+        <h1 className="text-2xl sm:text-3xl font-bold text-teal-600 mb-4">
+          🎉 {t('welcomeTitle')}
+        </h1>
+        <p className="text-gray-700 mb-6 leading-relaxed">
+          {t('checkEmail')}
+        </p>
+        <div className="text-sm text-gray-500">
+          {t('didntGetMail')}<br />
+          <span className="font-semibold">{t('checkSpam')}</span>
+        </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
+
 
   // 1단계: 가입 폼
   return (
@@ -218,7 +229,7 @@ export default function SignUpPage() {
 
       {/* Phone Number ★ */}
       <label className="block">
-        <span className="font-medium">{t('phone')} <span className="text-red-500">*</span></span>
+        <span className="font-medium">{t('phone')}</span>
         <input
           type="tel"
           value={phone}
@@ -239,6 +250,11 @@ export default function SignUpPage() {
             />
           </label>
 
+          {/* 🔸 필수 입력 안내 */}
+          <p className="text-sm text-gray-500 mt-2">
+            {t('requiredFieldsNote')}
+          </p>
+
           <button
             type="submit"
             disabled={!isFormValid || loading}
@@ -248,6 +264,8 @@ export default function SignUpPage() {
           >
             {loading ? t('signingUp') : t('signupButton')}
           </button>
+
+
         </form>
       </div>
     </div>

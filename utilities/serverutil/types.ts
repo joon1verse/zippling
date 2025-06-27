@@ -28,6 +28,8 @@ export interface Database {
           created_at: string;
           user_id: any;
           user_nickname: any;
+          price: number | null;
+          currency_type: any;
         };
         Insert: Partial<Omit<Database["public"]["Tables"]["hot_deal_posts"]["Row"], "id" | "created_at">>;
         Update: Partial<Database["public"]["Tables"]["hot_deal_posts"]["Row"]>;
@@ -42,9 +44,7 @@ export interface Database {
           phone: any | null;
           created_at: string | null;
         };
-            Insert: Partial<
-                            Omit<Database["public"]["Tables"]["user_profiles"]["Row"], "created_at">
-                           >;
+        Insert: Partial<Omit<Database["public"]["Tables"]["user_profiles"]["Row"], "id" | "created_at">>;
         Update: Partial<Database["public"]["Tables"]["user_profiles"]["Row"]>;
       };
     };

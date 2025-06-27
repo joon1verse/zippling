@@ -16,7 +16,9 @@
    "contact": "Contact Us",
     "login": "Log in",
    "logout": "Log out",
-   "signup": "Sign Up"
+   "signup": "Sign Up",
+    "hi": "Hi",
+    "welcome_suffix": "!"
   },
   
   "site": {
@@ -47,12 +49,23 @@
       "birthdate": "Birthdate",
       "signupButton": "Sign Up",
       "signingUp": "Signing Up…",
+      "welcomeTitle": "Welcome to Zippling!",
       "checkEmail": "Please check your email and click the link to complete registration.",
+      "didntGetMail": "Didn't receive the email?",
+      "checkSpam": "Be sure to check your spam folder.",
+      "requiredFieldsNote": "* indicates a required field.",
       "nameSpecialError": "Name can include letters, numbers, '-' and '_ ‘ only.",
       "nickSpecialError": "Nickname can include letters, numbers, '-' and '_ ‘ only.",
       "nameHangulError": "Only complete Hangul syllables are allowed in your name.",
       "nickHangulError": "Only complete Hangul syllables are allowed in your nickname.",
-      "passwordMismatchError": "Passwords do not match."
+      "passwordMismatchError": "Passwords do not match.",
+          "callback": {
+            "loading":      "Finalizing your registration…",
+            "noSession":    "Could not find your session. Please try logging in.",
+            "title":        "🎉 Verification Successful!",
+            "description":  "Your email has been verified successfully. We will redirect you to the homepage shortly.",
+            "redirecting":  "Redirecting to the homepage in 5 seconds…"
+      }
   },
 
   "roomListTitle": "バンクーバーの部屋リスト",

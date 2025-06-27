@@ -1,8 +1,7 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/[locale]/signup/page": "app/[locale]/signup/page.js",
+  "/[locale]/hot-deal/page": "app/[locale]/hot-deal/page.js",
+  "/[locale]/hot-deal/[id]/page": "app/[locale]/hot-deal/[id]/page.js",
+  "/[locale]/hot-deal/write/page": "app/[locale]/hot-deal/write/page.js",
   "/[locale]/page": "app/[locale]/page.js",
-  "/[locale]/login/page": "app/[locale]/login/page.js",
-  "/[locale]/vancouver/page": "app/[locale]/vancouver/page.js",
-  "/[locale]/hot-deal/page": "app/[locale]/hot-deal/page.js"
+  "/[locale]/vancouver/page": "app/[locale]/vancouver/page.js"
 }

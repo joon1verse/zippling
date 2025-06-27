@@ -11,8 +11,8 @@ import { Edit2, Trash2 } from "lucide-react";
 const NO_THUMB_URL = "/images/no_thumb.png";
 
 type HotDealPost = Pick<
-  Database["public"]["Tables"]["hot_deal_posts"]["Row"],
-  "id" | "title" | "content" | "thumbnail_url" | "created_at" | "user_nickname"
+  Database['public']['Tables']['hot_deal_posts']['Row'],
+  'id' | 'title' | 'price' | 'currency_type' | 'thumbnail_url' | 'created_at' | 'user_nickname'
 >;
 
 export default function HotDealPage() {
@@ -27,9 +27,9 @@ export default function HotDealPage() {
   // 게시글 목록 조회
   const fetchPosts = async () => {
     const { data, error } = await supabase
-      .from("hot_deal_posts")
-      .select("id, title, content, thumbnail_url, created_at, user_nickname")
-      .order("created_at", { ascending: false });
+    .from('hot_deal_posts')
+    .select('id, title, price, currency_type, thumbnail_url, created_at, user_nickname')
+    .order('created_at', { ascending: false });
     if (!error && data) setPosts(data);
     setLoading(false);
   };
@@ -84,10 +84,12 @@ export default function HotDealPage() {
       {/* 리스트 */}
       <ul className="divide-y divide-gray-200 bg-white rounded-2xl border shadow-sm overflow-hidden">
         {posts.map((p) => (
-          <li
-            key={p.id}
-            className="flex items-center px-3 py-2 gap-4 hover:bg-gray-50 transition group"
-          >
+          <li key={p.id} className="group ...">
+            <div
+              onClick={() => router.push(`/${locale}/hot-deal/${p.id}`)}
+              className="flex w-full cursor-pointer items-center px-3 py-2 gap-4 hover:bg-gray-50 transition"
+            >
+
             {/* 썸네일 */}
             <div className="flex-shrink-0 w-16 h-16 bg-gray-100 border rounded-lg overflow-hidden flex items-center justify-center">
               <Image
@@ -104,28 +106,12 @@ export default function HotDealPage() {
               <div className="flex items-center gap-2">
                 <span className="font-semibold truncate text-sm group-hover:underline">{p.title}</span>
               </div>
-              <p className="text-sm text-gray-600 truncate">{p.content}</p>
+              <span className="text-sm text-gray-600 font-medium">{p.currency_type} {p.price}</span>
               <div className="flex gap-4 text-xs text-gray-400 mt-0.5">
                 <time>{formatDate(p.created_at)}</time>
                 <span className="ml-2">by {p.user_nickname || t("anonymous")}</span>
               </div>
             </div>
-            {/* 버튼 */}
-            <div className="flex flex-col items-end gap-1">
-              <button
-                aria-label="Edit"
-                onClick={() => router.push(`/${locale}/hot-deal/write?id=${p.id}`)}
-                className="text-teal-600 hover:text-teal-700 p-1"
-              >
-                <Edit2 size={18} />
-              </button>
-              <button
-                aria-label="Delete"
-                onClick={() => handleDelete(p.id)}
-                className="text-red-500 hover:text-red-700 p-1"
-              >
-                <Trash2 size={18} />
-              </button>
             </div>
           </li>
         ))}
