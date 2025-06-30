@@ -20,7 +20,7 @@ export default function HeaderTopbar({ locale, initialSession }: HeaderTopbarPro
 
   const [user, setUser] = useState<User | null>(initialSession?.user ?? null);
   const [nickname, setNickname] = useState<string | null>(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // 모바일 메뉴 상태
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     setUser(initialSession?.user ?? null);
@@ -29,6 +29,7 @@ export default function HeaderTopbar({ locale, initialSession }: HeaderTopbarPro
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
+      // 로그인/로그아웃 시 router.refresh()는 여전히 유용하므로 유지합니다.
       if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
         router.refresh();
       }
@@ -57,9 +58,17 @@ export default function HeaderTopbar({ locale, initialSession }: HeaderTopbarPro
     })();
   }, [supabase, user]);
 
+  // --- ▼▼▼ 여기가 수정된 부분입니다 ▼▼▼ ---
   const handleLogout = async () => {
     await supabase.auth.signOut();
+    
+    // 로그아웃 후, 홈페이지로 강제 이동시킵니다.
+    // 이 방식은 router.refresh()보다 더 확실하게 페이지 전체를
+    // 새로운 (로그아웃된) 상태로 그리도록 보장합니다.
+    // 특히 모바일 브라우저의 캐시 문제를 해결하는 데 효과적입니다.
+    router.push(`/${locale}`);
   };
+  // --- ▲▲▲ ---
 
   const isLoggedIn = !!user;
 
@@ -96,7 +105,6 @@ export default function HeaderTopbar({ locale, initialSession }: HeaderTopbarPro
       <div className="flex gap-2 items-center">
         {isLoggedIn ? (
             <>
-              {/* --- ▼▼▼ hidden sm:inline 클래스를 삭제하여 항상 보이도록 수정했습니다 ▼▼▼ --- */}
               <span className="text-sm px-1">
                 {t('hi')}, <b className="font-bold">{nickname ?? user.email?.split('@')[0]}</b> {t('welcome_suffix')}
               </span>
