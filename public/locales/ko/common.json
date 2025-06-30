@@ -9,8 +9,64 @@
   "torontoComing": "토론토 (준비중)",
 
   "whyZipplingTitle": "Zippling이 만들어진 이유?",
-  "whyZipplingDescription": "Zippling은 밴쿠버에서 집을 구하며 직접 겪은 시행착오에서 시작됐습니다.\n개발자이자 외국인으로서 저 역시 새로운 문화의 낯선 주거 시스템에 어려움을 겪었습니다.\n\n서로의 생활방식과 소통 방식이 다르면, 정보의 장벽이 자연스럽게 생깁니다.\nZippling은 이 장벽을 허물고 모두가 더 좋은 선택을 할 수 있도록 돕고자 시작되었습니다.",
+  "whyZipplingDescription": "Zippling was created based on real experiences of struggling to find housing in Vancouver.\nAs a developer and as a foreigner myself, I — along with many others — faced difficulties navigating unfamiliar housing systems in a new culture.\n\nWhen people don't understand each other's norms or ways of communication, a barrier of information naturally arises.\nZippling was born to break down that barrier and help others make better choices with confidence.",
   
+  "about": {
+      "meta": {
+        "title": "About Zippling - Your Partner for New Beginnings"
+      },
+      "hero": {
+        "headline": "Zippling: Beyond Complex Housing Searches, Easy Connections for a New Start",
+        "subheadline": "Find the perfect home for you, anywhere in the world."
+      },
+      "memoriesTitle": "My Canada Memories",
+      "imageAlt1": "Canada Landscape Image 1",
+      "imageAlt2": "Canada Landscape Image 2",
+      "imageAlt3": "Canada Landscape Image 3",
+      "imageAlt4": "Canada Landscape Image 4",
+      "imageAlt5": "Canada Landscape Image 5"
+    },
+    "story": {
+      "title": "Our Story: Why Was Zippling Created?",
+      "paragraph1": "The challenges of finding accommodation when settling in a new city, as a developer and a foreigner myself, became the starting point for Zippling. Unfamiliar housing systems and information imbalances were common problems many people faced.",
+      "paragraph2": "Based on these experiences, we aimed to help users no longer wander in uncertainty. Our goal was to gather reliable accommodation information from various trusted platforms into one place, providing a transparent and easy search experience.",
+      "paragraph3": "Zippling is more than just a housing search tool; it's a solution that breaks down information barriers and empowers everyone to make better choices with confidence. We are here to help your new city life begin smoothly.",
+      "imageAlt": "People socializing and cozy living spaces"
+    },
+    "mission": {
+      "title": "Our Mission",
+      "paragraph": "To provide the best connection experience, enabling everyone, anywhere in the world, to easily and safely find their perfect accommodation."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "point1": "Building an accessible global accommodation information hub for everyone",
+      "point2": "Providing personalized information and tailored search experiences",
+      "point3": "Fostering a community based on trust and transparency"
+    },
+    "values": {
+      "title": "Our Core Values",
+      "value1": {
+        "icon": "✨",
+        "title": "User-Centric",
+        "description": "Every decision prioritizes user convenience and satisfaction."
+      },
+      "value2": {
+        "icon": "🛡️",
+        "title": "Transparency & Trust",
+        "description": "Providing accurate and reliable information to instill confidence in users."
+      },
+      "value3": {
+        "icon": "🚀",
+        "title": "Continuous Innovation",
+        "description": "Constantly learning and evolving for a better accommodation search experience."
+      }
+    },
+    "cta": {
+      "headline": "Find Your Next Home Today!",
+      "subheadline": "Prepare for your new beginning easily and conveniently with Zippling.",
+      "buttonText": "Find Accommodation"
+    },
+    
   "header": {
    "about": "About Us",
    "contact": "Contact Us",
