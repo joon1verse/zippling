@@ -30,7 +30,7 @@ export default function SignUpPage() {
 
   // 한글 검증
   const hasJamo = (s: string) => /[ㄱ-ㅎㅏ-ㅣ]/.test(s);
-  const hasBadChar = (s: string) => /[^\p{L}\p{N}\-_]/u.test(s);
+  const hasBadChar = (s: string) => /[^\p{L}\p{N}\-_ ]/u.test(s);
 
   // 이름 에러 메시지
   const nameError = useMemo(() => {
@@ -177,10 +177,10 @@ export default function SignUpPage() {
           {/* Email ★ (버튼 방식으로 수정) */}
           <label className="block">
             <span className="font-medium">{t('email')} <span className="text-red-500">*</span></span>
-            <div className="flex items-center mt-1">
+            <div className="flex items-center mt-1 gap-x-2"> {/* 1. gap-x-2 추가로 간격 생성 */}
               <input
                 type="email"
-                className="flex-grow w-full p-2 border border-r-0 rounded-l-md"
+                className="flex-grow w-full p-2 border rounded-md"
                 value={email}
                 onChange={e => {
                   setEmail(e.target.value);
@@ -192,7 +192,8 @@ export default function SignUpPage() {
                 type="button"
                 onClick={handleCheckEmail}
                 disabled={isCheckingEmail}
-                className="px-4 py-2 border rounded-r-md bg-gray-50 hover:bg-gray-100 disabled:bg-gray-200 text-sm font-semibold whitespace-nowrap"
+                /* 3. 홈페이지 테마에 맞게 버튼 스타일 수정 */
+                className="px-4 py-2 rounded-md bg-teal-500 text-white text-sm font-semibold whitespace-nowrap hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
                 {isCheckingEmail ? t('checking') : t('checkButton')}
               </button>
