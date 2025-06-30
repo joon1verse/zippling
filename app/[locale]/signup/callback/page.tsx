@@ -47,7 +47,7 @@ export default function SignUpCallbackPage() {
             setErrorMsg(t('timeoutError')); // 예: "인증 시간이 초과되었습니다."
             subscription.unsubscribe();
         }
-    }, 10000);
+    }, 15000);
 
     // 컴포넌트가 언마운트될 때 리스너와 타이머를 모두 정리합니다.
     return () => {
