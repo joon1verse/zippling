@@ -36,7 +36,7 @@ export default function AboutUsPage() {
       `}</style>
 
       {/* 🚀 히어로 섹션: 페이지의 첫인상 (relative는 이미지 배치 기준점) */}
-      <section className="relative w-full py-12 sm:py-16 md:py-20 lg:py-24 px-4 bg-gradient-to-br from-white to-gray-50 overflow-hidden flex flex-col items-center"> {/* py- 값 조정 */}
+      <section className="relative w-full py-12 sm:py-10 md:py-14 lg:py-18 px-4 bg-gradient-to-br from-white to-gray-50 overflow-hidden flex flex-col items-center"> {/* py- 값 조정 */}
         {/* 타이틀 및 서브헤드라인 영역 */}
         <div className="text-center max-w-4xl mx-auto relative z-10 mb-10 sm:mb-12 md:mb-8"> {/* mb- 값 조정 */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 mb-6">

@@ -12,13 +12,12 @@
   "whyZipplingDescription": "Zippling was created based on real experiences of struggling to find housing in Vancouver.\nAs a developer and as a foreigner myself, I — along with many others — faced difficulties navigating unfamiliar housing systems in a new culture.\n\nWhen people don't understand each other's norms or ways of communication, a barrier of information naturally arises.\nZippling was born to break down that barrier and help others make better choices with confidence.",
   
   "about": {
-      "meta": {
-        "title": "About Zippling - Your Partner for New Beginnings"
-      },
-      "hero": {
-        "headline": "Zippling: Beyond Complex Housing Searches, Easy Connections for a New Start",
-        "subheadline": "Find the perfect home for you, anywhere in the world."
-      },
+    "meta": {
+      "title": "About Zippling - Your Partner for New Beginnings"
+    },
+    "hero": {
+      "headline": "Zippling: Beyond Complex Housing Searches, Easy Connections for a New Start",
+      "subheadline": "Find the perfect home for you, anywhere in the world.",
       "memoriesTitle": "My Canada Memories",
       "imageAlt1": "Canada Landscape Image 1",
       "imageAlt2": "Canada Landscape Image 2",
@@ -65,7 +64,8 @@
       "headline": "Find Your Next Home Today!",
       "subheadline": "Prepare for your new beginning easily and conveniently with Zippling.",
       "buttonText": "Find Accommodation"
-    },
+    }
+},
     
   "header": {
    "about": "About Us",
