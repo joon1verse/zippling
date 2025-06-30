@@ -1,7 +1,7 @@
 // vancouver/page.tsx
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, Suspense } from 'react'; // Suspense 임포트
 import { useTranslations } from 'next-intl';
 import { formatDistanceToNow } from 'date-fns';
 import { AlertTriangle, Mars, Venus, Info, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -14,10 +14,12 @@ type RoomPost = Database['public']['Tables']['vancouver_roomlistings']['Row'];
 
 const POSTS_PER_PAGE = 20; // 페이지 당 게시물 수
 
-export default function VancouverRoomPage() {
-  const t = useTranslations();
+// useSearchParams를 사용하는 실제 콘텐츠를 담을 내부 컴포넌트
+// 이 컴포넌트가 VancouverRoomPage의 모든 기존 로직과 JSX를 포함합니다.
+function VancouverRoomContent() {
+  const t = useTranslations(); // 'common.json'에서 직접 키를 사용하므로 네임스페이스 지정 안 함
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams(); // 이 훅이 Suspense로 감싸져야 할 주된 이유입니다.
 
   const [listings, setListings] = useState<RoomPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -101,7 +103,10 @@ export default function VancouverRoomPage() {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
       // URL을 변경하여 페이지를 이동합니다. 이것이 페이지뷰를 발생시킵니다.
-      router.push(`?page=${newPage}`);
+      // useSearchParams를 사용하여 기존 쿼리 파라미터를 유지하면서 'page'만 업데이트
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.set('page', newPage.toString());
+      router.push(`?${newSearchParams.toString()}`);
       window.scrollTo(0, 0);
     }
   };
@@ -219,5 +224,20 @@ export default function VancouverRoomPage() {
         </>
       )}
     </main>
+  );
+}
+
+// VancouverRoomPage 컴포넌트를 Suspense로 감싸줍니다.
+export default function VancouverRoomPage() {
+  const t = useTranslations(); // fallback 메시지를 위해 번역 훅을 여기서도 사용 (common.json에서 직접 키 사용)
+
+  return (
+    <Suspense fallback={
+      <div className="py-20 text-center text-base">
+        {t("loading")} {/* common.json에 'loading' 키가 있다고 가정 */}
+      </div>
+    }>
+      <VancouverRoomContent />
+    </Suspense>
   );
 }

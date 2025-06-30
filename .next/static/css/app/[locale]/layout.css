@@ -2188,17 +2188,13 @@ img {
     padding-left: 2rem;
     padding-right: 2rem;
   }
-  .sm\:py-16 {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+  .sm\:py-10 {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
   }
   .sm\:py-8 {
     padding-top: 2rem;
     padding-bottom: 2rem;
-  }
-  .sm\:py-10 {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
   }
   .sm\:text-2xl {
     font-size: 1.5rem;
@@ -2304,10 +2300,6 @@ img {
   .md\:p-6 {
     padding: 1.5rem;
   }
-  .md\:py-20 {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
   .md\:py-14 {
     padding-top: 3.5rem;
     padding-bottom: 3.5rem;
@@ -2336,10 +2328,6 @@ img {
   }
   .lg\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .lg\:py-24 {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
   }
   .lg\:text-3xl {
     font-size: 1.875rem;

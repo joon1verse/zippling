@@ -49,7 +49,7 @@ export default function AboutUsPage() {
 
         {/* 이미지 컨테이너 - 타이틀 아래 명확히 배치 */}
         {/* 배경색을 gray-300으로 변경하고, py- 값 조정 */}
-        <div className="w-full relative z-0 py-6 bg-gray-200 text-center"> 
+        <div className="w-full relative z-0 py-6 bg-black text-center"> 
             {/* "나의 캐나다 추억" 문구 추가 */}
             {/* 텍스트 색상을 text-gray-800으로 변경하여 대비 강화 */}
             <div className="overflow-hidden"> {/* 애니메이션을 위한 클리핑 컨테이너 */}

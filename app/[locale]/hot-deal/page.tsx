@@ -1,8 +1,8 @@
 // app/[locale]/hot-deal/page.tsx
 'use client';
 
-import { useState, useEffect, useCallback } from "react";
-import { useParams, useRouter, useSearchParams } from "next/navigation"; // Import useSearchParams
+import { useState, useEffect, useCallback, Suspense } from "react"; // Suspense 임포트
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { createBrowserSupabase } from "@server/supabaseBrowserClient";
 import type { Database } from "@server/types";
@@ -23,10 +23,12 @@ type HotDealPost = Pick<
   | 'user_nickname'
 >;
 
-export default function HotDealPage() {
+// useSearchParams를 사용하는 실제 콘텐츠를 담을 내부 컴포넌트
+// 이 컴포넌트가 HotDealPage의 모든 기존 로직과 JSX를 포함합니다.
+function HotDealContent() {
   const { locale } = useParams() as { locale: string };
   const router = useRouter();
-  const searchParams = useSearchParams(); // Initialize useSearchParams
+  const searchParams = useSearchParams(); // 이 훅이 Suspense로 감싸져야 할 주된 이유입니다.
   const t = useTranslations('hotdeal');
   const supabase = createBrowserSupabase();
 
@@ -176,5 +178,20 @@ export default function HotDealPage() {
         <Pencil size={24} />
       </button>
     </div>
+  );
+}
+
+// HotDealPage 컴포넌트를 Suspense로 감싸줍니다.
+export default function HotDealPage() {
+  const t = useTranslations('hotdeal'); // fallback 메시지를 위해 번역 훅을 여기서도 사용
+
+  return (
+    <Suspense fallback={
+      <div className="py-20 text-center text-base">
+        {t("loading")} {/* 로딩 메시지 */}
+      </div>
+    }>
+      <HotDealContent />
+    </Suspense>
   );
 }
