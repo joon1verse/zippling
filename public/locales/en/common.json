@@ -67,13 +67,14 @@
     "invalidEmailFormat": "Please enter a valid email format.",
     "emailNotVerified": "Please check for email duplication.",
     "checkingEmail": "Checking email...",
-    "callback": {
-      "loading": "Finalizing your registration…",
-      "noSession": "Could not find your session. Please try logging in.",
-      "title": "🎉 Verification Successful!",
-      "description": "Your email has been verified successfully. We will redirect you to the homepage shortly.",
-      "redirecting": "Redirecting to the homepage in 5 seconds…"
-    }
+      "callback": {
+        "loading": "Finalizing your registration…",
+        "dbError": "An error occurred while saving your profile. Please contact support.",
+        "timeoutError": "Authentication timed out. Please try signing up again.",
+        "title": "🎉 Verification Successful!",
+        "description": "Your email has been verified successfully. We will redirect you to the homepage shortly.",
+        "redirecting": "Redirecting to the homepage in 3 seconds…"
+        }
   },
 
   "roomListTitle": "Vancouver Room Listings",
