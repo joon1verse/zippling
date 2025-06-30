@@ -1,9 +1,12 @@
 // 📄 mergeVancouverSupabase.js — Supabase 전용 병합 스크립트 (DB upsert + 병렬 다운로드 최적화)
 
-import { supabase } from './supabaseClient.js';           // Service‑Role key 클라이언트
+// 수정된 부분: getSupabaseAdmin 함수를 import하고 호출하여 supabase 클라이언트를 생성합니다.
+import { getSupabaseAdmin } from './supabaseClient.js';
+const supabase = getSupabaseAdmin();
+
 import { removeDuplicatesAndSort } from './mergeUtils.js';
-import pLimit from 'p-limit';                             // 병렬 제한
-import chunkArray from 'lodash.chunk';                    // npm i lodash.chunk
+import pLimit from 'p-limit';                                  // 병렬 제한
+import chunkArray from 'lodash.chunk';                         // npm i lodash.chunk
 
 async function mergeVancouver() {
   console.log('🟢 [MergeVancouverSupabase] 시작');
