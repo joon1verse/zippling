@@ -20,7 +20,7 @@ export default function HeaderTopbar({ locale, initialSession }: HeaderTopbarPro
 
   const [user, setUser] = useState<User | null>(initialSession?.user ?? null);
   const [nickname, setNickname] = useState<string | null>(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // 모바일 메뉴 상태 추가
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // 모바일 메뉴 상태
 
   useEffect(() => {
     setUser(initialSession?.user ?? null);
@@ -65,9 +65,7 @@ export default function HeaderTopbar({ locale, initialSession }: HeaderTopbarPro
 
   return (
     <div className="w-full bg-teal-100 text-gray-700 text-sm h-10 flex items-center justify-between px-4 sm:px-6 border-b border-gray-200 z-10 relative">
-      {/* --- ▼▼▼ 반응형 메뉴 로직 적용 ▼▼▼ --- */}
-      
-      {/* 1. 모바일 햄버거 메뉴 버튼 (작은 화면에서만 보임) */}
+      {/* 반응형 메뉴 */}
       <div className="md:hidden">
         <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 rounded-md hover:bg-teal-200">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -75,8 +73,6 @@ export default function HeaderTopbar({ locale, initialSession }: HeaderTopbarPro
           </svg>
         </button>
       </div>
-
-      {/* 2. 기존 좌측 메뉴 (중간 크기 이상 화면에서만 보임) */}
       <div className="hidden md:flex items-center gap-6">
         <Link href={`/${locale}/about`} className="hover:underline hover:text-teal-800 transition-colors">
           {t('about')}
@@ -85,8 +81,6 @@ export default function HeaderTopbar({ locale, initialSession }: HeaderTopbarPro
           {t('contact')}
         </Link>
       </div>
-
-      {/* 3. 모바일 메뉴 (isMenuOpen이 true일 때만 나타남) */}
       {isMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg rounded-b-lg border-t border-gray-200">
             <Link href={`/${locale}/about`} className="block px-4 py-3 text-gray-700 hover:bg-gray-100" onClick={() => setIsMenuOpen(false)}>
@@ -98,14 +92,12 @@ export default function HeaderTopbar({ locale, initialSession }: HeaderTopbarPro
         </div>
       )}
 
-      {/* --- ▲▲▲ 반응형 메뉴 로직 적용 끝 ▲▲▲ --- */}
-
-
       {/* 우측 인증/프로필 영역 */}
       <div className="flex gap-2 items-center">
         {isLoggedIn ? (
             <>
-              <span className="hidden sm:inline text-sm px-1">
+              {/* --- ▼▼▼ hidden sm:inline 클래스를 삭제하여 항상 보이도록 수정했습니다 ▼▼▼ --- */}
+              <span className="text-sm px-1">
                 {t('hi')}, <b className="font-bold">{nickname ?? user.email?.split('@')[0]}</b> {t('welcome_suffix')}
               </span>
               <button onClick={handleLogout} className="font-bold px-3 py-1 bg-teal-200 hover:bg-teal-300 text-teal-900 rounded">
