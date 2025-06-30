@@ -92,22 +92,37 @@
   "main_van_community_desc": "Share information and chat with locals.",
   "main_van_hot_deal": "Hot Deals",
   "main_van_hot_deal_desc": "Discover the latest special offers.",
-  
-  "hotDeals": "Hot Deals",
-  "hotDealsSubtitle": "This is a hot deal page",
-  "loading": "Loading…",
-  "noDealsYet": "No hot deals yet.",
 
-  "writeHotDeal": "Write Hot Deal",
-  "editHotDeal": "Edit Hot Deal",
-  "errorPrefix": "Error:",
-  "titleLabel": "Title",
-  "contentLabel": "Content",
-  "thumbnailUrlLabel": "Thumbnail URL",
-  "thumbnailUrlPlaceholder": "https://example.com/image.png",
-  "thumbnailUrlHelp": "비워두면 기본 이미지가 사용됩니다.",
-  "saving": "Saving…",
-  "save": "Save",
-  "update": "Update",
-  "HotDealwritebutton": "Post"
+  "hotdeal": {
+    "hotDeals": "Hot Deals",
+    "hotDealsSubtitle": "Meet Vancouver's hottest and cheapest prices in real time!",
+    "loading": "Loading…",
+    "noDealsYet": "No hot deals yet.",
+    "anonymous": "Anonymous",
+    "write": {
+      "writeHotDeal": "Write Hot Deal",
+      "editHotDeal": "Edit Hot Deal",
+      "errorPrefix": "Error:",
+      "titleLabel": "Title",
+      "contentLabel": "Content",
+      "thumbnailUrlLabel": "Thumbnail URL",
+      "thumbnailUrlPlaceholder": "https://example.com/image.png",
+      "thumbnailUrlHelp": "If left blank, the default image is used.",
+      "saving": "Saving…",
+      "save": "Save",
+      "update": "Update",
+      "postButton": "Post"
+    },
+    "detail": {
+      "loading": "Loading...",
+      "backToList": "Back to List",
+      "by": "by",
+      "anonymous": "Anonymous",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "deleteConfirm": "Are you sure you want to delete this post? This action cannot be undone.",
+      "deleteError": "Failed to delete the post. Please try again."
+    }
+  }
 }

@@ -1,3 +1,4 @@
+// app/[locale]/hot-deal/page.tsx
 'use client';
 
 import { useState, useEffect } from "react";
@@ -5,7 +6,6 @@ import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { createBrowserSupabase } from "@server/supabaseBrowserClient";
 import type { Database } from "@server/types";
-import type { Session } from "@supabase/supabase-js";
 import { useTranslations } from "next-intl";
 import { Pencil } from "lucide-react";
 
@@ -25,7 +25,7 @@ type HotDealPost = Pick<
 export default function HotDealPage() {
   const { locale } = useParams() as { locale: string };
   const router = useRouter();
-  const t = useTranslations();
+  const t = useTranslations('hotdeal');
   const supabase = createBrowserSupabase();
 
   const [posts, setPosts] = useState<HotDealPost[]>([]);
@@ -44,7 +44,7 @@ export default function HotDealPage() {
     })();
   }, [supabase]);
 
-  // 2) 글쓰기 버튼 핸들러: 클릭할 때마다 세션 확인
+  // 2) 글쓰기 버튼 핸들러
   const handleWrite = async () => {
     const {
       data: { session },
@@ -83,25 +83,28 @@ export default function HotDealPage() {
   // 5) 렌더링
   return (
     <div className="pt-2 px-2 w-full max-w-screen-lg mx-auto">
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-3">
-          <h1 className="text-2xl font-bold tracking-tight">{t("hotDeals")}</h1>
-          <span className="text-2xl">🔥</span>
+      {/* --- ▼▼▼ UI 수정이 적용된 부분입니다 ▼▼▼ --- */}
+      <div className="mb-4">
+        {/* Line 1: Main Title & Icon */}
+        <div className="flex items-center gap-1.5">
+          <h1 className="text-4xl font-bold tracking-tight">{t("hotDeals")}</h1>
+          <span className="text-3xl">🔥</span>
         </div>
-        <div>
-          <span
-            onClick={handleWrite}
-            className="
-              flex items-center gap-1 cursor-pointer select-none
-              text-gray-600 font-semibold text-base
-              hover:text-teal-500 hover:underline transition
-            "
-          >
-            <Pencil size={18} className="mb-[1px]" />
-            {t("HotDealwritebutton")}
-          </span>
+        
+        {/* Line 2: Subtitle & Write Button */}
+        <div className="flex flex-wrap items-center justify-between gap-y-2 mt-2">
+            <p className="text-base text-gray-500">{t('hotDealsSubtitle')}</p>
+            <span
+              onClick={handleWrite}
+              className="flex items-center gap-1.5 cursor-pointer select-none text-gray-600 font-semibold text-base hover:text-teal-500 transition"
+            >
+              <Pencil size={16} />
+              {t("write.postButton")}
+            </span>
         </div>
       </div>
+      {/* --- ▲▲▲ UI 수정이 적용된 부분입니다 ▲▲▲ --- */}
+
 
       <ul className="divide-y divide-gray-200 bg-white rounded-2xl border shadow-sm overflow-hidden">
         {posts.map((p) => (
