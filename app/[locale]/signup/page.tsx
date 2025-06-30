@@ -234,7 +234,6 @@ if (step === 'checkEmail') {
           type="tel"
           value={phone}
           onChange={e => setPhone(e.target.value.replace(/\D/g, ''))}
-          required
           className="mt-1 w-full p-2 border rounded"
         />
       </label>

@@ -51,8 +51,8 @@ export async function GET(
       email: user.email!,
       full_name: meta.full_name,
       user_nickname: meta.user_nickname,
-      phone: meta.phone ?? null,
-      birthdate: meta.birthdate ?? null,
+      phone: meta.phone || null,
+      birthdate: meta.birthdate || null,
     });
 
     if (dbErr) {
