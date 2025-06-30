@@ -14,7 +14,11 @@ export default function AboutUsPage() {
     { src: "/images/about_hero_2.jpg", altKey: "hero.imageAlt2", width: 150, height: 200 },
     { src: "/images/about_hero_3.jpg", altKey: "hero.imageAlt3", width: 150, height: 200 },
     { src: "/images/about_hero_4.jpg", altKey: "hero.imageAlt4", width: 150, height: 200, hiddenClass: "hidden sm:block" },
-    { src: "/images/about_hero_5.jpg", altKey: "hero.imageAlt5", width: 150, height: 200, hiddenClass: "hidden md:block" },
+    { src: "/images/about_hero_5.jpg", altKey: "hero.imageAlt5", width: 150, height: 200 },
+    // 새로 추가할 이미지들
+    { src: "/images/about_hero_6.jpg", altKey: "hero.imageAlt6", width: 150, height: 200 },
+    { src: "/images/about_hero_7.jpg", altKey: "hero.imageAlt7", width: 150, height: 200 },
+    { src: "/images/about_hero_8.jpg", altKey: "hero.imageAlt8", width: 150, height: 200 },
   ];
 
   return (
@@ -60,7 +64,7 @@ export default function AboutUsPage() {
                         <div
                             key={`original-${index}`}
                             className={`relative shadow-xl rounded-lg overflow-hidden flex-shrink-0 ${img.hiddenClass || ''}
-                                        mx-1 sm:mx-2 md:mx-3 lg:mx-4 xl:mx-5`} /* mx- 값 조정 */
+                                        mx-3 sm:mx-4 md:mx-5 lg:mx-5 xl:mx-5`} /* mx- 값 조정 */
                             style={{ minWidth: `${img.width}px`, height: `${img.height}px` }} /* 이미지 크기 고정 */
                         >
                             <Image
@@ -77,7 +81,7 @@ export default function AboutUsPage() {
                         <div
                             key={`duplicate-${index}`}
                             className={`relative shadow-xl rounded-lg overflow-hidden flex-shrink-0 ${img.hiddenClass || ''}
-                                        mx-1 sm:mx-2 md:mx-3 lg:mx-4 xl:mx-5`} /* mx- 값 조정 */
+                                        mx-3 sm:mx-4 md:mx-5 lg:mx-5 xl:mx-5`} /* mx- 값 조정 */
                             style={{ minWidth: `${img.width}px`, height: `${img.height}px` }} /* 이미지 크기 고정 */
                         >
                             <Image

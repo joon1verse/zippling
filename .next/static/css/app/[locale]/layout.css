@@ -1130,6 +1130,10 @@ video {
   margin-left: auto;
   margin-right: auto;
 }
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -2165,6 +2169,10 @@ img {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
   }
+  .sm\:mx-4 {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
   .sm\:mb-12 {
     margin-bottom: 3rem;
   }
@@ -2246,6 +2254,10 @@ img {
     margin-left: 0.75rem;
     margin-right: 0.75rem;
   }
+  .md\:mx-5 {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
   .md\:mb-8 {
     margin-bottom: 2rem;
   }
@@ -2326,6 +2338,14 @@ img {
     margin-left: 1rem;
     margin-right: 1rem;
   }
+  .lg\:mx-6 {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+  }
+  .lg\:mx-5 {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
   .lg\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2346,6 +2366,10 @@ img {
   .xl\:mx-5 {
     margin-left: 1.25rem;
     margin-right: 1.25rem;
+  }
+  .xl\:mx-6 {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
   }
 }
 .\[\&_\.ql-container\]\:min-h-\[320px\] .ql-container {
