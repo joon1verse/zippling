@@ -2,7 +2,14 @@
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+
+// tsconfig.json의 "@server/*": ["utilities/serverutil/*"] 설정에 따라
+// 정확한 경로에서 함수를 가져옵니다.
 import { createServerSupabase } from '@server/supabaseServerClient';
+
+// tsconfig.json의 "@server/*" 설정과 기존에 만들어두신 `supabaseClient.js` 파일을 활용하여
+// 관리자 클라이언트를 'supabaseAdmin'이라는 별칭으로 가져옵니다.
+import { supabase as supabaseAdmin } from '@server/supabaseClient';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,69 +20,61 @@ export async function GET(
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
   
-  // 성공 시 최종적으로 이동할 URL
+  // 성공 시나리오는 /signup/success 페이지가 있는 경우를 가정합니다.
+  // 만약 없다면 홈페이지('/') 등으로 변경하셔도 됩니다.
   const successUrl = `${origin}/${params.locale}/signup/success`;
-  // 실패 시 이동할 URL
-  const errorUrl = `${origin}/${params.locale}/login?error=auth-callback-failed`;
+  const errorUrl = `${origin}/${params.locale}/login?error=auth-failed`;
 
   if (!code) {
-    console.error('인증 콜백 오류: URL에 code 파라미터가 없습니다.');
+    console.error('Callback Error: No code found in URL');
     return NextResponse.redirect(errorUrl);
   }
 
+  // 1. 일반 사용자용 클라이언트로 세션 교환을 시도합니다.
   const supabase = createServerSupabase();
+  const { data: { user }, error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
 
-  // 1. 코드를 세션으로 교환
-  const { data, error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
-
-  if (exchangeError) {
-    console.error('세션 교환 오류:', exchangeError.message);
-    return NextResponse.redirect(errorUrl);
-  }
-  
-  // exchangeCodeForSession의 응답값으로 user와 session이 모두 들어옵니다.
-  const { user, session } = data;
-
-  if (!session || !user) {
-    console.error('인증 콜백 오류: 세션 또는 사용자 정보를 가져오지 못했습니다.');
+  if (exchangeError || !user) {
+    console.error('Session exchange error:', exchangeError?.message);
     return NextResponse.redirect(errorUrl);
   }
 
-  // 2. DB에 사용자 프로필 정보 저장 (upsert)
-  // 이 과정에서 오류가 발생해도 인증 자체는 성공한 것이므로,
-  // 에러 로그만 남기고 사용자는 성공 페이지로 보냅니다.
+  // 2. 인증 성공! 이제 DB 저장을 위한 후속 처리를 시작합니다.
   try {
-    const meta = user.user_metadata;
-    
-    // user_metadata가 존재하는지 확실히 확인
-    if (!meta.full_name || !meta.user_nickname) {
-        throw new Error('user_metadata (이름, 닉네임)가 비어있습니다.');
+    // 2-1. 관리자 클라이언트로 해당 유저의 전체 정보를 조회합니다.
+    // 이 과정을 통해 가입 시 입력했던 raw_user_meta_data를 가져올 수 있습니다.
+    const { data: { user: adminUser }, error: adminError } = await supabaseAdmin.auth.admin.getUserById(user.id);
+
+    if (adminError || !adminUser) {
+      throw new Error(`Admin client failed to get user info: ${adminError?.message}`);
     }
 
-    const { error: dbErr } = await supabase
-      .from('user_profiles')
-      .upsert({
-        id:            user.id,
-        email:         user.email!,
-        full_name:     meta.full_name,
-        user_nickname: meta.user_nickname,
-        phone:         meta.phone ?? null,
-        birthdate:     meta.birthdate ?? null,
-      }, { onConflict: 'id' });
+    // 2-2. 메타데이터를 변수에 저장합니다.
+    const meta = adminUser.user_metadata;
+    if (!meta || !meta.full_name || !meta.user_nickname) {
+        throw new Error('User metadata (full_name, user_nickname) is missing from admin user object.');
+    }
+    
+    // 2-3. 일반 클라이언트로 user_profiles 테이블에 데이터를 upsert 합니다.
+    const { error: dbErr } = await supabase.from('user_profiles').upsert({
+      id: user.id,
+      email: user.email!,
+      full_name: meta.full_name,
+      user_nickname: meta.user_nickname,
+      phone: meta.phone ?? null,
+      birthdate: meta.birthdate ?? null,
+    });
 
     if (dbErr) {
-      // dbErr를 그냥 throw하여 아래 catch 블록에서 처리하도록 합니다.
-      throw dbErr;
+      throw new Error(`Failed to save to DB: ${dbErr.message}`);
     }
 
-    console.log(`[${user.email}] 님의 프로필이 성공적으로 저장/업데이트되었습니다.`);
-
-  } catch (dbError: any) {
-    console.error('DB 저장/업데이트 심각한 오류:', dbError.message);
-    // 여기서 문제가 발생해도 사용자는 계속 진행시킵니다.
-    // 추후 Vercel의 서버 로그에서 이 에러를 확인하여 원인을 파악해야 합니다.
+  } catch (error) {
+    // 후속 처리 중 에러가 발생해도 인증 자체는 성공했으므로,
+    // 서버에 로그만 남기고 사용자는 성공 페이지로 보내줍니다.
+    console.error('Error in post-authentication processing:', error instanceof Error ? error.message : String(error));
   }
-
-  // 3. 모든 과정이 끝나면 성공 페이지로 리디렉션
+  
+  // 3. 모든 과정이 끝나면 최종적으로 성공 페이지로 리디렉션합니다.
   return NextResponse.redirect(successUrl);
 }

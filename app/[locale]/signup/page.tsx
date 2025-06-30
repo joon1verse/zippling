@@ -128,7 +128,7 @@ if (step === 'checkEmail') {
     <div className="pt-12 px-4 flex justify-center">
       <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
         <h1 className="text-2xl sm:text-3xl font-bold text-teal-600 mb-4">
-          🎉 {t('welcomeTitle')} 🎉
+          {t('welcomeTitle')} 🎉
         </h1>
         <p className="text-gray-700 mb-6 leading-relaxed">
           {t('checkEmail')}
