@@ -16,20 +16,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/layout.js"
     ],
-    "/[locale]/vancouver/page": [
+    "/[locale]/about/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/vancouver/page.js"
-    ],
-    "/[locale]/hot-deal/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/hot-deal/page.js"
-    ],
-    "/[locale]/vancouver/room/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/vancouver/room/page.js"
+      "static/chunks/app/[locale]/about/page.js"
     ]
   }
 }
