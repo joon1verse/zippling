@@ -3,9 +3,11 @@
 
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { useParams } from 'next/navigation'; // useParams 임포트 추가
 
 export default function AboutUsPage() {
   const t = useTranslations('about');
+  const { locale } = useParams() as { locale: string }; // 현재 로케일 가져오기
 
   // 이미지 배열 (반복을 위해 사용)
   const heroImages = [
@@ -99,7 +101,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* 📖 우리의 이야기: Zippling의 탄생 배경 */}
-      <section className="w-full py-2 px-4 bg-white">
+      <section className="w-full py-10 px-4 bg-white">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-6">
@@ -196,7 +198,7 @@ export default function AboutUsPage() {
             {t('cta.subheadline')}
           </p>
           <a
-            href="/cities"
+            href={`/${locale}`} // 로케일 기반 경로로 수정
             className="inline-block bg-white text-teal-600 font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-100 transition-colors duration-300 shadow-lg"
           >
             {t('cta.buttonText')}
