@@ -1,15 +1,16 @@
 // app/[locale]/hot-deal/page.tsx
 'use client';
 
-import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useState, useEffect, useCallback } from "react";
+import { useParams, useRouter, useSearchParams } from "next/navigation"; // Import useSearchParams
 import Image from "next/image";
 import { createBrowserSupabase } from "@server/supabaseBrowserClient";
 import type { Database } from "@server/types";
 import { useTranslations } from "next-intl";
-import { Pencil } from "lucide-react";
+import { Pencil, ChevronLeft, ChevronRight } from "lucide-react";
 
 const NO_THUMB_URL = "/images/no_thumb.png";
+const POSTS_PER_PAGE = 10; // 페이지 당 게시물 수
 
 type HotDealPost = Pick<
   Database['public']['Tables']['hot_deal_posts']['Row'],
@@ -25,32 +26,57 @@ type HotDealPost = Pick<
 export default function HotDealPage() {
   const { locale } = useParams() as { locale: string };
   const router = useRouter();
+  const searchParams = useSearchParams(); // Initialize useSearchParams
   const t = useTranslations('hotdeal');
   const supabase = createBrowserSupabase();
 
   const [posts, setPosts] = useState<HotDealPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [totalPosts, setTotalPosts] = useState(0);
 
-  // 1) 데이터 불러오기
-  useEffect(() => {
-    (async () => {
-      const { data, error } = await supabase
-        .from("hot_deal_posts")
-        .select("id, title, price, currency_type, thumbnail_url, created_at, user_nickname")
-        .order("created_at", { ascending: false });
+  // Get current page from URL or default to 1
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
 
-      if (!error && data) setPosts(data);
-      setLoading(false);
-    })();
+  // 1) 데이터 불러오기 (페이지네이션 적용)
+  const fetchPosts = useCallback(async (page: number) => {
+    setLoading(true);
+    const from = (page - 1) * POSTS_PER_PAGE;
+    const to = from + POSTS_PER_PAGE - 1;
+
+    const { data, error } = await supabase
+      .from("hot_deal_posts")
+      .select("id, title, price, currency_type, thumbnail_url, created_at, user_nickname")
+      .order("created_at", { ascending: false })
+      .range(from, to);
+
+    if (!error && data) setPosts(data);
+    setLoading(false);
   }, [supabase]);
+
+  // 전체 게시물 수 가져오기 (최초 1회만)
+  useEffect(() => {
+    const getTotalCount = async () => {
+      const { count, error } = await supabase
+        .from('hot_deal_posts')
+        .select('*', { count: 'exact', head: true });
+
+      if (!error && count !== null) {
+        setTotalPosts(count);
+      }
+    };
+    getTotalCount();
+  }, [supabase]);
+
+  // 페이지가 변경될 때마다 데이터 다시 불러오기 (currentPage는 이제 URL에서 파생됨)
+  useEffect(() => {
+    fetchPosts(currentPage);
+  }, [currentPage, fetchPosts]);
 
   // 2) 글쓰기 버튼 핸들러
   const handleWrite = async () => {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
+    const { data: { session } } = await supabase.auth.getSession();
     const writePath = `/${locale}/hot-deal/write`;
-
     if (session) {
       router.push(writePath);
     } else {
@@ -58,91 +84,97 @@ export default function HotDealPage() {
     }
   };
 
-  // 3) 로딩 / Empty 상태
-  if (loading) {
-    return <p className="py-20 text-center text-base">{t("loading")}</p>;
-  }
-  if (posts.length === 0) {
-    return (
-      <p className="py-20 text-center text-gray-500 text-base">
-        {t("noDealsYet")}
-      </p>
-    );
-  }
-
-  // 4) 날짜 포맷 헬퍼
+  // 3) 날짜 포맷 헬퍼
   const formatDate = (dateStr: string) =>
     new Date(dateStr).toLocaleString(locale, {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
+      year: "numeric", month: "short", day: "numeric",
+      hour: "2-digit", minute: "2-digit",
     });
 
-  // 5) 렌더링
+  // 4) 페이지 변경 핸들러 - URL을 업데이트하도록 수정
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      // Construct new URL with updated page query parameter
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.set('page', newPage.toString());
+      router.push(`/${locale}/hot-deal?${newSearchParams.toString()}`);
+      window.scrollTo(0, 0); // 페이지 변경 시 맨 위로 스크롤
+    }
+  };
+
   return (
-    <div className="pt-2 px-2 w-full max-w-screen-lg mx-auto">
-      {/* --- ▼▼▼ UI 수정이 적용된 부분입니다 ▼▼▼ --- */}
+    // relative 클래스 추가: 글쓰기 버튼의 기준점이 되도록 함
+    <div className="relative pt-2 px-2 w-full max-w-screen-lg mx-auto min-h-screen pb-24">
       <div className="mb-4">
-        {/* Line 1: Main Title & Icon */}
         <div className="flex items-center gap-1.5">
-          <h1 className="text-4xl font-bold tracking-tight">{t("hotDeals")}</h1>
-          <span className="text-3xl">🔥</span>
+          <h1 className="text-2xl font-bold tracking-tight">{t("hotDeals")}</h1>
+          <span className="text-2xl">🔥</span>
         </div>
-        
-        {/* Line 2: Subtitle & Write Button */}
-        <div className="flex flex-wrap items-center justify-between gap-y-2 mt-2">
-            <p className="text-base text-gray-500">{t('hotDealsSubtitle')}</p>
-            <span
-              onClick={handleWrite}
-              className="flex items-center gap-1.5 cursor-pointer select-none text-gray-600 font-semibold text-base hover:text-teal-500 transition"
-            >
-              <Pencil size={16} />
-              {t("write.postButton")}
-            </span>
+        <div className="flex items-center justify-between gap-x-4 mt-2">
+            <p className="text-sm text-gray-500 min-w-0 truncate">{t('hotDealsSubtitle')}</p>
         </div>
       </div>
-      {/* --- ▲▲▲ UI 수정이 적용된 부분입니다 ▲▲▲ --- */}
 
+      {/* 로딩 및 Empty 상태 처리 */}
+      {loading ? (
+        <p className="py-20 text-center text-base">{t("loading")}</p>
+      ) : posts.length === 0 ? (
+        <p className="py-20 text-center text-gray-500 text-base">{t("noDealsYet")}</p>
+      ) : (
+        <>
+          {/* 게시물 목록 */}
+          <ul className="divide-y divide-gray-200 bg-white rounded-2xl border shadow-sm overflow-hidden">
+            {posts.map((p) => (
+              <li key={p.id} className="group">
+                <div onClick={() => router.push(`/${locale}/hot-deal/${p.id}`)}
+                  className="flex w-full cursor-pointer items-center px-3 py-2 gap-4 hover:bg-gray-50 transition">
+                  <div className="flex-shrink-0 w-16 h-16 bg-gray-100 border rounded-lg overflow-hidden flex items-center justify-center">
+                    <Image src={p.thumbnail_url || NO_THUMB_URL} alt={p.thumbnail_url ? p.title : `Thumbnail for ${p.title}`} width={64} height={64} className="object-cover w-full h-full" priority/>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span className="font-semibold truncate text-sm group-hover:underline">{p.title}</span>
+                    <span className="block text-sm text-teal-600 font-bold">{p.currency_type} {p.price}</span>
+                    <div className="flex gap-4 text-xs text-gray-400 mt-0.5">
+                      <time>{formatDate(p.created_at)}</time>
+                      <span className="ml-2">by {p.user_nickname || t("anonymous")}</span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
 
-      <ul className="divide-y divide-gray-200 bg-white rounded-2xl border shadow-sm overflow-hidden">
-        {posts.map((p) => (
-          <li key={p.id} className="group">
-            <div
-              onClick={() => router.push(`/${locale}/hot-deal/${p.id}`)}
-              className="flex w-full cursor-pointer items-center px-3 py-2 gap-4 hover:bg-gray-50 transition"
+          {/* 페이지네이션 컨트롤 */}
+          <div className="flex justify-center items-center mt-8 space-x-2">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="p-2 rounded-md hover:bg-gray-100 disabled:opacity-50"
             >
-              <div className="flex-shrink-0 w-16 h-16 bg-gray-100 border rounded-lg overflow-hidden flex items-center justify-center">
-                <Image
-                  src={p.thumbnail_url || NO_THUMB_URL}
-                  alt={p.thumbnail_url ? p.title : `Thumbnail for ${p.title}`}
-                  width={64}
-                  height={64}
-                  className="object-cover w-full h-full"
-                  priority
-                />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold truncate text-sm group-hover:underline">
-                    {p.title}
-                  </span>
-                </div>
-                <span className="text-sm text-teal-600 font-bold">
-                  {p.currency_type} {p.price}
-                </span>
-                <div className="flex gap-4 text-xs text-gray-400 mt-0.5">
-                  <time>{formatDate(p.created_at)}</time>
-                  <span className="ml-2">
-                    by {p.user_nickname || t("anonymous")}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+              <ChevronLeft size={20} />
+            </button>
+            <span className="text-sm font-medium">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="p-2 rounded-md hover:bg-gray-100 disabled:opacity-50"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        </>
+      )}
+
+      {/* 글쓰기 버튼 (Floating Action Button) */}
+      <button
+        onClick={handleWrite}
+        className="fixed bottom-8 right-8 flex items-center justify-center w-14 h-14 bg-teal-500 text-white rounded-full shadow-lg hover:bg-teal-600 transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+        aria-label="Write a new post"
+      >
+        <Pencil size={24} />
+      </button>
     </div>
   );
 }
