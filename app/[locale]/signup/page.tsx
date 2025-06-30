@@ -146,7 +146,7 @@ export default function SignUpPage() {
     if (result.error) {
       setError(result.error);
     } else {
-      router.push(`/${locale}`);
+      router.push(`/${locale}/signup/success`);
     }
     setLoading(false);
   }

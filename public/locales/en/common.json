@@ -49,10 +49,6 @@
     "birthdate": "Birthdate",
     "signupButton": "Sign Up",
     "signingUp": "Signing Up…",
-    "welcomeTitle": "Welcome to Zippling!",
-    "checkEmail": "Please check your email and click the link to complete registration.",
-    "didntGetMail": "Didn't receive the email?",
-    "checkSpam": "Be sure to check your spam folder.",
     "requiredFieldsNote": "* indicates a required field.",
     "nameSpecialError": "Name can include letters, numbers, '-' and '_' only.",
     "nickSpecialError": "Nickname can include letters, numbers, '-' and '_' only.",
@@ -66,15 +62,15 @@
     "emailAvailable": "This email is available.",
     "invalidEmailFormat": "Please enter a valid email format.",
     "emailNotVerified": "Please check for email duplication.",
-    "checkingEmail": "Checking email...",
-      "callback": {
-        "loading": "Finalizing your registration…",
-        "dbError": "An error occurred while saving your profile. Please contact support.",
-        "timeoutError": "Authentication timed out. Please try signing up again.",
-        "title": "🎉 Verification Successful!",
-        "description": "Your email has been verified successfully. We will redirect you to the homepage shortly.",
+    "verifyTitle": "Verify Your Account",
+    "verifyInstructions": "An email with a 6-digit code has been sent to {email}. Please enter it below to complete your registration.",
+    "verifyButton": "Verify & Complete",
+    "verifying": "Verifying...",
+      "success": {
+        "title": "🎉 Welcome Aboard!",
+        "description": "Your account has been created successfully. Welcome to the Zippling community!",
         "redirecting": "Redirecting to the homepage in 3 seconds…"
-        }
+      }
   },
 
   "roomListTitle": "Vancouver Room Listings",
