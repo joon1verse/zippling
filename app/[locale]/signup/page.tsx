@@ -181,135 +181,144 @@ export default function SignUpPage() {
   }
 
   // 가입 폼 UI
-  return (
-    <div className="min-h-screen bg-gray-50 pt-2 flex items-start justify-center">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden">
-        <div className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-center py-4">
-          <h1 className="text-2xl font-bold">{t('title')}</h1>
-        </div>
-        <form onSubmit={handleSignUp} className="p-8 space-y-4">
-          {error && <div className="bg-red-100 text-red-800 p-2 rounded">{error}</div>}
-          
-          <label className="block">
-            <span className="font-medium text-gray-700">{t('email')} <span className="text-red-500">*</span></span>
-            <div className="flex items-center mt-1 relative">
-              <input
-                type="email"
-                className="flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"
-                value={email}
-                placeholder="you@example.com"
-                onChange={e => {
-                  setEmail(e.target.value);
-                  setIsEmailVerified(false);
-                  setEmailMessage({ text: '', type: '' });
-                }}
-                required
-              />
-              <button
-                type="button"
-                onClick={handleCheckEmail}
-                disabled={isCheckingEmail}
-                className="absolute right-1 top-1/2 -translate-y-1/2 inline-flex items-center px-3 py-1.5 bg-gray-100 text-sm font-semibold text-gray-700 hover:bg-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-teal-500 disabled:bg-gray-200 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
-              >
-                {isCheckingEmail ? t('checking') : t('checkButton')}
-              </button>
-            </div>
-            {emailMessage.text && (
-              <p className={`text-sm mt-1.5 ${emailMessage.type === 'error' ? 'text-red-600' : 'text-green-600'}`}>
-                {emailMessage.text}
-              </p>
-            )}
-          </label>
-
-          <label className="block">
-            <span className="font-medium text-gray-700">{t('password')} <span className="text-red-500">*</span></span>
-            <input
-              type="password"
-              className="mt-1 w-full p-3 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-              value={password}
-              onChange={e => {
-                setPassword(e.target.value);
-                setPasswordValid(PASSWORD_REGEX.test(e.target.value));
-              }}
-            />
-            {!passwordValid && <p className="text-sm mt-1.5 text-red-600">{t('passwordStrength')}</p>}
-          </label>
-          
-          <label className="block">
-            <span className="font-medium text-gray-700">{t('confirmPassword')} <span className="text-red-500">*</span></span>
-            <input
-              type="password"
-              className="mt-1 w-full p-3 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-              value={confirmPwd}
-              onChange={e => setConfirmPwd(e.target.value)}
-            />
-            {confirmPasswordError && (
-              <p className="text-sm mt-1.5 text-red-600">{confirmPasswordError}</p>
-            )}
-          </label>
-
-          <label className="block">
-            <span className="font-medium text-gray-700">{t('fullName')} <span className="text-red-500">*</span></span>
-            <input
-              type="text"
-              value={fullName}
-              onChange={e => setFullName(e.target.value)}
-              required
-              className="mt-1 w-full p-3 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-            />
-            {nameError && (
-              <p className="text-sm mt-1.5 text-red-600">{nameError}</p>
-            )}
-          </label>
-
-          <label className="block">
-            <span className="font-medium text-gray-700">{t('nickname')} <span className="text-red-500">*</span></span>
-            <input
-              type="text"
-              value={nickname}
-              onChange={e => setNickname(e.target.value)}
-              required
-              className="mt-1 w-full p-3 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-            />
-            {nickError && (
-              <p className="text-sm mt-1.5 text-red-600">{nickError}</p>
-            )}
-          </label>
-
-          <label className="block">
-            <span className="font-medium text-gray-700">{t('phone')}</span>
-            <input
-              type="tel"
-              value={phone}
-              onChange={e => setPhone(e.target.value.replace(/\D/g, ''))}
-              className="mt-1 w-full p-3 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-            />
-          </label>
-
-          <label className="block">
-            <span className="font-medium text-gray-700">{t('birthdate')}</span>
-            <input
-              type="date"
-              className="mt-1 w-full p-3 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-              value={birthdate}
-              onChange={e => setBirthdate(e.target.value)}
-            />
-          </label>
-
-          <p className="text-sm text-gray-500 mt-2">{t('requiredFieldsNote')}</p>
-
-          <button
-            type="submit"
-            disabled={!isFormValid || loading || !isEmailVerified}
-            className={`w-full p-3 text-white font-semibold rounded-lg transition-colors ${
-              (isFormValid && !loading && isEmailVerified)
-                ? 'bg-teal-600 hover:bg-teal-700'
-                : 'bg-gray-300 cursor-not-allowed'}`}
-          >
-            {loading ? t('signingUp') : t('signupButton')}
-          </button>
-        </form>
+return (
+  <div className="min-h-screen bg-gray-50 pt-2 flex items-start justify-center">
+    <div className="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden">
+      <div className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-center py-4">
+        <h1 className="text-2xl font-bold">{t('title')}</h1>
       </div>
+      <form onSubmit={handleSignUp} className="p-8 space-y-4">
+        {error && <div className="bg-red-100 text-red-800 p-2 rounded">{error}</div>}
+        
+        <label className="block">
+          <span className="font-medium text-gray-700">{t('email')} <span className="text-red-500">*</span></span>
+          {/* 이메일 입력칸과 버튼을 flex 컨테이너로 묶어 분리합니다. */}
+          <div className="flex items-center mt-1 space-x-2">
+            <input
+              type="email"
+              // 입력칸 패딩을 p-2로 수정합니다.
+              className="flex-grow w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"
+              value={email}
+              placeholder="you@example.com"
+              onChange={e => {
+                setEmail(e.target.value);
+                setIsEmailVerified(false);
+                setEmailMessage({ text: '', type: '' });
+              }}
+              required
+            />
+            {/* 버튼 스타일을 teal 색상 테마로 변경하고, 패딩을 조정합니다. */}
+            <button
+              type="button"
+              onClick={handleCheckEmail}
+              disabled={isCheckingEmail}
+              className="px-4 py-2 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
+            >
+              {isCheckingEmail ? t('checking') : t('checkButton')}
+            </button>
+          </div>
+          {emailMessage.text && (
+            <p className={`text-sm mt-1.5 ${emailMessage.type === 'error' ? 'text-red-600' : 'text-green-600'}`}>
+              {emailMessage.text}
+            </p>
+          )}
+        </label>
+
+        <label className="block">
+          <span className="font-medium text-gray-700">{t('password')} <span className="text-red-500">*</span></span>
+          <input
+            type="password"
+            // 입력칸 패딩을 p-2로 수정합니다.
+            className="mt-1 w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            value={password}
+            onChange={e => {
+              setPassword(e.target.value);
+              setPasswordValid(PASSWORD_REGEX.test(e.target.value));
+            }}
+          />
+          {!passwordValid && <p className="text-sm mt-1.5 text-red-600">{t('passwordStrength')}</p>}
+        </label>
+        
+        <label className="block">
+          <span className="font-medium text-gray-700">{t('confirmPassword')} <span className="text-red-500">*</span></span>
+          <input
+            type="password"
+            // 입력칸 패딩을 p-2로 수정합니다.
+            className="mt-1 w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            value={confirmPwd}
+            onChange={e => setConfirmPwd(e.target.value)}
+          />
+          {confirmPasswordError && (
+            <p className="text-sm mt-1.5 text-red-600">{confirmPasswordError}</p>
+          )}
+        </label>
+
+        <label className="block">
+          <span className="font-medium text-gray-700">{t('fullName')} <span className="text-red-500">*</span></span>
+          <input
+            type="text"
+            value={fullName}
+            onChange={e => setFullName(e.target.value)}
+            required
+            // 입력칸 패딩을 p-2로 수정합니다.
+            className="mt-1 w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+          {nameError && (
+            <p className="text-sm mt-1.5 text-red-600">{nameError}</p>
+          )}
+        </label>
+
+        <label className="block">
+          <span className="font-medium text-gray-700">{t('nickname')} <span className="text-red-500">*</span></span>
+          <input
+            type="text"
+            value={nickname}
+            onChange={e => setNickname(e.target.value)}
+            required
+            // 입력칸 패딩을 p-2로 수정합니다.
+            className="mt-1 w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+          {nickError && (
+            <p className="text-sm mt-1.5 text-red-600">{nickError}</p>
+          )}
+        </label>
+
+        <label className="block">
+          <span className="font-medium text-gray-700">{t('phone')}</span>
+          <input
+            type="tel"
+            value={phone}
+            onChange={e => setPhone(e.target.value.replace(/\D/g, ''))}
+            // 입력칸 패딩을 p-2로 수정합니다.
+            className="mt-1 w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+        </label>
+
+        <label className="block">
+          <span className="font-medium text-gray-700">{t('birthdate')}</span>
+          <input
+            type="date"
+            // 입력칸 패딩을 p-2로 수정합니다.
+            className="mt-1 w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            value={birthdate}
+            onChange={e => setBirthdate(e.target.value)}
+          />
+        </label>
+
+        <p className="text-sm text-gray-500 mt-2">{t('requiredFieldsNote')}</p>
+
+        <button
+          type="submit"
+          disabled={!isFormValid || loading || !isEmailVerified}
+          className={`w-full p-3 text-white font-semibold rounded-lg transition-colors ${
+            (isFormValid && !loading && isEmailVerified)
+              ? 'bg-teal-600 hover:bg-teal-700'
+              : 'bg-gray-300 cursor-not-allowed'}`}
+        >
+          {loading ? t('signingUp') : t('signupButton')}
+        </button>
+      </form>
     </div>
-  );
+  </div>
+);
 }
