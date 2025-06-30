@@ -23,16 +23,16 @@ export default function Header({ locale }: HeaderProps) {
 function Logo({ locale }: { locale: string }) {
   return (
     <Link href={`/${locale}`}>
-      <div className="flex items-center gap-2 cursor-pointer">
+      <div className="flex items-center cursor-pointer">
         {/* 기존 SVG 제거하고 이미지로 교체 */}
         <Image
           src="/images/zippling_logo_white.png"
           alt="Zippling Logo"
-          width={64}  // 기존 SVG w-8 = 32px
-          height={64}
+          width={48}  // 기존 SVG w-8 = 32px
+          height={48}
           priority
         />
-        <span className="text-2xl font-extrabold">Zippling</span>
+        <span className="text-2xl font-bold">Zippling</span>
       </div>
     </Link>
   );
