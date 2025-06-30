@@ -9,125 +9,129 @@
   "torontoComing": "토론토 (준비중)",
 
   "whyZipplingTitle": "Zippling이 만들어진 이유?",
-  "whyZipplingDescription": "Zippling was created based on real experiences of struggling to find housing in Vancouver.\nAs a developer and as a foreigner myself, I — along with many others — faced difficulties navigating unfamiliar housing systems in a new culture.\n\nWhen people don't understand each other's norms or ways of communication, a barrier of information naturally arises.\nZippling was born to break down that barrier and help others make better choices with confidence.",
+  "whyZipplingDescription": "Zippling은 밴쿠버에서 숙소를 찾기 위해 고군분투했던 실제 경험을 바탕으로 만들어졌습니다.\n개발자이자 외국인으로서 저를 포함한 많은 이들이 낯선 주거 시스템과 새로운 문화에 적응하는 데 어려움을 겪었습니다.\n\n사람들이 서로의 규범이나 소통 방식을 이해하지 못할 때, 정보의 장벽이 자연스럽게 발생합니다.\nZippling은 이러한 장벽을 허물고 다른 사람들이 자신감을 가지고 더 나은 선택을 할 수 있도록 돕기 위해 탄생했습니다.",
   
   "about": {
-    "meta": {
-      "title": "About Zippling - Your Partner for New Beginnings"
-    },
-    "hero": {
-      "headline": "Zippling: Beyond Complex Housing Searches, Easy Connections for a New Start",
-      "subheadline": "Find the perfect home for you, anywhere in the world.",
-      "memoriesTitle": "My Canada Memories",
-      "imageAlt1": "Canada Landscape Image 1",
-      "imageAlt2": "Canada Landscape Image 2",
-      "imageAlt3": "Canada Landscape Image 3",
-      "imageAlt4": "Canada Landscape Image 4",
-      "imageAlt5": "Canada Landscape Image 5"
-    },
-    "story": {
-      "title": "Our Story: Why Was Zippling Created?",
-      "paragraph1": "The challenges of finding accommodation when settling in a new city, as a developer and a foreigner myself, became the starting point for Zippling. Unfamiliar housing systems and information imbalances were common problems many people faced.",
-      "paragraph2": "Based on these experiences, we aimed to help users no longer wander in uncertainty. Our goal was to gather reliable accommodation information from various trusted platforms into one place, providing a transparent and easy search experience.",
-      "paragraph3": "Zippling is more than just a housing search tool; it's a solution that breaks down information barriers and empowers everyone to make better choices with confidence. We are here to help your new city life begin smoothly.",
-      "imageAlt": "People socializing and cozy living spaces"
-    },
-    "mission": {
-      "title": "Our Mission",
-      "paragraph": "To provide the best connection experience, enabling everyone, anywhere in the world, to easily and safely find their perfect accommodation."
-    },
-    "vision": {
-      "title": "Our Vision",
-      "point1": "Building an accessible global accommodation information hub for everyone",
-      "point2": "Providing personalized information and tailored search experiences",
-      "point3": "Fostering a community based on trust and transparency"
-    },
-    "values": {
-      "title": "Our Core Values",
-      "value1": {
-        "icon": "✨",
-        "title": "User-Centric",
-        "description": "Every decision prioritizes user convenience and satisfaction."
+      "meta": {
+        "title": "Zippling 소개 - 새로운 시작을 위한 당신의 파트너"
       },
-      "value2": {
-        "icon": "🛡️",
-        "title": "Transparency & Trust",
-        "description": "Providing accurate and reliable information to instill confidence in users."
+      "hero": {
+        "headline": "Zippling: 복잡한 숙소 찾기를 넘어, 새로운 시작을 위한 쉬운 연결",
+        "subheadline": "전 세계 어디에서든 당신에게 꼭 맞는 보금자리를 찾아드립니다.",
+        "memoriesTitle": "나의 캐나다 추억",
+        "imageAlt1": "캐나다 풍경 이미지 1",
+        "imageAlt2": "캐나다 풍경 이미지 2",
+        "imageAlt3": "캐나다 풍경 이미지 3",
+        "imageAlt4": "캐나다 풍경 이미지 4",
+        "imageAlt5": "캐나다 풍경 이미지 5",
+        "imageAlt6": "캐나다 풍경 이미지 6",
+        "imageAlt7": "캐나다 풍경 이미지 7",
+        "imageAlt8": "캐나다 풍경 이미지 8"
       },
-      "value3": {
-        "icon": "🚀",
-        "title": "Continuous Innovation",
-        "description": "Constantly learning and evolving for a better accommodation search experience."
+      "story": {
+        "title": "우리의 이야기: Zippling은 왜 탄생했을까요?",
+        "paragraph1": "개발자이자 외국인으로서 새로운 도시에 정착하며 겪었던 숙소 찾기의 어려움은 Zippling의 시작점이 되었습니다. 익숙하지 않은 주거 시스템과 정보의 불균형은 많은 이들이 겪는 공통된 문제였습니다.",
+        "paragraph2": "우리는 이 경험을 바탕으로 사용자들이 더 이상 불확실함 속에서 헤매지 않도록 돕고자 했습니다. 신뢰할 수 있는 여러 플랫폼의 숙소 정보를 한곳에 모아, 투명하고 쉬운 검색 경험을 제공하는 것이 목표였습니다.",
+        "paragraph3": "Zippling은 단순한 숙소 검색 도구가 아닌, 정보의 장벽을 허물고 모든 이들이 자신감을 가지고 더 나은 선택을 할 수 있도록 돕는 솔루션입니다. 우리는 당신의 새로운 도시 생활이 순조롭게 시작되도록 돕고자 합니다.",
+        "imageAlt": "함께 어울리는 사람들과 안락한 주거 공간"
+      },
+      "mission": {
+        "title": "우리의 미션",
+        "paragraph": "전 세계 어디에서든, 모든 사람이 쉽고 안전하게 자신에게 꼭 맞는 숙소를 찾을 수 있도록 최고의 연결 경험을 제공합니다."
+      },
+      "vision": {
+        "title": "우리의 비전",
+        "point1": "누구나 접근 가능한 글로벌 숙소 정보 허브 구축",
+        "point2": "사용자 맞춤형 정보와 개인화된 검색 경험 제공",
+        "point3": "신뢰와 투명성을 기반으로 한 커뮤니티 조성"
+      },
+      "values": {
+        "title": "우리의 핵심 가치",
+        "value1": {
+          "icon": "✨",
+          "title": "사용자 중심",
+          "description": "모든 결정은 사용자의 편의와 만족을 최우선으로 합니다."
+        },
+        "value2": {
+          "icon": "🛡️",
+          "title": "투명성 및 신뢰",
+          "description": "정확하고 신뢰할 수 있는 정보를 제공하여 사용자에게 확신을 줍니다."
+        },
+        "value3": {
+          "icon": "🚀",
+          "title": "지속적인 혁신",
+          "description": "더 나은 숙소 찾기 경험을 위해 끊임없이 배우고 발전합니다."
+        }
+      },
+      "cta": {
+        "headline": "지금 바로 당신의 다음 보금자리를 찾아보세요!",
+        "subheadline": "Zippling과 함께 쉽고 간편하게 새로운 시작을 준비하세요.",
+        "buttonText": "숙소 찾으러 가기"
       }
-    },
-    "cta": {
-      "headline": "Find Your Next Home Today!",
-      "subheadline": "Prepare for your new beginning easily and conveniently with Zippling.",
-      "buttonText": "Find Accommodation"
-    }
-},
+  },
     
   "header": {
-   "about": "About Us",
-   "contact": "Contact Us",
-    "login": "Log in",
-   "logout": "Log out",
-   "signup": "Sign Up",
+   "about": "회사 소개",
+   "contact": "문의하기",
+    "login": "로그인",
+   "logout": "로그아웃",
+   "signup": "회원가입",
     "hi": "안녕하세요",
     "welcome_suffix": "님!"
   },
-  
+
   "site": {
     "korea": "한국 사이트",
     "canada": "캐나다 사이트",
     "japan": "일본 사이트"
   },
-
+  
  "signin": {
-   "title": "Welcome to Zippling!",
+   "title": "Zippling에 오신 것을 환영합니다!",
    "email": "이메일",
    "password": "비밀번호",
    "loginButton": "로그인",
    "loggingIn": "로그인 중…",
    "error": "오류: {message}"
  },
- 
+
   "signup": {
-    "title": "Sign Up",
-    "email": "Email",
-    "password": "Password",
-    "confirmPassword": "Confirm Password",
-    "passwordMismatch": "Passwords do not match.",
-    "passwordStrength": "Password must be at least 8 characters and include uppercase, lowercase, a number, and a special character.",
-    "fullName": "Full Name",
-    "nickname": "Nickname",
-    "phone": "Phone Number",
-    "birthdate": "Birthdate",
-    "signupButton": "Sign Up",
-    "signingUp": "Signing Up…",
-    "requiredFieldsNote": "* indicates a required field.",
-    "nameSpecialError": "Name can include letters, numbers, '-' and '_' only.",
-    "nickSpecialError": "Nickname can include letters, numbers, '-' and '_' only.",
-    "nameHangulError": "Only complete Hangul syllables are allowed in your name.",
-    "nickHangulError": "Only complete Hangul syllables are allowed in your nickname.",
-    "passwordMismatchError": "Passwords do not match.",
-    "emailTakenError": "This email is already in use.",
-    "emailCheckError": "An error occurred while checking the email. Please try again.",
-    "checkButton": "Check",
-    "checking": "Checking...",
-    "emailAvailable": "This email is available.",
-    "invalidEmailFormat": "Please enter a valid email format.",
-    "emailNotVerified": "Please check for email duplication.",
-    "verifyTitle": "Verify Your Account",
-    "verifyInstructions": "An email with a 6-digit code has been sent to {email}. Please enter it below to complete your registration.",
-    "verifyButton": "Verify & Complete",
-    "verifying": "Verifying...",
+    "title": "회원가입",
+    "email": "이메일",
+    "password": "비밀번호",
+    "confirmPassword": "비밀번호 확인",
+    "passwordMismatch": "비밀번호가 일치하지 않습니다.",
+    "passwordStrength": "비밀번호는 8자 이상이어야 하며, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.",
+    "fullName": "이름",
+    "nickname": "닉네임",
+    "phone": "전화번호",
+    "birthdate": "생년월일",
+    "signupButton": "회원가입",
+    "signingUp": "회원가입 중…",
+    "requiredFieldsNote": "* 필수 입력 필드입니다.",
+    "nameSpecialError": "이름에는 문자, 숫자, '-', '_'만 포함할 수 있습니다.",
+    "nickSpecialError": "닉네임에는 문자, 숫자, '-', '_'만 포함할 수 있습니다.",
+    "nameHangulError": "이름에는 완성된 한글만 허용됩니다.",
+    "nickHangulError": "닉네임에는 완성된 한글만 허용됩니다.",
+    "passwordMismatchError": "비밀번호가 일치하지 않습니다.",
+    "emailTakenError": "이미 사용 중인 이메일입니다.",
+    "emailCheckError": "이메일 확인 중 오류가 발생했습니다. 다시 시도해 주세요.",
+    "checkButton": "확인",
+    "checking": "확인 중...",
+    "emailAvailable": "사용 가능한 이메일입니다.",
+    "invalidEmailFormat": "유효한 이메일 형식을 입력해 주세요.",
+    "emailNotVerified": "이메일 중복 확인을 해주세요.",
+    "verifyTitle": "계정 인증",
+    "verifyInstructions": "{email}으로 6자리 인증 코드가 전송되었습니다. 아래에 코드를 입력하여 회원가입을 완료해 주세요.",
+    "verifyButton": "인증 및 완료",
+    "verifying": "인증 중...",
       "success": {
-        "title": "🎉 Welcome Aboard!",
-        "description": "Your account has been created successfully. Welcome to the Zippling community!",
-        "redirecting": "Redirecting to the homepage in 3 seconds…"
+        "title": "🎉 환영합니다!",
+        "description": "계정이 성공적으로 생성되었습니다. Zippling 커뮤니티에 오신 것을 환영합니다!",
+        "redirecting": "3초 후 홈페이지로 이동합니다…"
       }
   },
+
   "roomListTitle": "밴쿠버 방 매물 목록",
   "roompage_searchbar": "제목으로 검색...",
   "roompage_disclaimer": "Zippling은 신뢰할 수 있는 외부 플랫폼의 매물만 연결합니다. 원본 콘텐츠의 소유권을 존중하며, 전체 글을 제공하지 않습니다. 모든 중요한 정보는 반드시 출처 사이트에서 직접 확인하세요. Zippling은 계약 당사자가 아니며, 사용자 부주의로 인한 문제에 책임지지 않습니다.",
@@ -149,35 +153,35 @@
   "main_van_hot_deal_desc": "최신 특가 정보를 한눈에",
 
   "hotdeal": {
-    "hotDeals": "Hot Deals",
-    "hotDealsSubtitle": "“Handpicked hot deals for the smart shopper — updated daily.”",
-    "loading": "Loading…",
-    "noDealsYet": "No hot deals yet.",
-    "anonymous": "Anonymous",
+    "hotDeals": "핫딜",
+    "hotDealsSubtitle": "“스마트한 쇼핑객을 위한 엄선된 핫딜 — 매일 업데이트됩니다.”",
+    "loading": "불러오는 중…",
+    "noDealsYet": "아직 핫딜이 없습니다.",
+    "anonymous": "익명",
     "write": {
-      "writeHotDeal": "Write Hot Deal",
-      "editHotDeal": "Edit Hot Deal",
-      "errorPrefix": "Error:",
-      "titleLabel": "Title",
-      "contentLabel": "Content",
-      "thumbnailUrlLabel": "Thumbnail URL",
+      "writeHotDeal": "핫딜 작성",
+      "editHotDeal": "핫딜 수정",
+      "errorPrefix": "오류:",
+      "titleLabel": "제목",
+      "contentLabel": "내용",
+      "thumbnailUrlLabel": "썸네일 URL",
       "thumbnailUrlPlaceholder": "https://example.com/image.png",
-      "thumbnailUrlHelp": "If left blank, the default image is used.",
-      "saving": "Saving…",
-      "save": "Save",
-      "update": "Update",
-      "postButton": "Post"
+      "thumbnailUrlHelp": "비워두면 기본 이미지가 사용됩니다.",
+      "saving": "저장 중…",
+      "save": "저장",
+      "update": "업데이트",
+      "postButton": "게시"
     },
     "detail": {
-      "loading": "Loading...",
-      "backToList": "Back to List",
-      "by": "by",
-      "anonymous": "Anonymous",
-      "edit": "Edit",
-      "delete": "Delete",
-      "deleting": "Deleting...",
-      "deleteConfirm": "Are you sure you want to delete this post? This action cannot be undone.",
-      "deleteError": "Failed to delete the post. Please try again."
+      "loading": "불러오는 중...",
+      "backToList": "목록으로 돌아가기",
+      "by": "작성자",
+      "anonymous": "익명",
+      "edit": "수정",
+      "delete": "삭제",
+      "deleting": "삭제 중...",
+      "deleteConfirm": "이 게시물을 정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+      "deleteError": "게시물 삭제에 실패했습니다. 다시 시도해 주세요."
     }
   }
 }

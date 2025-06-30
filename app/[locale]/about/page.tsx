@@ -13,7 +13,7 @@ export default function AboutUsPage() {
     { src: "/images/about_hero_1.jpg", altKey: "hero.imageAlt1", width: 150, height: 200 }, 
     { src: "/images/about_hero_2.jpg", altKey: "hero.imageAlt2", width: 150, height: 200 },
     { src: "/images/about_hero_3.jpg", altKey: "hero.imageAlt3", width: 150, height: 200 },
-    { src: "/images/about_hero_4.jpg", altKey: "hero.imageAlt4", width: 150, height: 200, hiddenClass: "hidden sm:block" },
+    { src: "/images/about_hero_4.jpg", altKey: "hero.imageAlt4", width: 150, height: 200,},
     { src: "/images/about_hero_5.jpg", altKey: "hero.imageAlt5", width: 150, height: 200 },
     // 새로 추가할 이미지들
     { src: "/images/about_hero_6.jpg", altKey: "hero.imageAlt6", width: 150, height: 200 },
@@ -63,7 +63,7 @@ export default function AboutUsPage() {
                     {heroImages.map((img, index) => (
                         <div
                             key={`original-${index}`}
-                            className={`relative shadow-xl rounded-lg overflow-hidden flex-shrink-0 ${img.hiddenClass || ''}
+                            className={`relative shadow-xl rounded-lg overflow-hidden flex-shrink-0
                                         mx-3 sm:mx-4 md:mx-5 lg:mx-5 xl:mx-5`} /* mx- 값 조정 */
                             style={{ minWidth: `${img.width}px`, height: `${img.height}px` }} /* 이미지 크기 고정 */
                         >
@@ -80,7 +80,7 @@ export default function AboutUsPage() {
                     {heroImages.map((img, index) => (
                         <div
                             key={`duplicate-${index}`}
-                            className={`relative shadow-xl rounded-lg overflow-hidden flex-shrink-0 ${img.hiddenClass || ''}
+                            className={`relative shadow-xl rounded-lg overflow-hidden flex-shrink-0
                                         mx-3 sm:mx-4 md:mx-5 lg:mx-5 xl:mx-5`} /* mx- 값 조정 */
                             style={{ minWidth: `${img.width}px`, height: `${img.height}px` }} /* 이미지 크기 고정 */
                         >
