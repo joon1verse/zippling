@@ -27,6 +27,24 @@ export default function SignUpPage() {
   const [nickname,   setNickname]   = useState('');
   const [phone,      setPhone]      = useState('');
   const [birthdate,  setBirthdate]  = useState('');
+  const RESERVED_NAMES = [
+    // 관리자/시스템 관련 (Admin/System)
+    'admin', 'administrator', '운영자', '관리자', 'master', 'root', 'system', 'zippling', 'superuser', '管理者', '管理人',
+    
+    // 일반적인 비속어 및 욕설 - 한국어 (Korean)
+    '씨발', '시발', 'ㅅㅂ', '병신', 'ㅄ', '좆', '좇', '개새끼', '새끼', '미친', '지랄', '염병', '썅', '등신', '또라이', '애미', '느금마', '애비',
+    
+    // 일반적인 비속어 및 욕설 - 영어 (English)
+    'fuck', 'shit', 'bitch', 'cunt', 'asshole', 'bastard', 'dick', 'pussy', 'wanker', 'slut', 'whore',
+    
+    // 일반적인 비속어 및 욕설 - 일본어 (Japanese)
+    '馬鹿', 'バカ', 'ばか', '阿呆', 'アホ', 'あほ', '糞', 'クソ', 'くそ', '死ね', 'しね', 'ブス', 'デブ', 'チビ', 'インポ', 'マンコ', 'チンコ',
+  
+    // 차별 및 혐오 표현 (Hate Speech & Slurs)
+    'nigger', 'nigga', 'faggot', 'tranny', 'retard', // 영어
+    '일베', '메갈', '워마드', '페미', '한남', '한녀', '김치녀', '된장녀', '맘충', '틀딱', '급식충', // 한국어
+    'キチガイ', 'ガイジ', '部落' // 일본어
+  ];
   
   // 이메일 중복 확인을 위한 상태
   const [isCheckingEmail, setIsCheckingEmail] = useState(false);
@@ -42,6 +60,10 @@ export default function SignUpPage() {
 
   const nameError = useMemo(() => {
     if (!fullName) return '';
+    // 금지어 검사 로직
+    if (RESERVED_NAMES.some(reserved => fullName.toLowerCase().includes(reserved))) {
+      return t('nameReservedError'); // 번역 키
+    }
     if (hasJamo(fullName)) return t('nameHangulError');
     if (hasBadChar(fullName)) return t('nameSpecialError');
     return '';
@@ -49,6 +71,10 @@ export default function SignUpPage() {
 
   const nickError = useMemo(() => {
     if (!nickname) return '';
+    // 금지어 검사 로직
+    if (RESERVED_NAMES.some(reserved => nickname.toLowerCase().includes(reserved))) {
+      return t('nickReservedError'); // 번역 키
+    }
     if (hasJamo(nickname)) return t('nickHangulError');
     if (/^[가-힣]+$/.test(nickname) && nickname.length < 2) return t('nickLenError');
     if (hasBadChar(nickname)) return t('nickSpecialError');

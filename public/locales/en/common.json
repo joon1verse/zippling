@@ -150,6 +150,8 @@
     "verifyInstructions": "An email with a 6-digit code has been sent to {email}. Please enter it below to complete your registration.",
     "verifyButton": "Verify & Complete",
     "verifying": "Verifying...",
+    "nameReservedError": "This name is not available.",
+    "nickReservedError": "This nickname is not available.",
       "success": {
         "title": "🎉 Welcome Aboard!",
         "description": "Your account has been created successfully. Welcome to the Zippling community!",

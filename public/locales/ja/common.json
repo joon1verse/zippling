@@ -152,6 +152,8 @@
     "verifyInstructions": "{email}宛に6桁の認証コードを送信しました。下記に入力して登録を完了してください。",
     "verifyButton": "認証して完了",
     "verifying": "認証中...",
+    "nameReservedError": "This name is not available.",
+    "nickReservedError": "This nickname is not available.",
     "success": {
       "title": "🎉 ご登録ありがとうございます！",
       "description": "アカウントが正常に作成されました。Zipplingコミュニティへようこそ！",

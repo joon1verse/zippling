@@ -16,15 +16,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/layout.js"
     ],
-    "/[locale]/about/page": [
+    "/[locale]/vancouver/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/about/page.js"
+      "static/chunks/app/[locale]/vancouver/page.js"
     ],
-    "/[locale]/contact/page": [
+    "/[locale]/signup/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/contact/page.js"
+      "static/chunks/app/[locale]/signup/page.js"
     ]
   }
 }

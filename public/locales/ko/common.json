@@ -69,7 +69,7 @@
         "buttonText": "숙소 찾으러 가기"
       }
   },
-  
+
     "contact": {
       "hero": {
         "title": "문의하기",
@@ -152,6 +152,8 @@
     "verifyInstructions": "{email}으로 6자리 인증 코드가 전송되었습니다. 아래에 코드를 입력하여 회원가입을 완료해 주세요.",
     "verifyButton": "인증 및 완료",
     "verifying": "인증 중...",
+    "nameReservedError": "This name is not available.",
+    "nickReservedError": "This nickname is not available.",
       "success": {
         "title": "🎉 환영합니다!",
         "description": "계정이 성공적으로 생성되었습니다. Zippling 커뮤니티에 오신 것을 환영합니다!",
