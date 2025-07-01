@@ -73,7 +73,7 @@ export default function HeaderTopbar({ locale, initialSession }: HeaderTopbarPro
   const isLoggedIn = !!user;
 
   return (
-    <div className="w-full bg-teal-100 text-gray-700 text-sm h-10 flex items-center justify-between px-4 sm:px-6 border-b border-gray-200 z-10 relative">
+    <div className="relative top-0 z-40 w-full bg-teal-100 text-gray-700 text-sm h-10 flex items-center justify-between px-4 sm:px-6 border-b border-gray-200">
       {/* 반응형 메뉴 */}
       <div className="md:hidden">
         <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 rounded-md hover:bg-teal-200">

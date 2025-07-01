@@ -70,6 +70,33 @@
     }
   },
 
+    "contact": {
+      "hero": {
+        "title": "お問い合わせ",
+        "subtitle": "ご質問やご意見をお待ちしております"
+      },
+      "details": {
+        "heading": "お問い合わせ",
+        "emailLabel": "メールアドレス：",
+        "notice": "通常、1～2営業日以内にご返信いたします。",
+        "description": "パートナーシップのご相談から一般的なフィードバックまで、どんなご質問も歓迎です。お気軽にメッセージをお送りください！"
+      },
+      "social": {
+        "heading": "私たちとつながる",
+        "linkedin": "LinkedIn",
+        "twitter": "Twitter",
+        "instagram": "Instagram"
+      },
+      "form": {
+        "formHeading": "メッセージを送る",
+        "namePlaceholder": "お名前",
+        "emailPlaceholder": "メールアドレス",
+        "messagePlaceholder": "メッセージを入力してください",
+        "submit": "送信",
+        "successMessage": "メッセージを送信いただき、ありがとうございます。折り返しご連絡いたします。"
+      }
+    },
+
   "header": {
     "about": "私たちについて",
     "contact": "お問い合わせ",

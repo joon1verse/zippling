@@ -69,7 +69,34 @@
         "buttonText": "숙소 찾으러 가기"
       }
   },
-    
+  
+    "contact": {
+      "hero": {
+        "title": "문의하기",
+        "subtitle": "질문과 의견을 환영합니다"
+      },
+      "details": {
+        "heading": "연락처",
+        "emailLabel": "이메일 주소:",
+        "notice": "저희 팀은 영업일 기준 1~2일 내에 회신드립니다.",
+        "description": "파트너십 문의부터 일반적인 피드백까지, 모든 질문을 환영합니다. 편하게 메시지를 보내주세요!"
+      },
+      "social": {
+        "heading": "저희와 소통하세요",
+        "linkedin": "LinkedIn",
+        "twitter": "Twitter",
+        "instagram": "Instagram"
+      },
+      "form": {
+        "formHeading": "메시지 보내기",
+        "namePlaceholder": "이름을 입력하세요",
+        "emailPlaceholder": "이메일을 입력하세요",
+        "messagePlaceholder": "메시지를 입력하세요",
+        "submit": "전송",
+        "successMessage": "메시지를 보내주셔서 감사합니다. 곧 연락드리겠습니다."
+      }
+    },
+
   "header": {
    "about": "회사 소개",
    "contact": "문의하기",

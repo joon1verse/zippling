@@ -11,7 +11,7 @@ interface HeaderProps {
 
 export default function Header({ locale }: HeaderProps) {
   return (
-    <header className="relative z-20 bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-md">
+    <header className="relative top-0 z-50 bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-md">
       <div className="container mx-auto px-6 py-1 flex items-center justify-between">
         <Logo locale={locale} />
         <LanguageDropdown currentLocale={locale} />
