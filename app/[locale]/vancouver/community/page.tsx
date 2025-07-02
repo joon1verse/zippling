@@ -115,12 +115,11 @@ function CommunityContent() {
                     <div className="flex items-center gap-2 min-w-0">
                       {/* is_notice가 true일 때 '공지' 배지 표시 */}
                       {p.is_notice && (
-                        <span className="flex-shrink-0 bg-teal-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">
+                        <span className="flex-shrink-0 bg-teal-500 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full flex items-center gap-1">
                           <Megaphone size={14} />
-                          NOTICE
                         </span>
                       )}
-                      <p className="font-semibold truncate text-sm sm:text-base group-hover:underline">{p.title}</p>
+                      <p className="font-semibold text-sm group-hover:underline">{p.title}</p>
                     </div>
                   </div>
                   <div className="flex gap-4 text-xs text-gray-500 mt-1.5 pl-1">
