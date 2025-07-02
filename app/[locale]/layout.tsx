@@ -15,14 +15,19 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   let messages;
   try {
+    // 1. 해당 언어의 번역 파일을 불러옵니다.
     messages = (await import(`../../public/locales/${locale}/common.json`)).default;
   } catch (error) {
-    messages = {};
+    messages = {}; // 파일이 없으면 빈 객체로 초기화
   }
   
   const siteUrl = new URL("https://zippling.net");
+
+  // 2. [수정됨] 번역 파일에서 title과 description을 가져옵니다.
+  //    파일이 없거나 키가 없을 경우를 대비해 기본값을 설정합니다.
   const title = messages.Metadata?.title || "Zippling – Canada Room Rentals, Share Houses & Community";
   const description = messages.Metadata?.description || "Your community for room rentals, share houses, and homestays for students in Canada.";
+
 
   return {
     metadataBase: siteUrl,

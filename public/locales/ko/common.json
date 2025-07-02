@@ -2,6 +2,11 @@
   "hello": "한 곳에서 쉽게 찾으세요",
   "description": "Zippling은 여러 신뢰할 수 있는 플랫폼의 룸쉐어와 홈스테이 매물을 한 곳에 모아, 더 쉽고 빠른 검색을 도와드립니다.",
   "loading": "Loading...",
+
+  "Metadata": {
+    "title": "지플링 – 캐나다 룸렌트, 쉐어하우스 커뮤니티",
+    "description": "캐나다 유학생을 위한 룸렌트, 쉐어하우스, 홈스테이 정보 커뮤니티"
+  },
   
   "chooseCity": "도시 선택",
   "chooseCityPlaceholder": "도시를 선택하세요...",

@@ -3,6 +3,11 @@
   "description": "Zippling brings together room share and homestay listings from multiple trusted platforms — making your search faster and simpler.",
   "loading": "Loading...",
 
+  "Metadata": {
+    "title": "Zippling – Canada Room Rentals, Share Houses & Community",
+    "description": "Your community for room rentals, share houses, and homestays for students in Canada."
+  },
+
   "chooseCity": "Choose a City",
   "chooseCityPlaceholder": "Please choose the city...",
   "selectedCity": "Currently selected city is",
