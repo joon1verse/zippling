@@ -186,7 +186,7 @@ function VancouverRoomContent() {
             {listings.map((post) => (
               <li key={post.id} className="px-3 py-2 hover:bg-gray-50 transition group">
                 <div className="flex flex-row items-center w-full">
-                  <a href={post.link ?? '#'} target="_blank" rel="noreferrer" className="font-semibold text-sm group-hover:underline text-blue-700 truncate flex-1 min-w-0">{post.title}</a>
+                  <a href={post.link ?? '#'} target="_blank" rel="noreferrer" className="font-semibold text-sm group-hover:underline text-blue-700 flex-1 min-w-0">{post.title}</a>
                   {post.source && <span className="flex items-center gap-1 text-xs italic text-gray-500 flex-shrink-0 ml-3"><Info className="w-3.5 h-3.5 text-gray-400" />{post.source}</span>}
                 </div>
                 <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400 mt-0.5">
