@@ -96,7 +96,7 @@ function CommunityContent() {
           <h1 className="text-2xl font-bold tracking-tight">{t("title")}</h1>
           <span className="text-2xl">💬</span>
         </div>
-        <p className="text-sm text-gray-500 min-w-0 truncate mt-2">{t('subtitle')}</p>
+        <p className="text-sm text-gray-500 min-w-0 mt-2">{t('subtitle')}</p>
       </div>
 
       {loading ? (
