@@ -72,6 +72,11 @@
       "static/chunks/main-app.js",
       "static/css/app/[locale]/vancouver/community/write/page.css",
       "static/chunks/app/[locale]/vancouver/community/write/page.js"
+    ],
+    "/[locale]/signup/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[locale]/signup/page.js"
     ]
   }
 }

@@ -10,18 +10,15 @@ import DOMPurify from 'dompurify';
 import { useTranslations } from 'next-intl';
 import { ArrowLeft, Pencil, Trash2, Send, ThumbsUp, ThumbsDown } from 'lucide-react';
 
-// 타입 정의 (upvotes, downvotes 추가)
 type CommunityPost = Database['public']['Tables']['vancouver_community']['Row'];
 type CommunityComment = Database['public']['Tables']['vancouver_community_comments']['Row'];
 
 export default function CommunityDetailPage() {
-  // Hooks
   const { id, locale } = useParams() as { id: string; locale: string };
   const router = useRouter();
   const supabase = useSupabaseClient();
   const t = useTranslations('community.detail');
 
-  // State
   const [post, setPost] = useState<CommunityPost | null>(null);
   const [comments, setComments] = useState<CommunityComment[]>([]);
   const [newComment, setNewComment] = useState('');
@@ -29,12 +26,10 @@ export default function CommunityDetailPage() {
   const [isAuthor, setIsAuthor] = useState(false);
   const [loading, setLoading] = useState(true);
   
-  // 추천/비추천 상태 추가
   const [votes, setVotes] = useState({ upvotes: 0, downvotes: 0 });
   const [userVote, setUserVote] = useState<'up' | 'down' | null>(null);
   const [isVoteLoading, setIsVoteLoading] = useState(false);
 
-  // 1. 데이터 불러오기 (투표 정보 포함)
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -62,14 +57,12 @@ export default function CommunityDetailPage() {
     fetchData();
   }, [id, supabase]);
 
-  // 2. 게시물 삭제 핸들러
   const handleDeletePost = async () => {
     if (!post || !window.confirm(t('deleteConfirm'))) return;
     const { error } = await supabase.from('vancouver_community').delete().eq('id', post.id);
     if (error) { alert(t('deleteError')); } else { router.push(`/${locale}/vancouver/community`); }
   };
 
-  // 3. 댓글 작성 핸들러
   const handleCommentSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!newComment.trim() || !currentUser || !post) return;
@@ -79,37 +72,26 @@ export default function CommunityDetailPage() {
     if (error) { alert(t('commentError')); } else if (newCommentData) { setComments([...comments, newCommentData]); setNewComment(''); }
   };
 
-  // 4. 댓글 삭제 핸들러
   const handleDeleteComment = async (commentId: number) => {
     if (!window.confirm(t('deleteCommentConfirm'))) return;
     const { error } = await supabase.from('vancouver_community_comments').delete().eq('id', commentId);
     if (error) { alert(t('deleteCommentError')); } else { setComments(comments.filter(c => c.id !== commentId)); }
   };
 
-  // 5. 추천/비추천 핸들러
   const handleVote = async (voteType: 'up' | 'down') => {
     if (!currentUser) {
-      alert(t('loginToVote')); // 번역 키 추가 필요
+      alert(t('loginToVote'));
       return;
     }
     if (!post || isVoteLoading) return;
     setIsVoteLoading(true);
-
-    const { data, error } = await supabase.rpc('handle_vote', {
-      post_id_input: post.id,
-      vote_type_input: voteType
-    });
-
+    const { data, error } = await supabase.rpc('handle_vote', { post_id_input: post.id, vote_type_input: voteType });
     if (error) {
       console.error('Error handling vote:', error);
-      alert(t('voteError')); // 번역 키 추가 필요
+      alert(t('voteError'));
     } else {
       setVotes({ upvotes: data.upvotes, downvotes: data.downvotes });
-      if (userVote === voteType) {
-        setUserVote(null); // 투표 취소
-      } else {
-        setUserVote(voteType); // 투표 또는 변경
-      }
+      setUserVote(userVote === voteType ? null : voteType);
     }
     setIsVoteLoading(false);
   };
@@ -134,7 +116,8 @@ export default function CommunityDetailPage() {
         </div>
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
           <article className="p-6 sm:p-8">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-3 text-gray-900">{post.title}</h1>
+            {/* 게시물 제목: 폰트 크기 조정 (text-xl sm:text-2xl) */}
+            <h1 className="text-xl sm:text-2xl font-bold mb-3 text-gray-900">{post.title}</h1>
             <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-gray-500 mb-6">
               <div>
                 <span>{t('by')} {post.user_nickname || t('anonymous')}</span>
@@ -148,43 +131,47 @@ export default function CommunityDetailPage() {
                 </div>
               )}
             </div>
-            <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: safeContent }} />
+            {/* 본문: 폰트 크기 조정 (prose-lg 제거) */}
+            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: safeContent }} />
             
-            {/* 추천/비추천 버튼 섹션 */}
             <div className="mt-8 pt-4 border-t flex items-center justify-center gap-6">
               <button onClick={() => handleVote('up')} disabled={isVoteLoading} className={`flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors disabled:cursor-not-allowed ${userVote === 'up' ? 'text-green-600 font-bold' : ''}`}>
-                <ThumbsUp size={22} className={`${userVote === 'up' ? 'fill-current' : ''}`} />
-                <span className="text-lg">{votes.upvotes}</span>
+                <ThumbsUp size={20} className={`${userVote === 'up' ? 'fill-current' : ''}`} />
+                <span className="text-base">{votes.upvotes}</span>
               </button>
               <button onClick={() => handleVote('down')} disabled={isVoteLoading} className={`flex items-center gap-2 text-gray-600 hover:text-red-600 transition-colors disabled:cursor-not-allowed ${userVote === 'down' ? 'text-red-600 font-bold' : ''}`}>
-                <ThumbsDown size={22} className={`${userVote === 'down' ? 'fill-current' : ''}`} />
-                <span className="text-lg">{votes.downvotes}</span>
+                <ThumbsDown size={20} className={`${userVote === 'down' ? 'fill-current' : ''}`} />
+                <span className="text-base">{votes.downvotes}</span>
               </button>
             </div>
           </article>
 
           <section className="bg-gray-50/70 px-6 sm:px-8 py-4 border-t border-gray-200">
-            <h2 className="text-lg font-bold mb-5">{t('commentsTitle')} ({comments.length})</h2>
+            {/* 댓글 제목: 폰트 크기 조정 (text-base) */}
+            <h2 className="text-base font-bold mb-4">{t('commentsTitle')} ({comments.length})</h2>
             {currentUser ? (
               <form onSubmit={handleCommentSubmit} className="flex gap-3 mb-6 items-start">
-                <textarea value={newComment} onChange={(e) => setNewComment(e.target.value)} placeholder={t('commentPlaceholder')} className="flex-grow border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition resize-none" rows={4} />
-                <button type="submit" className="bg-teal-500 text-white px-5 py-3 rounded-md hover:bg-teal-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex-shrink-0" disabled={!newComment.trim()} aria-label="Submit comment"><Send size={22} /></button>
+                <textarea value={newComment} onChange={(e) => setNewComment(e.target.value)} placeholder={t('commentPlaceholder')} className="flex-grow border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition resize-none" rows={3} />
+                <button type="submit" className="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex-shrink-0" disabled={!newComment.trim()} aria-label="Submit comment"><Send size={20} /></button>
               </form>
             ) : (
               <p className="text-sm text-gray-500 mb-6 text-center bg-gray-100 p-4 rounded-md">{t('loginToComment')}</p>
             )}
-            <div className="space-y-4">
+            {/* 댓글 목록: 간격 조정 (space-y-3) */}
+            <div className="space-y-3">
               {comments.map(comment => (
                 <div key={comment.id} className="flex items-start gap-3">
                   <div className="flex-grow">
                     <div className="flex justify-between items-center">
                       <div>
-                        <span className="font-semibold text-sm text-gray-800">{comment.user_nickname || t('anonymous')}</span>
+                        {/* 댓글 닉네임: 폰트 크기 조정 (text-xs) */}
+                        <span className="font-semibold text-xs text-gray-800">{comment.user_nickname || t('anonymous')}</span>
                         <time className="text-xs text-gray-400 ml-2">{new Date(comment.created_at).toLocaleString(locale, { dateStyle: 'medium', timeStyle: 'short' })}</time>
                       </div>
                       {comment.user_id === currentUser?.id && (<button onClick={() => handleDeleteComment(comment.id)} className="text-gray-400 hover:text-red-500"><Trash2 size={13} /></button>)}
                     </div>
-                    <p className="text-gray-700 text-sm">{comment.content}</p>
+                    {/* 댓글 내용: 폰트 크기 조정 (text-sm) */}
+                    <p className="text-sm text-gray-700 mt-0.5">{comment.content}</p>
                   </div>
                 </div>
               ))}

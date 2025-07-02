@@ -14,6 +14,7 @@ export interface Database {
           user_id: any;
           upvotes: number;
           downvotes: number;
+          is_notice: boolean;
         };
         Insert: Partial<Omit<Database["public"]["Tables"]["vancouver_community"]["Row"], "id" | "created_at">>;
         Update: Partial<Database["public"]["Tables"]["vancouver_community"]["Row"]>;
@@ -75,6 +76,7 @@ export interface Database {
           postedAt: string | null;
           crawledAt: string | null;
           event_time: string | null;
+          is_notice: boolean;
         };
         Insert: Partial<Omit<Database["public"]["Tables"]["vancouver_roomlistings"]["Row"], "id" | "created_at">>;
         Update: Partial<Database["public"]["Tables"]["vancouver_roomlistings"]["Row"]>;
@@ -92,6 +94,7 @@ export interface Database {
           currency_type: any;
           upvotes: number;
           downvotes: number;
+          is_notice: boolean;
         };
         Insert: Partial<Omit<Database["public"]["Tables"]["hot_deal_posts"]["Row"], "id" | "created_at">>;
         Update: Partial<Database["public"]["Tables"]["hot_deal_posts"]["Row"]>;
