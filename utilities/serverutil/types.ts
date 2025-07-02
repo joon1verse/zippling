@@ -4,6 +4,66 @@ export type Json = string | number | boolean | null | { [key: string]: Json } | 
 export interface Database {
   public: {
     Tables: {
+      "vancouver_community": {
+        Row: {
+          id: number;
+          user_nickname: any;
+          created_at: string;
+          title: any;
+          content: any;
+          user_id: any;
+          upvotes: number;
+          downvotes: number;
+        };
+        Insert: Partial<Omit<Database["public"]["Tables"]["vancouver_community"]["Row"], "id" | "created_at">>;
+        Update: Partial<Database["public"]["Tables"]["vancouver_community"]["Row"]>;
+      };
+      "vancouver_community_votes": {
+        Row: {
+          id: number;
+          post_id: number;
+          user_id: any;
+          vote_type: any;
+          created_at: string;
+        };
+        Insert: Partial<Omit<Database["public"]["Tables"]["vancouver_community_votes"]["Row"], "id" | "created_at">>;
+        Update: Partial<Database["public"]["Tables"]["vancouver_community_votes"]["Row"]>;
+      };
+      "vancouver_community_comments": {
+        Row: {
+          id: number;
+          content: any;
+          created_at: string;
+          post_id: number;
+          user_id: any;
+          user_nickname: any | null;
+        };
+        Insert: Partial<Omit<Database["public"]["Tables"]["vancouver_community_comments"]["Row"], "id" | "created_at">>;
+        Update: Partial<Database["public"]["Tables"]["vancouver_community_comments"]["Row"]>;
+      };
+      "hot_deal_votes": {
+        Row: {
+          id: number;
+          post_id: number;
+          user_id: any;
+          vote_type: any;
+          created_at: string;
+        };
+        Insert: Partial<Omit<Database["public"]["Tables"]["hot_deal_votes"]["Row"], "id" | "created_at">>;
+        Update: Partial<Database["public"]["Tables"]["hot_deal_votes"]["Row"]>;
+      };
+      "hot_deal_comments": {
+        Row: {
+          id: number;
+          content: any;
+          created_at: string;
+          post_id: number;
+          user_id: any;
+          user_nickname: any | null;
+        };
+        Insert: Partial<Omit<Database["public"]["Tables"]["hot_deal_comments"]["Row"], "id" | "created_at">>;
+        Update: Partial<Database["public"]["Tables"]["hot_deal_comments"]["Row"]>;
+      };
       "vancouver_roomlistings": {
         Row: {
           id: any;
@@ -27,9 +87,11 @@ export interface Database {
           thumbnail_url: any | null;
           created_at: string;
           user_id: any;
-          user_nickname: any;
+          user_nickname: any | null;
           price: number | null;
           currency_type: any;
+          upvotes: number;
+          downvotes: number;
         };
         Insert: Partial<Omit<Database["public"]["Tables"]["hot_deal_posts"]["Row"], "id" | "created_at">>;
         Update: Partial<Database["public"]["Tables"]["hot_deal_posts"]["Row"]>;

@@ -1,4 +1,4 @@
-// app/[locale]/hot-deal/[id]/page.tsx
+// app/[locale]/vancouver/community/[id]/page.tsx
 'use client';
 
 import { useEffect, useState, FormEvent } from 'react';
@@ -10,38 +10,38 @@ import DOMPurify from 'dompurify';
 import { useTranslations } from 'next-intl';
 import { ArrowLeft, Pencil, Trash2, Send, ThumbsUp, ThumbsDown } from 'lucide-react';
 
-// 타입 정의
-type HotDealPost = Database['public']['Tables']['hot_deal_posts']['Row'];
-type HotDealComment = Database['public']['Tables']['hot_deal_comments']['Row'];
+// 타입 정의 (upvotes, downvotes 추가)
+type CommunityPost = Database['public']['Tables']['vancouver_community']['Row'];
+type CommunityComment = Database['public']['Tables']['vancouver_community_comments']['Row'];
 
-export default function HotDealDetailPage() {
+export default function CommunityDetailPage() {
   // Hooks
   const { id, locale } = useParams() as { id: string; locale: string };
   const router = useRouter();
   const supabase = useSupabaseClient();
-  const t = useTranslations('hotdeal.detail');
+  const t = useTranslations('community.detail');
 
   // State
-  const [post, setPost] = useState<HotDealPost | null>(null);
-  const [comments, setComments] = useState<HotDealComment[]>([]);
+  const [post, setPost] = useState<CommunityPost | null>(null);
+  const [comments, setComments] = useState<CommunityComment[]>([]);
   const [newComment, setNewComment] = useState('');
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isAuthor, setIsAuthor] = useState(false);
   const [loading, setLoading] = useState(true);
-
-  // 추천/비추천 상태
+  
+  // 추천/비추천 상태 추가
   const [votes, setVotes] = useState({ upvotes: 0, downvotes: 0 });
   const [userVote, setUserVote] = useState<'up' | 'down' | null>(null);
   const [isVoteLoading, setIsVoteLoading] = useState(false);
 
-  // 1. 데이터 불러오기
+  // 1. 데이터 불러오기 (투표 정보 포함)
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       const { data: { user } } = await supabase.auth.getUser();
       setCurrentUser(user);
 
-      const { data: postData } = await supabase.from('hot_deal_posts').select('*').eq('id', Number(id)).single();
+      const { data: postData } = await supabase.from('vancouver_community').select('*').eq('id', Number(id)).single();
       if (postData) {
         setPost(postData);
         setVotes({ upvotes: postData.upvotes, downvotes: postData.downvotes });
@@ -49,23 +49,24 @@ export default function HotDealDetailPage() {
       }
 
       if (user && postData) {
-        const { data: voteData } = await supabase.from('hot_deal_votes').select('vote_type').eq('post_id', postData.id).eq('user_id', user.id).single();
-        if (voteData) setUserVote(voteData.vote_type as 'up' | 'down');
+        const { data: voteData } = await supabase.from('vancouver_community_votes').select('vote_type').eq('post_id', postData.id).eq('user_id', user.id).single();
+        if (voteData) {
+          setUserVote(voteData.vote_type as 'up' | 'down');
+        }
       }
 
-      const { data: commentsData } = await supabase.from('hot_deal_comments').select('*').eq('post_id', Number(id)).order('created_at', { ascending: true });
+      const { data: commentsData } = await supabase.from('vancouver_community_comments').select('*').eq('post_id', Number(id)).order('created_at', { ascending: true });
       setComments(commentsData || []);
       setLoading(false);
     };
     fetchData();
   }, [id, supabase]);
 
-  // 2. 게시물 삭제, 수정 핸들러
-  const handleEdit = () => router.push(`/${locale}/hot-deal/write?id=${id}`);
+  // 2. 게시물 삭제 핸들러
   const handleDeletePost = async () => {
     if (!post || !window.confirm(t('deleteConfirm'))) return;
-    const { error } = await supabase.from('hot_deal_posts').delete().eq('id', post.id);
-    if (error) { alert(t('deleteError')); } else { router.push(`/${locale}/hot-deal`); }
+    const { error } = await supabase.from('vancouver_community').delete().eq('id', post.id);
+    if (error) { alert(t('deleteError')); } else { router.push(`/${locale}/vancouver/community`); }
   };
 
   // 3. 댓글 작성 핸들러
@@ -74,41 +75,51 @@ export default function HotDealDetailPage() {
     if (!newComment.trim() || !currentUser || !post) return;
     const { data: profileData } = await supabase.from('user_profiles').select('user_nickname').eq('id', currentUser.id).single();
     const nickname = profileData?.user_nickname || t('anonymous');
-    const { data: newCommentData, error } = await supabase.from('hot_deal_comments').insert({ content: newComment, post_id: post.id, user_id: currentUser.id, user_nickname: nickname }).select().single();
+    const { data: newCommentData, error } = await supabase.from('vancouver_community_comments').insert({ content: newComment, post_id: post.id, user_id: currentUser.id, user_nickname: nickname }).select().single();
     if (error) { alert(t('commentError')); } else if (newCommentData) { setComments([...comments, newCommentData]); setNewComment(''); }
   };
 
   // 4. 댓글 삭제 핸들러
   const handleDeleteComment = async (commentId: number) => {
     if (!window.confirm(t('deleteCommentConfirm'))) return;
-    const { error } = await supabase.from('hot_deal_comments').delete().eq('id', commentId);
+    const { error } = await supabase.from('vancouver_community_comments').delete().eq('id', commentId);
     if (error) { alert(t('deleteCommentError')); } else { setComments(comments.filter(c => c.id !== commentId)); }
   };
 
   // 5. 추천/비추천 핸들러
   const handleVote = async (voteType: 'up' | 'down') => {
-    if (!currentUser) { alert(t('loginToVote')); return; }
+    if (!currentUser) {
+      alert(t('loginToVote')); // 번역 키 추가 필요
+      return;
+    }
     if (!post || isVoteLoading) return;
     setIsVoteLoading(true);
-    const { data, error } = await supabase.rpc('handle_hotdeal_vote', { post_id_input: post.id, vote_type_input: voteType });
+
+    const { data, error } = await supabase.rpc('handle_vote', {
+      post_id_input: post.id,
+      vote_type_input: voteType
+    });
+
     if (error) {
-      alert(t('voteError'));
+      console.error('Error handling vote:', error);
+      alert(t('voteError')); // 번역 키 추가 필요
     } else {
       setVotes({ upvotes: data.upvotes, downvotes: data.downvotes });
-      setUserVote(userVote === voteType ? null : voteType);
+      if (userVote === voteType) {
+        setUserVote(null); // 투표 취소
+      } else {
+        setUserVote(voteType); // 투표 또는 변경
+      }
     }
     setIsVoteLoading(false);
   };
-  
-  const getSafeCurrencyCode = (code: string | null): string => {
-    if (!code) return 'CAD';
-    if (code === 'CA$') return 'CAD';
-    if (code === 'US$') return 'USD';
-    return code;
-  };
 
-  if (loading) return <p className="py-20 text-center text-gray-500">{t('loading')}</p>;
-  if (!post) return <p className="py-20 text-center text-gray-500">{t('postNotFound')}</p>;
+  if (loading) {
+    return <p className="py-20 text-center text-gray-500">{t('loading')}</p>;
+  }
+  if (!post) {
+    return <p className="py-20 text-center text-gray-500">{t('postNotFound')}</p>;
+  }
 
   const safeContent = DOMPurify.sanitize(post.content || '');
 
@@ -116,25 +127,39 @@ export default function HotDealDetailPage() {
     <div className="bg-gray-50 min-h-screen py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
       <div className="max-w-screen-lg mx-auto">
         <div className="mb-4">
-          <button onClick={() => router.back()} className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900"><ArrowLeft className="w-5 h-5 mr-1.5" />{t('backToList')}</button>
+          <button onClick={() => router.back()} className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+            <ArrowLeft className="w-5 h-5 mr-1.5" />
+            {t('backToList')}
+          </button>
         </div>
-
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
           <article className="p-6 sm:p-8">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-gray-900">{post.title}</h1>
-            {post.price != null && (
-              <p className="text-2xl font-bold text-teal-600 mb-4">{new Intl.NumberFormat(locale, { style: 'currency', currency: getSafeCurrencyCode(post.currency_type), minimumFractionDigits: 2 }).format(post.price)}</p>
-            )}
+            <h1 className="text-2xl sm:text-3xl font-bold mb-3 text-gray-900">{post.title}</h1>
             <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-gray-500 mb-6">
-              <div><span>{t('by')} {post.user_nickname || t('anonymous')}</span><span className="mx-1.5">·</span><time dateTime={post.created_at}>{new Date(post.created_at).toLocaleString(locale, { dateStyle: 'long', timeStyle: 'short' })}</time></div>
-              {isAuthor && (<div className="flex items-center gap-4"><button onClick={handleEdit} className="flex items-center gap-1 text-gray-500 hover:text-teal-600"><Pencil size={14} /><span>{t('edit')}</span></button><button onClick={handleDeletePost} className="flex items-center gap-1 text-gray-500 hover:text-red-600"><Trash2 size={14} /><span>{t('delete')}</span></button></div>)}
+              <div>
+                <span>{t('by')} {post.user_nickname || t('anonymous')}</span>
+                <span className="mx-1.5">·</span>
+                <time dateTime={post.created_at}>{new Date(post.created_at).toLocaleString(locale, { dateStyle: 'long', timeStyle: 'short' })}</time>
+              </div>
+              {isAuthor && (
+                <div className="flex items-center gap-4">
+                  <button onClick={() => router.push(`/${locale}/vancouver/community/write?id=${id}`)} className="flex items-center gap-1 text-gray-500 hover:text-teal-600"><Pencil size={14} /><span>{t('edit')}</span></button>
+                  <button onClick={handleDeletePost} className="flex items-center gap-1 text-gray-500 hover:text-red-600"><Trash2 size={14} /><span>{t('delete')}</span></button>
+                </div>
+              )}
             </div>
             <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: safeContent }} />
-
-            {/* 추천/비추천 버튼 상하 여백 수정 (mt-8 pt-4) */}
-            <div className="mt-8 pt-6 border-t flex items-center justify-center gap-6">
-              <button onClick={() => handleVote('up')} disabled={isVoteLoading} className={`flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors disabled:cursor-not-allowed ${userVote === 'up' ? 'text-green-600 font-bold' : ''}`}><ThumbsUp size={22} className={`${userVote === 'up' ? 'fill-current' : ''}`} /><span className="text-lg">{votes.upvotes}</span></button>
-              <button onClick={() => handleVote('down')} disabled={isVoteLoading} className={`flex items-center gap-2 text-gray-600 hover:text-red-600 transition-colors disabled:cursor-not-allowed ${userVote === 'down' ? 'text-red-600 font-bold' : ''}`}><ThumbsDown size={22} className={`${userVote === 'down' ? 'fill-current' : ''}`} /><span className="text-lg">{votes.downvotes}</span></button>
+            
+            {/* 추천/비추천 버튼 섹션 */}
+            <div className="mt-8 pt-4 border-t flex items-center justify-center gap-6">
+              <button onClick={() => handleVote('up')} disabled={isVoteLoading} className={`flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors disabled:cursor-not-allowed ${userVote === 'up' ? 'text-green-600 font-bold' : ''}`}>
+                <ThumbsUp size={22} className={`${userVote === 'up' ? 'fill-current' : ''}`} />
+                <span className="text-lg">{votes.upvotes}</span>
+              </button>
+              <button onClick={() => handleVote('down')} disabled={isVoteLoading} className={`flex items-center gap-2 text-gray-600 hover:text-red-600 transition-colors disabled:cursor-not-allowed ${userVote === 'down' ? 'text-red-600 font-bold' : ''}`}>
+                <ThumbsDown size={22} className={`${userVote === 'down' ? 'fill-current' : ''}`} />
+                <span className="text-lg">{votes.downvotes}</span>
+              </button>
             </div>
           </article>
 
@@ -153,7 +178,10 @@ export default function HotDealDetailPage() {
                 <div key={comment.id} className="flex items-start gap-3">
                   <div className="flex-grow">
                     <div className="flex justify-between items-center">
-                      <div><span className="font-semibold text-sm text-gray-800">{comment.user_nickname || t('anonymous')}</span><time className="text-xs text-gray-400 ml-2">{new Date(comment.created_at).toLocaleString(locale, { dateStyle: 'medium', timeStyle: 'short' })}</time></div>
+                      <div>
+                        <span className="font-semibold text-sm text-gray-800">{comment.user_nickname || t('anonymous')}</span>
+                        <time className="text-xs text-gray-400 ml-2">{new Date(comment.created_at).toLocaleString(locale, { dateStyle: 'medium', timeStyle: 'short' })}</time>
+                      </div>
                       {comment.user_id === currentUser?.id && (<button onClick={() => handleDeleteComment(comment.id)} className="text-gray-400 hover:text-red-500"><Trash2 size={13} /></button>)}
                     </div>
                     <p className="text-gray-700 text-sm">{comment.content}</p>

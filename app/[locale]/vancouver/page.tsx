@@ -75,27 +75,30 @@ export default function VancouverHubPage() {
           </div>
         </div>
 
-        {/* 3) Find a Job — 하단 중간 1col × 1row */}
+        {/* 3) Find a Job — 준비 중 상태로 변경 */}
         <div
-          onClick={() => navigate('find-job')}
           className="
-            cursor-pointer
-            md:col-start-2 md:row-start-2
+            relative md:col-start-2 md:row-start-2
             flex flex-col justify-center items-center
-            rounded-xl shadow-md hover:shadow-lg
-            bg-white hover:bg-blue-50
-            transition-all duration-200
+            rounded-xl shadow-sm
+            bg-gray-100
             p-3 md:p-4
             min-h-[120px] md:min-h-[150px]
-            border border-blue-100
+            border border-gray-200
+            cursor-not-allowed
           "
         >
-          <Briefcase className="w-5 h-5 md:w-6 md:h-6 mb-1 text-blue-500" />
-          <span className="text-sm md:text-base font-semibold mb-1 text-blue-700">
+          {/* 'Coming Soon' 배지 */}
+          <div className="absolute top-2 right-2 bg-teal-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+            {t('comingSoon')}
+          </div>
+
+          <Briefcase className="w-5 h-5 md:w-6 md:h-6 mb-1 text-gray-400" />
+          <span className="text-sm md:text-base font-semibold mb-1 text-gray-500">
             {t('main_van_find_job')}
           </span>
-          <span className="text-xs md:text-sm text-gray-600 text-center">
-            {t('main_van_find_job_desc')}
+          <span className="text-xs md:text-sm text-gray-400 text-center">
+            {t('featureComingSoon')}
           </span>
         </div>
 

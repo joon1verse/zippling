@@ -1,14 +1,5 @@
 {
-  "node": {
-    "da6e6c9e6f04c59469b14723fbf7a1f1126bdae2": {
-      "workers": {
-        "app/[locale]/signup/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5C%5Blocale%5D%5C%5Csignup%5C%5Cactions.ts%22%2C%5B%22verifyOtpAndSaveProfile%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/[locale]/signup/page": "action-browser"
-      }
-    }
-  },
+  "node": {},
   "edge": {},
-  "encryptionKey": "PZnVilDi7mossJtKVpwm2tb+kjt8Iv5xwAkIPsicCSQ="
+  "encryptionKey": "METRCSYMEhIxL3Fjot2NRLHZxTSB1dYmRXmEyEUvAWY="
 }

@@ -178,6 +178,8 @@
   "main_van_community_desc": "Share information and chat with locals.",
   "main_van_hot_deal": "Hot Deals",
   "main_van_hot_deal_desc": "Discover the latest special offers.",
+  "comingSoon": "Coming Soon",
+  "featureComingSoon": "This feature will be updated soon!",
 
   "hotdeal": {
     "hotDeals": "Hot Deals",
@@ -200,15 +202,61 @@
       "postButton": "Post"
     },
     "detail": {
-      "loading": "Loading...",
       "backToList": "Back to List",
       "by": "by",
-      "anonymous": "Anonymous",
       "edit": "Edit",
       "delete": "Delete",
-      "deleting": "Deleting...",
       "deleteConfirm": "Are you sure you want to delete this post? This action cannot be undone.",
-      "deleteError": "Failed to delete the post. Please try again."
+      "deleteError": "Failed to delete the post. Please try again.",
+      "loading": "Loading post...",
+      "postNotFound": "Post not found.",
+      "commentsTitle": "Comments",
+      "commentPlaceholder": "Write a comment...",
+      "loginToComment": "Please log in to write a comment.",
+      "noComments": "No comments yet.",
+      "commentError": "Failed to post the comment. Please try again.",
+      "deleteCommentConfirm": "Are you sure you want to delete this comment?",
+      "deleteCommentError": "Failed to delete the comment. Please try again."
+    }
+  },
+
+  "community": {
+    "title": "Community",
+    "subtitle": "Share your stories and connect with others.",
+    "loading": "Loading...",
+    "noPostsYet": "No posts yet. Be the first one to write!",
+    "anonymous": "Anonymous",
+    "detail": {
+      "backToList": "Back to List",
+      "by": "by",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleteConfirm": "Are you sure you want to delete this post? This action cannot be undone.",
+      "deleteError": "Failed to delete the post. Please try again.",
+      "loading": "Loading post...",
+      "postNotFound": "Post not found.",
+      "commentsTitle": "Comments",
+      "commentPlaceholder": "Write a comment...",
+      "loginToComment": "Please log in to write a comment.",
+      "noComments": "No comments yet.",
+      "commentError": "Failed to post the comment. Please try again.",
+      "deleteCommentConfirm": "Are you sure you want to delete this comment?",
+      "deleteCommentError": "Failed to delete the comment. Please try again."
+    },
+      "write": {
+      "editPost": "Edit Post",
+      "writePost": "Write a New Post",
+      "titleLabel": "Title",
+      "contentLabel": "Content",
+      "contentPlaceholder": "Share your story...",
+      "thumbnailHelp": "The first image in the content will be automatically used as the thumbnail.",
+      "saving": "Saving...",
+      "update": "Update Post",
+      "save": "Save Post",
+      "titleContentRequired": "Title and content are required.",
+      "loginRequired": "Login is required to write a post.",
+      "nicknameRequired": "A nickname is required to write a post. Please set it in your profile.",
+      "errorPrefix": "An error occurred:"
     }
   }
 }

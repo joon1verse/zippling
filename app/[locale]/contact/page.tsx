@@ -114,7 +114,7 @@ export default function ContactPage() {
             {t('social.heading')}
           </h3>
           <a
-            href="https://instagram.com/zippling"
+            href="https://instagram.com/zippling_net"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block text-gray-600 hover:text-teal-500"
