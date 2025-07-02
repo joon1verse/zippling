@@ -1,29 +1,31 @@
 // app/layout.tsx
-import './globals.css'
-import type { ReactNode } from 'react'
-import SupabaseProvider from '@server/supabaseProvider'
-import Script from 'next/script' // next/script 임포트
+
+import "./globals.css";
+import type { ReactNode } from "react";
+import { Noto_Sans_KR } from "next/font/google";
+import SupabaseProvider from "@server/supabaseProvider";
+
+// 폰트 설정은 전역으로 유지합니다.
+const notoSansKr = Noto_Sans_KR({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+  style: "normal",
+});
+
+// 가장 기본적인 메타데이터만 정의합니다.
+export const metadata = {
+  title: "Zippling",
+  description: "Canada’s Multilingual Community Platform for students.",
+};
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      {/* 애드센스 코드는 <head> 태그 내부에 위치해야 합니다.
-        Next.js App Router에서는 next/script 컴포넌트를 사용하여 스크립트가 올바른 위치에 삽입되도록 합니다.
-        strategy="afterInteractive"는 페이지가 상호작용 가능해진 후에 스크립트를 로드합니다.
-        YOUR_PUBLISHER_ID 부분을 실제 애드센스 퍼블리셔 ID로 교체해야 합니다.
-      */}
-      <Script async 
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3494006453865250"
-      crossOrigin="anonymous">
-      strategy="afterInteractive"
-      </Script>
-
-      <body>
-        {/* 전역에서 단 한 번만 Supabase Client를 생성해 감싸 줍니다 */}
-        <SupabaseProvider>
-          {children}
-        </SupabaseProvider>
+    // <html>과 <body> 태그는 여기에만 존재합니다.
+    <html lang="en" className={notoSansKr.className}>
+      {/* [수정됨] 사이트 전체 배경색을 여기서 지정합니다. */}
+      <body className="bg-gray-50">
+        <SupabaseProvider>{children}</SupabaseProvider>
       </body>
     </html>
-  )
+  );
 }
