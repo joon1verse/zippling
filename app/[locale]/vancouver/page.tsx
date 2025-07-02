@@ -75,10 +75,34 @@ export default function VancouverHubPage() {
           </div>
         </div>
 
-        {/* 3) Find a Job — 준비 중 상태로 변경 */}
+        {/* 3) Community — 하단 오른쪽 1col × 1row */}
+        <div
+          onClick={() => navigate('community')}
+          className="
+            cursor-pointer
+            md:col-start-2 md:row-start-2
+            flex flex-col justify-center items-center
+            rounded-xl shadow-md hover:shadow-lg
+            bg-white hover:bg-gray-100
+            transition-all duration-200
+            p-3 md:p-4
+            min-h-[120px] md:min-h-[150px]
+            border border-gray-200
+          "
+        >
+          <MessageSquare className="w-5 h-5 md:w-6 md:h-6 mb-1 text-teal-500" />
+          <span className="text-sm md:text-base font-semibold mb-1 text-gray-800">
+            {t('main_van_community')}
+          </span>
+          <span className="text-xs md:text-sm text-gray-600 text-center">
+            {t('main_van_community_desc')}
+          </span>
+        </div>
+
+        {/* 4) Find a Job — 준비 중 상태로 변경 */}
         <div
           className="
-            relative md:col-start-2 md:row-start-2
+            relative md:col-start-3 md:row-start-2
             flex flex-col justify-center items-center
             rounded-xl shadow-sm
             bg-gray-100
@@ -99,30 +123,6 @@ export default function VancouverHubPage() {
           </span>
           <span className="text-xs md:text-sm text-gray-400 text-center">
             {t('featureComingSoon')}
-          </span>
-        </div>
-
-        {/* 4) Community — 하단 오른쪽 1col × 1row */}
-        <div
-          onClick={() => navigate('community')}
-          className="
-            cursor-pointer
-            md:col-start-3 md:row-start-2
-            flex flex-col justify-center items-center
-            rounded-xl shadow-md hover:shadow-lg
-            bg-white hover:bg-gray-100
-            transition-all duration-200
-            p-3 md:p-4
-            min-h-[120px] md:min-h-[150px]
-            border border-gray-200
-          "
-        >
-          <MessageSquare className="w-5 h-5 md:w-6 md:h-6 mb-1 text-gray-500" />
-          <span className="text-sm md:text-base font-semibold mb-1 text-gray-800">
-            {t('main_van_community')}
-          </span>
-          <span className="text-xs md:text-sm text-gray-600 text-center">
-            {t('main_van_community_desc')}
           </span>
         </div>
 
