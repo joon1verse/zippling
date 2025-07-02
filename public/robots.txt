@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://zippling.net
+
+# Sitemaps
+Sitemap: https://zippling.net/sitemap.xml

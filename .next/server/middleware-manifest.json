@@ -10,15 +10,22 @@
       "page": "/",
       "matchers": [
         {
-          "regexp": "^/.*$",
-          "originalSource": "/:path*"
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?(?:\\/(\\/?index|\\/?index\\.json))?[\\/#\\?]?$",
+          "originalSource": "/"
+        },
+        {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?(?:\\/([^\\/#\\?]+?))\\/hot-deal\\/write(.json)?[\\/#\\?]?$",
+          "originalSource": "/:locale/hot-deal/write"
         }
       ],
       "wasm": [],
       "assets": [],
       "env": {
-        "__NEXT_BUILD_ID": "development",
-        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "METRCSYMEhIxL3Fjot2NRLHZxTSB1dYmRXmEyEUvAWY="
+        "__NEXT_BUILD_ID": "sIvbCOlXoXLZFh4x-ylju",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "O5SJGwnL/MsB9BTw/G2IHOvrNwSWlQb58eLDKn+nD+0=",
+        "__NEXT_PREVIEW_MODE_ID": "6bce4739b3b63289d4b2b55e4757d0b2",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "1a0e5313276e2ca9cebb30a62d10c330e98f813ba8b33a73a593475f38c575f8",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "f7361a0c381308a8c26297b5d1ddb496cbbefe1fbe6eec051c447123645acfe7"
       }
     }
   },

@@ -1,6 +1,7 @@
 {
   "hello": "Find it easily in one place",
   "description": "Zippling brings together room share and homestay listings from multiple trusted platforms — making your search faster and simpler.",
+  "loading": "Loading...",
 
   "chooseCity": "Choose a City",
   "chooseCityPlaceholder": "Please choose the city...",

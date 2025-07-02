@@ -1,30 +1,32 @@
 {
   "app\\[locale]\\hot-deal\\write\\WriteForm.tsx -> react-quill": {
-    "id": "app\\[locale]\\hot-deal\\write\\WriteForm.tsx -> react-quill",
+    "id": 5600,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_react-quill_lib_index_js.js"
+      "static/chunks/8012d7e2.e1326afb41fd516d.js",
+      "static/chunks/600.e5acaae1cab45468.js"
     ]
   },
   "app\\[locale]\\vancouver\\community\\write\\WriteForm.tsx -> react-quill": {
-    "id": "app\\[locale]\\vancouver\\community\\write\\WriteForm.tsx -> react-quill",
+    "id": 5600,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_react-quill_lib_index_js.js"
+      "static/chunks/8012d7e2.e1326afb41fd516d.js",
+      "static/chunks/600.e5acaae1cab45468.js"
     ]
   },
   "node_modules\\@supabase\\auth-js\\dist\\module\\lib\\helpers.js -> @supabase/node-fetch": {
-    "id": "node_modules\\@supabase\\auth-js\\dist\\module\\lib\\helpers.js -> @supabase/node-fetch",
+    "id": 485,
     "files": []
   },
   "node_modules\\@supabase\\functions-js\\dist\\module\\helper.js -> @supabase/node-fetch": {
-    "id": "node_modules\\@supabase\\functions-js\\dist\\module\\helper.js -> @supabase/node-fetch",
+    "id": 485,
     "files": []
   },
   "node_modules\\@supabase\\realtime-js\\dist\\module\\RealtimeClient.js -> @supabase/node-fetch": {
-    "id": "node_modules\\@supabase\\realtime-js\\dist\\module\\RealtimeClient.js -> @supabase/node-fetch",
+    "id": 485,
     "files": []
   },
   "node_modules\\@supabase\\storage-js\\dist\\module\\lib\\helpers.js -> @supabase/node-fetch": {
-    "id": "node_modules\\@supabase\\storage-js\\dist\\module\\lib\\helpers.js -> @supabase/node-fetch",
+    "id": 485,
     "files": []
   }
 }
