@@ -133,7 +133,7 @@ export default function HotDealDetailPage() {
               <div><span>{t('by')} {post.user_nickname || t('anonymous')}</span><span className="mx-1.5">·</span><time dateTime={post.created_at}>{new Date(post.created_at).toLocaleString(locale, { dateStyle: 'long', timeStyle: 'short' })}</time></div>
               {isAuthor && (<div className="flex items-center gap-4"><button onClick={handleEdit} className="flex items-center gap-1 text-gray-500 hover:text-teal-600"><Pencil size={14} /><span>{t('edit')}</span></button><button onClick={handleDeletePost} className="flex items-center gap-1 text-gray-500 hover:text-red-600"><Trash2 size={14} /><span>{t('delete')}</span></button></div>)}
             </div>
-            
+
             {/* [수정됨] 제목/정보와 본문 사이에 구분선을 추가합니다. */}
             <hr className="my-6 border-gray-300" />
 

@@ -138,7 +138,7 @@ function VancouverRoomContent() {
   };
 
   return (
-    <main className="w-full max-w-screen-lg mx-auto px-2 py-2">
+    <main className="w-full max-w-screen-lg mx-auto px-2 py-2 pt-6">
       {/* 공지, 헤더, 검색/필터 UI (기존과 동일) */}
       <div className="bg-yellow-50 border border-yellow-300 text-yellow-800 p-4 rounded-md mb-6">
         <div className="flex items-start gap-3">

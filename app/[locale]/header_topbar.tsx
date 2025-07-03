@@ -1,35 +1,41 @@
-// app/[locale]/header_topbar.tsx
+/*
+ * 파일 2: header_topbar.tsx
+ * * [수정 사항]
+ * - 상위 컴포넌트로부터 session 대신 user 객체를 직접 받도록 props 인터페이스와 로직을 수정합니다.
+ */
 'use client';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { createBrowserSupabase } from '@server/supabaseBrowserClient';
-import type { User, Session } from '@supabase/supabase-js';
+import type { User } from '@supabase/supabase-js'; // Session 타입은 더 이상 필요 없습니다.
 import { useEffect, useState } from 'react';
 
+// [FIXED] initialSession 대신 initialUser를 받도록 props 인터페이스를 수정합니다.
 interface HeaderTopbarProps {
   locale: string;
-  initialSession: Session | null;
+  initialUser: User | null;
 }
 
-export default function HeaderTopbar({ locale, initialSession }: HeaderTopbarProps) {
+export default function HeaderTopbar({ locale, initialUser }: HeaderTopbarProps) {
   const t = useTranslations('header');
   const router = useRouter();
   const supabase = createBrowserSupabase();
 
-  const [user, setUser] = useState<User | null>(initialSession?.user ?? null);
+  // [FIXED] initialUser를 사용하여 user 상태를 초기화합니다.
+  const [user, setUser] = useState<User | null>(initialUser);
   const [nickname, setNickname] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // [FIXED] initialUser가 변경될 때 user 상태를 업데이트합니다.
   useEffect(() => {
-    setUser(initialSession?.user ?? null);
-  }, [initialSession]);
+    setUser(initialUser);
+  }, [initialUser]);
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
-      // 로그인/로그아웃 시 router.refresh()는 여전히 유용하므로 유지합니다.
       if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
         router.refresh();
       }
@@ -58,17 +64,10 @@ export default function HeaderTopbar({ locale, initialSession }: HeaderTopbarPro
     })();
   }, [supabase, user]);
 
-  // --- ▼▼▼ 여기가 수정된 부분입니다 ▼▼▼ ---
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    
-    // 로그아웃 후, 홈페이지로 강제 이동시킵니다.
-    // 이 방식은 router.refresh()보다 더 확실하게 페이지 전체를
-    // 새로운 (로그아웃된) 상태로 그리도록 보장합니다.
-    // 특히 모바일 브라우저의 캐시 문제를 해결하는 데 효과적입니다.
     router.push(`/${locale}`);
   };
-  // --- ▲▲▲ ---
 
   const isLoggedIn = !!user;
 

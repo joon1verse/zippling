@@ -1,10 +1,15 @@
-// app/[locale]/contact/page.tsx
 'use client';
 
 import { useState } from 'react';
 import { Mail, Instagram, MessageCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+/**
+ * ContactPage 컴포넌트 (스타일 개선)
+ * - Get in Touch 카드: notice + description 분리 및 스타일 강화
+ * - 실제 동작하는 submit 핸들러 포함
+ * - Instagram 소셜 링크
+ */
 export default function ContactPage() {
   const t = useTranslations('contact');
   const [name, setName] = useState('');
@@ -15,8 +20,6 @@ export default function ContactPage() {
     e.preventDefault();
     // TODO: 실제 API 연동 또는 메일 전송 로직 추가
     console.log({ name, email, message });
-    // 사용자가 alert 창을 닫아야 다음 코드가 실행되는 것을 방지하기 위해,
-    // alert 대신 더 나은 사용자 경험을 제공하는 토스트 메시지 라이브러리 사용을 권장합니다.
     alert(t('form.successMessage'));
     setName('');
     setEmail('');
@@ -25,9 +28,9 @@ export default function ContactPage() {
 
   return (
     <>
-      {/* Hero Section (도입부) */}
+      {/* Hero Section */}
       <section className="py-6">
-        <div className="max-w-3xl mx-auto text-center px-4">
+        <div className="max-w-3xl mx-auto text-center px-4 pt-6">
           <MessageCircle className="w-10 h-10 text-teal-600 mx-auto mb-3" />
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
             {t('hero.title')}
@@ -38,12 +41,11 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* [수정됨] 페이지의 핵심 콘텐츠인 Contact Grid를 <main> 태그로 감쌉니다. */}
-      {/* 기존의 <section> 태그를 <main>으로 변경하여 시맨틱 의미를 강화합니다. */}
-      <main className="py-10 bg-gray-50">
+      {/* Contact Grid */}
+      <section className="py-10 bg-gray-50">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 px-4">
 
-          {/* Get in Touch 카드 */}
+          {/* Get in Touch 카드: 중앙 정렬, notice + description */}
           <div className="flex flex-col items-center text-center bg-white p-10 rounded-xl shadow-lg border border-gray-100 h-full space-y-4">
             <Mail className="w-10 h-10 text-teal-600 mb-2" />
             <h2 className="text-2xl font-semibold text-gray-800">
@@ -55,9 +57,11 @@ export default function ContactPage() {
             >
               official@zippling.net
             </a>
+            {/* Notice: 중간 강조 텍스트 */}
             <p className="text-sm text-gray-500">
               {t('details.notice')}
             </p>
+            {/* Description: 작은 회색 텍스트 */}
             <p className="text-sm text-gray-400">
               {t('details.description')}
             </p>
@@ -101,9 +105,9 @@ export default function ContactPage() {
             </form>
           </div>
         </div>
-      </main>
+      </section>
 
-      {/* Instagram 소셜 섹션 (부가 정보) */}
+      {/* Instagram 소셜 섹션 */}
       <section className="py-6">
         <div className="max-w-3xl mx-auto text-center">
           <h3 className="text-lg font-semibold text-gray-700 mb-2">

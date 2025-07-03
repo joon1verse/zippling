@@ -126,7 +126,7 @@ export default function WriteForm() {
 
   return (
     // [수정됨] 이 컴포넌트의 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
-    <main className="pt-4 px-4 max-w-4xl mx-auto pb-24">
+    <main className="pt-6 px-4 max-w-4xl mx-auto pb-24">
       <h1 className="text-3xl font-bold mb-8">{isEdit ? t('editPost') : t('writePost')}</h1>
       {error && <div className="mb-4 text-red-600 bg-red-100 p-3 rounded-md">{error}</div>}
       <form onSubmit={handleSubmit} className="space-y-6">

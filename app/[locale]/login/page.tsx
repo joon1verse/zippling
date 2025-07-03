@@ -40,7 +40,7 @@ export default function SignInPage() {
   return (
     // [수정됨] 페이지 전체를 감싸는 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
     <main className="min-h-screen bg-gray-50 pt-2 flex items-start justify-center">
-      <div className="w-full px-12 flex justify-center">
+      <div className="w-full px-12 pt-6 flex justify-center">
         <div className="mt-8 w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden">
           {/* 헤더 그라데이션 */}
           <div className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-center py-4">

@@ -163,7 +163,7 @@ export default function SignUpPage() {
   if (step === 'verify') {
     return (
       // [수정됨] OTP 인증 폼의 최상위 div를 main으로 변경합니다.
-      <main className="pt-12 px-4 flex justify-center">
+      <main className="pt-14 px-4 flex justify-center">
         <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8">
           <h1 className="text-2xl font-bold text-center mb-4">{t('verifyTitle')}</h1>
           <p className="text-center text-gray-600 mb-6">{t('verifyInstructions', { email })}</p>
@@ -192,7 +192,7 @@ export default function SignUpPage() {
   // 가입 폼 UI
   return (
     // [수정됨] 회원가입 폼의 최상위 div를 main으로 변경합니다.
-    <main className="min-h-screen bg-gray-50 pt-2 flex items-start justify-center">
+    <main className="min-h-screen bg-gray-50 pt-12 flex items-start justify-center">
       <div className="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden">
         <div className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-center py-4">
           <h1 className="text-2xl font-bold">{t('title')}</h1>

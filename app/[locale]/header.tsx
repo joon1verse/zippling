@@ -1,9 +1,15 @@
-'use client'; // 클라이언트 컴포넌트이므로 여기서 선언
+/*
+ * 파일 2: header.tsx (신규 추가 및 수정)
+ * * [수정 사항]
+ * - usePathname 훅을 사용하여 현재 경로를 가져옵니다.
+ * - 언어 변경 시, 현재 경로를 유지한 채로 locale만 변경하여 이동하도록 수정합니다.
+ */
+'use client'; 
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useState } from 'react';
-import Image from 'next/image'; // 이미지 사용을 위해 추가
+import Image from 'next/image';
 
 interface HeaderProps {
   locale: string;
@@ -24,11 +30,10 @@ function Logo({ locale }: { locale: string }) {
   return (
     <Link href={`/${locale}`}>
       <div className="flex items-center cursor-pointer">
-        {/* 기존 SVG 제거하고 이미지로 교체 */}
         <Image
           src="/images/zippling_logo_white.png"
           alt="Zippling Logo"
-          width={48}  // 기존 SVG w-8 = 32px
+          width={48}
           height={48}
           priority
         />
@@ -40,6 +45,7 @@ function Logo({ locale }: { locale: string }) {
 
 function LanguageDropdown({ currentLocale }: { currentLocale: string }) {
   const router = useRouter();
+  const pathname = usePathname(); // 현재 경로를 가져옵니다.
   const [open, setOpen] = useState(false);
 
   const languages = [
@@ -50,8 +56,16 @@ function LanguageDropdown({ currentLocale }: { currentLocale: string }) {
 
   const currentLang = languages.find(l => l.code === currentLocale);
 
-  const handleLocaleChange = (code: string) => {
-    router.push(`/${code}`);
+  const handleLocaleChange = (newLocale: string) => {
+    // 현재 경로에서 locale 부분을 제거합니다. 예: /ko/about -> /about
+    const pathWithoutLocale = pathname.startsWith(`/${currentLocale}`)
+      ? pathname.substring(currentLocale.length + 1)
+      : pathname;
+    
+    // 새로운 locale과 나머지 경로를 조합하여 새 URL을 만듭니다.
+    const newPath = `/${newLocale}${pathWithoutLocale}`;
+    
+    router.push(newPath);
     setOpen(false);
   };
 

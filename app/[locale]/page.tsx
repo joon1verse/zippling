@@ -18,23 +18,23 @@ export default function HomePage() {
   return (
     <main className="bg-gray-50">
       {/* ✨ ZIPPLING 브랜딩 및 메인 슬로건 섹션 */}
-      <section className="text-center px-4 pt-10 pb-10 bg-gradient-to-b from-white to-gray-50">
+      <section className="text-center px-4 pt-10 pb-8 bg-gradient-to-b from-white to-gray-50">
         <h1 
           className="text-5xl sm:text-6xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-teal-500 to-cyan-500 bg-clip-text text-transparent"
           style={{ textShadow: '0 2px 10px rgba(45, 212, 191, 0.2)' }}
         >
           ZIPPLING
         </h1>
-        <h2 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl mt-6 mb-4">
+        <h2 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl mt-4 mb-4 break-keep">
             {t('hello')}
         </h2>
-        <p className="max-w-3xl mx-auto text-lg text-gray-600 leading-relaxed">
+        <p className="max-w-3xl mx-auto text-lg text-gray-600 leading-relaxed break-keep">
           {t('description')}
         </p>
       </section>
 
       {/* 🏙️ 2단 그리드 레이아웃의 히어로 섹션 */}
-      <section className="py-8 sm:py-14 px-4 bg-white overflow-hidden">
+      <section className="py-7 sm:py-13 px-4 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
@@ -44,10 +44,10 @@ export default function HomePage() {
                 <Sparkles className="w-5 h-5 text-teal-500" />
                 <span>{t('vancouver.tagline')}</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-5">
+              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-5 break-keep">
                 {t('vancouver.title')}
               </h2>
-              <p className="text-lg text-gray-600 leading-relaxed">
+              <p className="text-lg text-gray-600 leading-relaxed break-keep">
                 {t('vancouver.description')}
               </p>
               {/* 버튼 그룹 */}

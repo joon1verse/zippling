@@ -89,7 +89,7 @@ function CommunityContent() {
   return (
     // [수정됨] 이 페이지의 핵심 콘텐츠 전체를 <main> 태그로 감쌉니다.
     // 기존의 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
-    <main className="relative pt-2 px-2 w-full max-w-screen-lg mx-auto min-h-screen pb-24">
+    <main className="relative pt-6 px-2 w-full max-w-screen-lg mx-auto min-h-screen pb-24">
       <div className="mb-4">
         <div className="flex items-center gap-1.5">
           <h1 className="text-2xl font-bold tracking-tight">{t("title")}</h1>
