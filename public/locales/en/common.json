@@ -1,21 +1,28 @@
 {
+  "main": {
   "hello": "Find it easily in one place",
   "description": "Zippling brings together room share and homestay listings from multiple trusted platforms — making your search faster and simpler.",
   "loading": "Loading...",
+  "chooseCity": "Choose a City",
+  "chooseCityPlaceholder": "Please choose the city...",
+  "selectedCity": "Currently selected city is",
+  "torontoComing": "Toronto (Coming Soon)",
+  "whyZipplingTitle": "Why was Zippling created?",
+  "whyZipplingDescription": "Zippling was created based on real experiences of struggling to find housing in Vancouver.\nAs a developer and as a foreigner myself, I — along with many others — faced difficulties navigating unfamiliar housing systems in a new culture.\n\nWhen people don't understand each other's norms or ways of communication, a barrier of information naturally arises.\nZippling was born to break down that barrier and help others make better choices with confidence.",
+    "vancouver": {
+      "tagline": "A New Beginning in Vancouver",
+      "title": "Zippling Officially Launches in Vancouver",
+      "description": "Zippling's expert student and settlement support services are now available in Vancouver. Find housing, visa, and lifestyle information all in one place.",
+      "buttonText": "Explore Vancouver Services",
+      "firstTimerLinkText": "New to Vancouver? (Read Our Guide)"
+    }
+
+  },
 
   "Metadata": {
     "title": "Zippling – Canada Room Rentals, Share Houses & Community",
     "description": "Your community for room rentals, share houses, and homestays for students in Canada."
   },
-
-  "chooseCity": "Choose a City",
-  "chooseCityPlaceholder": "Please choose the city...",
-  "selectedCity": "Currently selected city is",
-  "vancouver": "Vancouver",
-  "torontoComing": "Toronto (Coming Soon)",
-
-  "whyZipplingTitle": "Why was Zippling created?",
-  "whyZipplingDescription": "Zippling was created based on real experiences of struggling to find housing in Vancouver.\nAs a developer and as a foreigner myself, I — along with many others — faced difficulties navigating unfamiliar housing systems in a new culture.\n\nWhen people don't understand each other's norms or ways of communication, a barrier of information naturally arises.\nZippling was born to break down that barrier and help others make better choices with confidence.",
   
   "about": {
       "meta": {

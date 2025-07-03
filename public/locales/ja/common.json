@@ -1,21 +1,28 @@
 {
-  "hello": "すべてを一か所で簡単に見つける",
-  "description": "Zipplingは複数の信頼できるプラットフォームからルームシェアやホームステイ情報を集約し、検索をより速く、シンプルにします。",
-  "loading": "Loading...",
+  "main": {
+    "hello": "一箇所で簡単に見つけよう",
+    "description": "Zipplingは、信頼できる複数のプラットフォームからルームシェアやホームステイの物件情報を集約し、あなたの部屋探しをより速く、より簡単にします。",
+    "loading": "読み込み中...",
+    "chooseCity": "都市を選択してください",
+    "chooseCityPlaceholder": "都市を選択してください...",
+    "selectedCity": "現在選択されている都市は",
+    "torontoComing": "トロント (近日公開予定)",
+    "whyZipplingTitle": "Zipplingが作られた理由",
+    "whyZipplingDescription": "Zipplingは、バンクーバーでの家探しに苦労した実体験をもとに作られました。\n開発者として、そして外国人として、私自身も多くの人々と同じように、新しい文化の中で見慣れない住宅システムを理解することに困難を感じました。\n\nお互いの規範やコミュニケーション方法を理解できないとき、情報の壁は自然と生まれます。\nZipplingは、その壁を打ち破り、他の人々が自信を持ってより良い選択ができるように手助けするために生まれました。",
+    "vancouver": {
+      "tagline": "バンクーバーでの新しい始まり",
+      "title": "Zippling、バンクーバーで正式サービス開始",
+      "description": "これからはバンクーバーでもZipplingの専門的な留学・定着サポートサービスをご利用いただけます。住居、ビザ、生活情報まですべてをここで解決してください。",
+      "buttonText": "バンクーバーのサービスを見る",
+      "firstTimerLinkText": "バンクーバーは初めてですか？ (必読ガイド)"
+    }
+
+  },
 
   "Metadata": {
     "title": "Zippling – Canada Room Rentals, Share Houses & Community",
     "description": "Your community for room rentals, share houses, and homestays for students in Canada."
   },
-  
-  "chooseCity": "都市を選択",
-  "chooseCityPlaceholder": "都市を選択してください...",
-  "selectedCity": "現在選択されている都市：",
-  "vancouver": "バンクーバー",
-  "torontoComing": "トロント（近日公開）",
-
-  "whyZipplingTitle": "なぜZipplingが生まれたのか？",
-  "whyZipplingDescription": "Zipplingは、バンクーバーで住まいを探す際に直面した実体験から生まれました。\n開発者であり外国人である私自身、そして多くの人が、新しい文化の中で見慣れない住宅システムに戸惑い、困難を感じていました。\n\n互いの常識やコミュニケーション方法が分からないと、自然と情報の壁が生まれます。\nZipplingは、その壁を取り払い、誰もが安心して良い選択ができるようにサポートするために誕生しました。",
 
   "about": {
     "meta": {
