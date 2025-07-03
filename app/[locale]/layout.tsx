@@ -45,7 +45,6 @@ export async function generateMetadata({
       type: "website",
     },
     twitter: { card: "summary_large_image", title, description, images: ["/og-image.png"] },
-    icons: { icon: "/favicon.ico", shortcut: "/favicon.ico", apple: "/apple-touch-icon.png" },
   };
 }
 
