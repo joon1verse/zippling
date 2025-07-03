@@ -1,3 +1,6 @@
 {
-  "/[locale]/hot-deal/page": "app/[locale]/hot-deal/page.js"
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/[locale]/page": "app/[locale]/page.js",
+  "/[locale]/vancouver/page": "app/[locale]/vancouver/page.js",
+  "/[locale]/about/page": "app/[locale]/about/page.js"
 }

@@ -95,7 +95,7 @@
         "description": "파트너십 문의부터 일반적인 피드백까지, 모든 질문을 환영합니다. 편하게 메시지를 보내주세요!"
       },
       "social": {
-        "heading": "저희와 소통하세요",
+        "heading": "SNS Connection",
         "linkedin": "LinkedIn",
         "twitter": "Twitter",
         "instagram": "Instagram"
@@ -180,21 +180,20 @@
   "female": "여성",
   "male": "남성",
 
-  "main_van_what_do": "밴쿠버에서 무엇을 하고 싶으신가요?",
-  "main_van_room": "방 찾기",
-  "main_van_room_desc": "방/룸메이트를 찾거나 내놓기.",
-  "main_van_find_job": "일자리 찾기",
-  "main_van_find_job_desc": "현지 구인정보 보기.",
-  "main_van_post_resume": "이력서 등록",
-  "main_van_post_resume_desc": "나의 경력·스킬 공유.",
-  "main_van_flea_market": "중고거래",
-  "main_van_flea_market_desc": "중고 물품 사고팔기.",
-  "main_van_community": "커뮤니티",
-  "main_van_community_desc": "정보 공유·자유로운 소통",
-  "main_van_hot_deal": "핫딜",
-  "main_van_hot_deal_desc": "최신 특가 정보를 한눈에!",
-  "comingSoon": "Coming Soon",
-  "featureComingSoon": "This feature will be updated soon!",
+  "vancouver_main": {
+    "what_do_title": "밴쿠버에서 무엇을 하고 싶으신가요?",
+    "welcome_message": "새로운 여정에서 여러분이 안정적으로 정착하고 성공적으로 지내실 수 있도록 저희가 돕겠습니다!",
+    "room_title": "숙소",
+    "room_description": "밴쿠버에서 여러분에게 딱 맞는 숙소를 찾아보세요.",
+    "hot_deal_title": "핫 딜",
+    "hot_deal_description": "특별한 할인과 혜택을 찾아보세요.",
+    "community_title": "커뮤니티",
+    "community_description": "다른 학생들과 현지인들을 만나 소통하세요.",
+    "find_job_title": "일자리 찾기",
+    "find_job_description": "일하고 경험을 쌓을 기회를 찾아보세요.",
+    "comingSoon": "출시 예정",
+    "featureComingSoon": "이 기능은 곧 출시됩니다!"
+  },
 
   "hotdeal": {
     "hotDeals": "Hot Deals",

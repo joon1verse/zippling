@@ -100,13 +100,13 @@ export default function AboutUsPage() {
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-6">
                 {t('story.title')}
               </h2>
-              <p className="text-lg text-gray-700 leading-relaxed mb-4">
+              <p className="text-lg text-gray-700 leading-relaxed mb-4 break-keep">
                 {t('story.paragraph1')}
               </p>
-              <p className="text-lg text-gray-700 leading-relaxed mb-4">
+              <p className="text-lg text-gray-700 leading-relaxed mb-4 break-keep">
                 {t('story.paragraph2')}
               </p>
-              <p className="text-lg text-gray-700 leading-relaxed">
+              <p className="text-lg text-gray-700 leading-relaxed break-keep">
                 {t('story.paragraph3')}
               </p>
             </div>

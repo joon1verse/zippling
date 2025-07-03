@@ -6,7 +6,8 @@ import { useRouter, useParams } from 'next/navigation';
 import { Home, Briefcase, MessageSquare, Flame } from 'lucide-react';
 
 export default function VancouverHubPage() {
-  const t = useTranslations();
+  // useTranslations 훅을 'vancouver_main' 네임스페이스로 변경
+  const t = useTranslations('vancouver_main'); 
   const router = useRouter();
   const { locale } = useParams() as { locale: string };
 
@@ -18,9 +19,13 @@ export default function VancouverHubPage() {
     // [수정됨] 페이지 전체를 감싸는 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
     <main className="max-w-6xl mx-auto px-4 py-2 pt-6">
       {/* 페이지 제목 */}
-      <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6 text-center">
-        {t('main_van_what_do')}
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 text-center">
+        {t('what_do_title')} {/* 새 번역키 적용 */}
       </h2>
+      {/* 정겨운 환영인사 추가 */}
+      <p className="text-md sm:text-lg text-gray-600 mb-6 text-center">
+        {t('welcome_message')} {/* 새 번역키 적용 */}
+      </p>
 
       {/* 3cols × 2rows 그리드 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2 gap-4">
@@ -42,10 +47,10 @@ export default function VancouverHubPage() {
         >
           <Home className="w-10 h-10 md:w-14 md:h-14 mb-2 text-white drop-shadow" />
           <span className="text-xl md:text-2xl font-bold mb-1 text-white drop-shadow">
-            {t('main_van_room')}
+            {t('room_title')} {/* 새 번역키 적용 */}
           </span>
           <span className="text-white/90 text-sm md:text-base text-center">
-            {t('main_van_room_desc')}
+            {t('room_description')} {/* 새 번역키 적용 */}
           </span>
         </div>
 
@@ -69,10 +74,10 @@ export default function VancouverHubPage() {
           ">
             <Flame className="w-6 h-6 md:w-8 md:h-8 mb-2 text-orange-600" />
             <span className="text-base md:text-lg font-semibold text-orange-600 mb-1">
-              {t('main_van_hot_deal')}
+              {t('hot_deal_title')} {/* 새 번역키 적용 */}
             </span>
             <span className="text-xs md:text-sm text-gray-600 text-center">
-              {t('main_van_hot_deal_desc')}
+              {t('hot_deal_description')} {/* 새 번역키 적용 */}
             </span>
           </div>
         </div>
@@ -94,10 +99,10 @@ export default function VancouverHubPage() {
         >
           <MessageSquare className="w-5 h-5 md:w-6 md:h-6 mb-1 text-teal-500" />
           <span className="text-base md:text-lg font-semibold mb-1 text-gray-800">
-            {t('main_van_community')}
+            {t('community_title')} {/* 새 번역키 적용 */}
           </span>
           <span className="text-xs md:text-sm text-gray-600 text-center">
-            {t('main_van_community_desc')}
+            {t('community_description')} {/* 새 번역키 적용 */}
           </span>
         </div>
 
@@ -121,7 +126,7 @@ export default function VancouverHubPage() {
 
           <Briefcase className="w-5 h-5 md:w-6 md:h-6 mb-1 text-gray-400" />
           <span className="text-base md:text-lg font-semibold mb-1 text-gray-500">
-            {t('main_van_find_job')}
+            {t('find_job_title')} {/* 새 번역키 적용 */}
           </span>
           <span className="text-xs md:text-sm text-gray-400 text-center">
             {t('featureComingSoon')}

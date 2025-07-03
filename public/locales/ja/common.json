@@ -95,7 +95,7 @@
         "description": "パートナーシップのご相談から一般的なフィードバックまで、どんなご質問も歓迎です。お気軽にメッセージをお送りください！"
       },
       "social": {
-        "heading": "私たちとつながる",
+        "heading": "SNS Connection",
         "linkedin": "LinkedIn",
         "twitter": "Twitter",
         "instagram": "Instagram"
@@ -180,21 +180,20 @@
   "female": "女性",
   "male": "男性",
 
-  "main_van_what_do": "バンクーバーで何をしたいですか？",
-  "main_van_room": "部屋",
-  "main_van_room_desc": "部屋探しやルームメイト募集。",
-  "main_van_find_job": "仕事を探す",
-  "main_van_find_job_desc": "地元の求人情報を検索。",
-  "main_van_post_resume": "履歴書を投稿",
-  "main_van_post_resume_desc": "あなたの経験やスキルを共有。",
-  "main_van_flea_market": "フリーマーケット",
-  "main_van_flea_market_desc": "中古品の売買。",
-  "main_van_community": "コミュニティ",
-  "main_van_community_desc": "情報共有やローカルとの交流。",
-  "main_van_hot_deal": "お得情報",
-  "main_van_hot_deal_desc": "最新のお得情報をチェック。",
-  "comingSoon": "Coming Soon",
-  "featureComingSoon": "This feature will be updated soon!",
+  "vancouver_main": {
+    "what_do_title": "バンクーバーで何をしたいですか？",
+    "welcome_message": "新しい旅立ちにおいて、皆様が安心して生活し、活躍できるよう、私たちがお手伝いします！",
+    "room_title": "お部屋",
+    "room_description": "バンクーバーであなたにぴったりの宿泊先を見つけましょう。",
+    "hot_deal_title": "ホットディール",
+    "hot_deal_description": "限定のお得な情報や割引を見つけましょう。",
+    "community_title": "コミュニティ",
+    "community_description": "他の学生や地元の人々と繋がりましょう。",
+    "find_job_title": "仕事探し",
+    "find_job_description": "仕事をして経験を積む機会を見つけましょう。",
+    "comingSoon": "近日公開",
+    "featureComingSoon": "この機能は近日公開予定です！"
+  },
 
   "hotdeal": {
     "hotDeals": "Hot Deals",

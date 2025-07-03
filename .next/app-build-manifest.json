@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/[locale]/hot-deal/page": [
+    "/[locale]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/hot-deal/page.js"
+      "static/chunks/app/[locale]/page.js"
     ],
     "/[locale]/layout": [
       "static/chunks/webpack.js",
@@ -15,6 +15,16 @@
       "static/chunks/main-app.js",
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
+    ],
+    "/[locale]/about/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[locale]/about/page.js"
+    ],
+    "/[locale]/vancouver/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[locale]/vancouver/page.js"
     ]
   }
 }
