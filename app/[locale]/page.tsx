@@ -1,3 +1,4 @@
+// app/[locale]/page.tsx
 'use client';
 
 import { useTranslations } from 'next-intl';
@@ -15,7 +16,8 @@ export default function HomePage() {
   };
 
   return (
-    <>
+    // [수정됨] 페이지의 모든 섹션을 포함하는 최상위 Fragment를 main으로 변경합니다.
+    <main>
       {/* 💬 메인 슬로건 */}
       <section className="w-full flex flex-col items-center px-4 pt-1 pb-4">
         <div className="text-center mt-2 mb-8 px-4">
@@ -85,6 +87,6 @@ export default function HomePage() {
           {t('whyZipplingDescription')}
         </p>
       </section>
-    </>
+    </main>
   );
 }

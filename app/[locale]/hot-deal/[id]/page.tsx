@@ -113,17 +113,19 @@ export default function HotDealDetailPage() {
   const safeContent = DOMPurify.sanitize(post.content || '');
 
   return (
-    <div className="bg-gray-50 min-h-screen py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
+    // [수정됨] 페이지 전체를 감싸는 div를 main으로 변경하고, 스타일을 적용합니다.
+    <main className="bg-gray-50 min-h-screen py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
       <div className="max-w-screen-lg mx-auto">
         <div className="mb-4">
           <button onClick={() => router.back()} className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900"><ArrowLeft className="w-5 h-5 mr-1.5" />{t('backToList')}</button>
         </div>
 
+
+
+        {/* 게시물과 댓글을 포함하는 흰색 배경의 컨테이너 */}
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
           <article className="p-6 sm:p-8">
-            {/* 게시물 제목: 폰트 크기 조정 */}
             <h1 className="text-xl sm:text-2xl font-bold mb-2 text-gray-900">{post.title}</h1>
-            {/* 가격: 폰트 크기 조정 */}
             {post.price != null && (
               <p className="text-xl font-bold text-teal-600 mb-4">{new Intl.NumberFormat(locale, { style: 'currency', currency: getSafeCurrencyCode(post.currency_type), minimumFractionDigits: 2 }).format(post.price)}</p>
             )}
@@ -131,8 +133,11 @@ export default function HotDealDetailPage() {
               <div><span>{t('by')} {post.user_nickname || t('anonymous')}</span><span className="mx-1.5">·</span><time dateTime={post.created_at}>{new Date(post.created_at).toLocaleString(locale, { dateStyle: 'long', timeStyle: 'short' })}</time></div>
               {isAuthor && (<div className="flex items-center gap-4"><button onClick={handleEdit} className="flex items-center gap-1 text-gray-500 hover:text-teal-600"><Pencil size={14} /><span>{t('edit')}</span></button><button onClick={handleDeletePost} className="flex items-center gap-1 text-gray-500 hover:text-red-600"><Trash2 size={14} /><span>{t('delete')}</span></button></div>)}
             </div>
-            {/* 본문: 폰트 크기 조정 (prose-lg 제거) */}
-            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: safeContent }} />
+            
+            {/* [수정됨] 제목/정보와 본문 사이에 구분선을 추가합니다. */}
+            <hr className="my-6 border-gray-300" />
+
+            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: safeContent }} />     
 
             <div className="mt-8 pt-4 border-t flex items-center justify-center gap-6">
               <button onClick={() => handleVote('up')} disabled={isVoteLoading} className={`flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors disabled:cursor-not-allowed ${userVote === 'up' ? 'text-green-600 font-bold' : ''}`}><ThumbsUp size={20} className={`${userVote === 'up' ? 'fill-current' : ''}`} /><span className="text-base">{votes.upvotes}</span></button>
@@ -141,7 +146,6 @@ export default function HotDealDetailPage() {
           </article>
 
           <section className="bg-gray-50/70 px-6 sm:px-8 py-4 border-t border-gray-200">
-            {/* 댓글 제목: 폰트 크기 조정 */}
             <h2 className="text-base font-bold mb-4">{t('commentsTitle')} ({comments.length})</h2>
             {currentUser ? (
               <form onSubmit={handleCommentSubmit} className="flex gap-3 mb-6 items-start">
@@ -151,20 +155,17 @@ export default function HotDealDetailPage() {
             ) : (
               <p className="text-sm text-gray-500 mb-6 text-center bg-gray-100 p-4 rounded-md">{t('loginToComment')}</p>
             )}
-            {/* 댓글 목록: 간격 조정 */}
             <div className="space-y-3">
               {comments.map(comment => (
                 <div key={comment.id} className="flex items-start gap-3">
                   <div className="flex-grow">
                     <div className="flex justify-between items-center">
                       <div>
-                        {/* 댓글 닉네임: 폰트 크기 조정 */}
                         <span className="font-semibold text-xs text-gray-800">{comment.user_nickname || t('anonymous')}</span>
                         <time className="text-xs text-gray-400 ml-2">{new Date(comment.created_at).toLocaleString(locale, { dateStyle: 'medium', timeStyle: 'short' })}</time>
                       </div>
                       {comment.user_id === currentUser?.id && (<button onClick={() => handleDeleteComment(comment.id)} className="text-gray-400 hover:text-red-500"><Trash2 size={13} /></button>)}
                     </div>
-                    {/* 댓글 내용: 폰트 크기 조정 */}
                     <p className="text-sm text-gray-700 mt-0.5">{comment.content}</p>
                   </div>
                 </div>
@@ -174,6 +175,6 @@ export default function HotDealDetailPage() {
           </section>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

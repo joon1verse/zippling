@@ -106,7 +106,8 @@ export default function CommunityDetailPage() {
   const safeContent = DOMPurify.sanitize(post.content || '');
 
   return (
-    <div className="bg-gray-50 min-h-screen py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
+    // [수정됨] 페이지 전체를 감싸는 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
+    <main className="bg-gray-50 min-h-screen py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
       <div className="max-w-screen-lg mx-auto">
         <div className="mb-4">
           <button onClick={() => router.back()} className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
@@ -116,7 +117,6 @@ export default function CommunityDetailPage() {
         </div>
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
           <article className="p-6 sm:p-8">
-            {/* 게시물 제목: 폰트 크기 조정 (text-xl sm:text-2xl) */}
             <h1 className="text-xl sm:text-2xl font-bold mb-3 text-gray-900">{post.title}</h1>
             <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-gray-500 mb-6">
               <div>
@@ -131,7 +131,10 @@ export default function CommunityDetailPage() {
                 </div>
               )}
             </div>
-            {/* 본문: 폰트 크기 조정 (prose-lg 제거) */}
+
+            {/* [수정됨] 제목/정보와 본문 사이에 구분선을 추가합니다. */}
+            <hr className="my-6 border-gray-300" />
+
             <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: safeContent }} />
             
             <div className="mt-8 pt-4 border-t flex items-center justify-center gap-6">
@@ -147,7 +150,6 @@ export default function CommunityDetailPage() {
           </article>
 
           <section className="bg-gray-50/70 px-6 sm:px-8 py-4 border-t border-gray-200">
-            {/* 댓글 제목: 폰트 크기 조정 (text-base) */}
             <h2 className="text-base font-bold mb-4">{t('commentsTitle')} ({comments.length})</h2>
             {currentUser ? (
               <form onSubmit={handleCommentSubmit} className="flex gap-3 mb-6 items-start">
@@ -157,20 +159,17 @@ export default function CommunityDetailPage() {
             ) : (
               <p className="text-sm text-gray-500 mb-6 text-center bg-gray-100 p-4 rounded-md">{t('loginToComment')}</p>
             )}
-            {/* 댓글 목록: 간격 조정 (space-y-3) */}
             <div className="space-y-3">
               {comments.map(comment => (
                 <div key={comment.id} className="flex items-start gap-3">
                   <div className="flex-grow">
                     <div className="flex justify-between items-center">
                       <div>
-                        {/* 댓글 닉네임: 폰트 크기 조정 (text-xs) */}
                         <span className="font-semibold text-xs text-gray-800">{comment.user_nickname || t('anonymous')}</span>
                         <time className="text-xs text-gray-400 ml-2">{new Date(comment.created_at).toLocaleString(locale, { dateStyle: 'medium', timeStyle: 'short' })}</time>
                       </div>
                       {comment.user_id === currentUser?.id && (<button onClick={() => handleDeleteComment(comment.id)} className="text-gray-400 hover:text-red-500"><Trash2 size={13} /></button>)}
                     </div>
-                    {/* 댓글 내용: 폰트 크기 조정 (text-sm) */}
                     <p className="text-sm text-gray-700 mt-0.5">{comment.content}</p>
                   </div>
                 </div>
@@ -180,6 +179,6 @@ export default function CommunityDetailPage() {
           </section>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

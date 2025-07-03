@@ -79,7 +79,7 @@ export default async function LocaleLayout({
         <HeaderWithTopbar locale={locale} />
 
         {/* 2. 메인 콘텐츠 영역이 남는 공간을 모두 차지하도록 만듭니다. */}
-        <div className="flex-grow">{children}</div>
+        <div className="flex-grow pt-6">{children}</div>
 
         {/* 3. 푸터는 자연스럽게 최하단으로 밀려납니다. */}
         <footer className="bg-white text-gray-500 text-center py-4 text-sm">

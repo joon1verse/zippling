@@ -71,7 +71,6 @@ export default function WriteForm() {
   // 3. 폼 제출 핸들러
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // 유효성 검사: 가격을 항상 필수로 변경
     if (!title.trim() || !content.trim() || !price || price <= 0) {
       setError(t('titleContentPriceRequired'));
       return;
@@ -99,7 +98,6 @@ export default function WriteForm() {
       title: title.trim(),
       content,
       thumbnail_url: autoThumb,
-      // 가격과 통화를 항상 값으로 설정
       price: price,
       currency_type: currency,
       user_nickname: profile.user_nickname,
@@ -128,7 +126,8 @@ export default function WriteForm() {
   const formats = [ 'header', 'bold', 'italic', 'underline', 'strike', 'list', 'bullet', 'link', 'image' ];
 
   return (
-    <div className="pt-4 px-4 max-w-4xl mx-auto pb-24">
+    // [수정됨] 이 컴포넌트의 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
+    <main className="pt-4 px-4 max-w-4xl mx-auto pb-24">
       <h1 className="text-3xl font-bold mb-8">{isEdit ? t('editHotDeal') : t('writeHotDeal')}</h1>
       {error && <div className="mb-4 text-red-600 bg-red-100 p-3 rounded-md">{error}</div>}
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -137,7 +136,6 @@ export default function WriteForm() {
           <input id="title" type="text" value={title} onChange={e => setTitle(e.target.value)} required className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 text-lg focus:ring-teal-500 focus:border-teal-500" disabled={loading} />
         </div>
         
-        {/* 가격 입력 필드: 항상 활성화되도록 수정 */}
         <div>
           <label className="block mb-1 font-medium text-gray-700">{t('priceLabel')}</label>
           <div className="flex gap-3">
@@ -158,7 +156,6 @@ export default function WriteForm() {
           </div>
         </div>
         
-        {/* 관리자에게만 보이는 공지 체크박스 */}
         {userRole === 'admin' && (
           <div className="flex items-center gap-3 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <input type="checkbox" id="is_notice" checked={isNotice} onChange={(e) => setIsNotice(e.target.checked)} className="h-5 w-5 rounded border-gray-300 text-teal-600 focus:ring-teal-500 cursor-pointer" />
@@ -170,6 +167,6 @@ export default function WriteForm() {
           {loading ? t('saving') : isEdit ? t('update') : t('save')}
         </button>
       </form>
-    </div>
+    </main>
   );
 }

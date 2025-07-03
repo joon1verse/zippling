@@ -7,12 +7,11 @@ import Image from "next/image";
 import { createBrowserSupabase } from "@server/supabaseBrowserClient";
 import type { Database } from "@server/types";
 import { useTranslations } from "next-intl";
-import { Pencil, ChevronLeft, ChevronRight, Megaphone } from "lucide-react"; // Megaphone 아이콘 추가
+import { Pencil, ChevronLeft, ChevronRight, Megaphone } from "lucide-react";
 
 const NO_THUMB_URL = "/images/no_thumb.png";
 const POSTS_PER_PAGE = 10;
 
-// HotDealPost 타입에 is_notice 추가
 type HotDealPost = Pick<
   Database['public']['Tables']['hot_deal_posts']['Row'],
   | 'id'
@@ -22,7 +21,7 @@ type HotDealPost = Pick<
   | 'thumbnail_url'
   | 'created_at'
   | 'user_nickname'
-  | 'is_notice' // is_notice 필드 추가
+  | 'is_notice'
 >;
 
 function HotDealContent() {
@@ -39,7 +38,6 @@ function HotDealContent() {
   const currentPage = Number(searchParams.get('page')) || 1;
   const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
 
-  // 1) 데이터 불러오기 로직 수정
   const fetchPosts = useCallback(async (page: number) => {
     setLoading(true);
     const from = (page - 1) * POSTS_PER_PAGE;
@@ -47,8 +45,7 @@ function HotDealContent() {
 
     const { data, error } = await supabase
       .from("hot_deal_posts")
-      .select("id, title, price, currency_type, thumbnail_url, created_at, user_nickname, is_notice") // is_notice 컬럼 조회
-      // 정렬 순서 변경: 공지글을 최상단으로, 그 후 최신순으로 정렬
+      .select("id, title, price, currency_type, thumbnail_url, created_at, user_nickname, is_notice")
       .order("is_notice", { ascending: false })
       .order("created_at", { ascending: false })
       .range(from, to);
@@ -93,7 +90,9 @@ function HotDealContent() {
   };
 
   return (
-    <div className="relative pt-2 px-2 w-full max-w-screen-lg mx-auto min-h-screen pb-24">
+    // [수정됨] 이 페이지의 핵심 콘텐츠 전체를 <main> 태그로 감쌉니다.
+    // 기존의 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
+    <main className="relative pt-2 px-2 w-full max-w-screen-lg mx-auto min-h-screen pb-24">
       <div className="mb-4">
         <div className="flex items-center gap-1.5">
           <h1 className="text-2xl font-bold tracking-tight">{t("hotDeals")}</h1>
@@ -110,10 +109,8 @@ function HotDealContent() {
         <p className="py-20 text-center text-gray-500 text-base">{t("noDealsYet")}</p>
       ) : (
         <>
-          {/* 2) 게시물 목록 UI 수정 */}
           <ul className="divide-y divide-gray-200 bg-white rounded-2xl border shadow-sm overflow-hidden">
             {posts.map((p) => (
-              // is_notice가 true일 때 배경색 변경
               <li key={p.id} className={`group ${p.is_notice ? 'bg-teal-50 hover:bg-teal-100/60' : 'hover:bg-gray-50'}`}>
                 <div onClick={() => router.push(`/${locale}/hot-deal/${p.id}`)} className="flex w-full cursor-pointer items-center px-3 py-2 gap-4 transition-colors">
                   <div className="flex-shrink-0 w-16 h-16 bg-gray-100 border rounded-lg overflow-hidden flex items-center justify-center">
@@ -121,7 +118,6 @@ function HotDealContent() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      {/* is_notice가 true일 때 '공지' 배지 표시 */}
                       {p.is_notice && (
                         <span className="flex-shrink-0 bg-teal-500 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full flex items-center gap-1">
                           <Megaphone size={14} />
@@ -129,7 +125,6 @@ function HotDealContent() {
                       )}
                       <span className="font-semibold text-sm group-hover:underline">{p.title}</span>
                     </div>
-                    {/* 공지가 아닐 때만 가격 표시 */}
                     {p.price != null && !p.is_notice && (
                       <span className="block text-sm text-teal-600 font-bold">{p.currency_type} {p.price}</span>
                     )}
@@ -152,7 +147,7 @@ function HotDealContent() {
       )}
 
       <button onClick={handleWrite} className="fixed bottom-8 right-8 flex items-center justify-center w-14 h-14 bg-teal-500 text-white rounded-full shadow-lg hover:bg-teal-600 transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500" aria-label="Write a new post"><Pencil size={24} /></button>
-    </div>
+    </main>
   );
 }
 

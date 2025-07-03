@@ -20,7 +20,8 @@ export default function SignUpSuccessPage() {
   }, [router, locale]);
 
   return (
-    <div className="pt-12 px-4 flex justify-center">
+    // [수정됨] 페이지 전체를 감싸는 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
+    <main className="pt-12 px-4 flex justify-center">
       <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
         <h1 className="text-2xl font-bold text-teal-600 mb-4">
           {t('title')} {/* 예: "🎉 Welcome Aboard!" */}
@@ -32,6 +33,6 @@ export default function SignUpSuccessPage() {
           {t('redirecting')} {/* 예: "Redirecting to the homepage in 3 seconds…" */}
         </p>
       </div>
-    </div>
+    </main>
   );
 }

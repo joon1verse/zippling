@@ -1,7 +1,9 @@
 {
   "/[locale]/page": "app/[locale]/page.js",
-  "/[locale]/hot-deal/write/page": "app/[locale]/hot-deal/write/page.js",
   "/[locale]/login/page": "app/[locale]/login/page.js",
-  "/[locale]/vancouver/room/page": "app/[locale]/vancouver/room/page.js",
-  "/[locale]/about/page": "app/[locale]/about/page.js"
+  "/[locale]/hot-deal/page": "app/[locale]/hot-deal/page.js",
+  "/[locale]/hot-deal/write/page": "app/[locale]/hot-deal/write/page.js",
+  "/[locale]/vancouver/page": "app/[locale]/vancouver/page.js",
+  "/[locale]/vancouver/community/[id]/page": "app/[locale]/vancouver/community/[id]/page.js",
+  "/[locale]/hot-deal/[id]/page": "app/[locale]/hot-deal/[id]/page.js"
 }

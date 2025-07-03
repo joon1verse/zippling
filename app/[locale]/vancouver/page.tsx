@@ -1,3 +1,4 @@
+// app/[locale]/vancouver/page.tsx
 'use client';
 
 import { useTranslations } from 'next-intl';
@@ -14,7 +15,8 @@ export default function VancouverHubPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-2">
+    // [수정됨] 페이지 전체를 감싸는 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
+    <main className="max-w-6xl mx-auto px-4 py-2">
       {/* 페이지 제목 */}
       <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6 text-center">
         {t('main_van_what_do')}
@@ -39,7 +41,7 @@ export default function VancouverHubPage() {
           "
         >
           <Home className="w-10 h-10 md:w-14 md:h-14 mb-2 text-white drop-shadow" />
-          <span className="text-lg md:text-xl font-bold mb-1 text-white drop-shadow">
+          <span className="text-xl md:text-2xl font-bold mb-1 text-white drop-shadow">
             {t('main_van_room')}
           </span>
           <span className="text-white/90 text-sm md:text-base text-center">
@@ -75,7 +77,7 @@ export default function VancouverHubPage() {
           </div>
         </div>
 
-        {/* 3) Community — 하단 오른쪽 1col × 1row */}
+        {/* 3) Community — 하단 중앙 1col × 1row */}
         <div
           onClick={() => navigate('community')}
           className="
@@ -91,7 +93,7 @@ export default function VancouverHubPage() {
           "
         >
           <MessageSquare className="w-5 h-5 md:w-6 md:h-6 mb-1 text-teal-500" />
-          <span className="text-sm md:text-base font-semibold mb-1 text-gray-800">
+          <span className="text-base md:text-lg font-semibold mb-1 text-gray-800">
             {t('main_van_community')}
           </span>
           <span className="text-xs md:text-sm text-gray-600 text-center">
@@ -118,7 +120,7 @@ export default function VancouverHubPage() {
           </div>
 
           <Briefcase className="w-5 h-5 md:w-6 md:h-6 mb-1 text-gray-400" />
-          <span className="text-sm md:text-base font-semibold mb-1 text-gray-500">
+          <span className="text-base md:text-lg font-semibold mb-1 text-gray-500">
             {t('main_van_find_job')}
           </span>
           <span className="text-xs md:text-sm text-gray-400 text-center">
@@ -127,6 +129,6 @@ export default function VancouverHubPage() {
         </div>
 
       </div>
-    </div>
+    </main>
   );
 }

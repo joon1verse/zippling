@@ -10,7 +10,6 @@ import { Pencil, Megaphone, ChevronLeft, ChevronRight } from "lucide-react";
 
 const POSTS_PER_PAGE = 15;
 
-// CommunityPost 타입에 is_notice 추가
 type CommunityPost = Pick<
   Database['public']['Tables']['vancouver_community']['Row'],
   | 'id'
@@ -18,7 +17,7 @@ type CommunityPost = Pick<
   | 'created_at'
   | 'user_nickname'
   | 'user_id'
-  | 'is_notice' // is_notice 필드 추가
+  | 'is_notice'
 >;
 
 function CommunityContent() {
@@ -35,7 +34,6 @@ function CommunityContent() {
   const currentPage = Number(searchParams.get('page')) || 1;
   const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
 
-  // 1) 데이터 불러오기 로직 수정
   const fetchPosts = useCallback(async (page: number) => {
     setLoading(true);
     const from = (page - 1) * POSTS_PER_PAGE;
@@ -43,8 +41,7 @@ function CommunityContent() {
 
     const { data, error } = await supabase
       .from("vancouver_community")
-      .select("id, title, created_at, user_nickname, user_id, is_notice") // is_notice 컬럼 조회
-      // 정렬 순서 변경: 공지글을 최상단으로, 그 후 최신순으로 정렬
+      .select("id, title, created_at, user_nickname, user_id, is_notice")
       .order("is_notice", { ascending: false })
       .order("created_at", { ascending: false })
       .range(from, to);
@@ -90,7 +87,9 @@ function CommunityContent() {
   };
 
   return (
-    <div className="relative pt-2 px-2 w-full max-w-screen-lg mx-auto min-h-screen pb-24">
+    // [수정됨] 이 페이지의 핵심 콘텐츠 전체를 <main> 태그로 감쌉니다.
+    // 기존의 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
+    <main className="relative pt-2 px-2 w-full max-w-screen-lg mx-auto min-h-screen pb-24">
       <div className="mb-4">
         <div className="flex items-center gap-1.5">
           <h1 className="text-2xl font-bold tracking-tight">{t("title")}</h1>
@@ -105,15 +104,12 @@ function CommunityContent() {
         <p className="py-20 text-center text-gray-500 text-base">{t("noPostsYet")}</p>
       ) : (
         <>
-          {/* 2) 게시물 목록 UI 수정 */}
           <ul className="divide-y divide-gray-200 bg-white rounded-2xl border shadow-sm overflow-hidden">
             {posts.map((p) => (
-              // is_notice가 true일 때 배경색 변경
               <li key={p.id} className={`group ${p.is_notice ? 'bg-teal-50 hover:bg-teal-100/60' : 'hover:bg-gray-50'}`}>
                 <div onClick={() => router.push(`/${locale}/vancouver/community/${p.id}`)} className="w-full cursor-pointer px-4 py-3 transition-colors">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 min-w-0">
-                      {/* is_notice가 true일 때 '공지' 배지 표시 */}
                       {p.is_notice && (
                         <span className="flex-shrink-0 bg-teal-500 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full flex items-center gap-1">
                           <Megaphone size={14} />
@@ -140,7 +136,7 @@ function CommunityContent() {
       )}
 
       <button onClick={handleWrite} className="fixed bottom-8 right-8 flex items-center justify-center w-14 h-14 bg-teal-500 text-white rounded-full shadow-lg hover:bg-teal-600 transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500" aria-label="Write a new post"><Pencil size={24} /></button>
-    </div>
+    </main>
   );
 }
 

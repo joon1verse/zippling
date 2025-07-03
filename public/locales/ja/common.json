@@ -227,7 +227,8 @@
       "noComments": "No comments yet.",
       "commentError": "Failed to post the comment. Please try again.",
       "deleteCommentConfirm": "Are you sure you want to delete this comment?",
-      "deleteCommentError": "Failed to delete the comment. Please try again."
+      "deleteCommentError": "Failed to delete the comment. Please try again.",
+      "loginToVote": "Please login to vote for contents."
     }
   },
 
@@ -252,7 +253,8 @@
       "noComments": "No comments yet.",
       "commentError": "Failed to post the comment. Please try again.",
       "deleteCommentConfirm": "Are you sure you want to delete this comment?",
-      "deleteCommentError": "Failed to delete the comment. Please try again."
+      "deleteCommentError": "Failed to delete the comment. Please try again.",
+      "loginToVote": "Please login to vote for contents."
     },
       "write": {
       "editPost": "Edit Post",
