@@ -179,6 +179,11 @@
   "roompage_disclaimer": "Zipplingは信頼できるプラットフォームの情報のみを掲載しています。オリジナルコンテンツの権利を尊重し、投稿の全文は表示しません。重要な情報は必ず元サイトでご確認ください。Zipplingは契約等に関与せず、ユーザーの過失による問題の責任は負いません。",
   "female": "女性",
   "male": "男性",
+  "delete_confirmation": "Are you sure you want to delete this post?",
+  "delete_success": "Post deleted successfully.",
+  "delete_fail": "Failed to delete the post. Please try again.",
+  "delete_post": "Delete post",
+  "delete_fail_with_reason": "Failed to delete post. Reason: {{reason}}",
 
   "vancouver_main": {
     "what_do_title": "バンクーバーで何をしたいですか？",

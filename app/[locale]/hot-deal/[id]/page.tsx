@@ -28,18 +28,31 @@ export default function HotDealDetailPage() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isAuthor, setIsAuthor] = useState(false);
   const [loading, setLoading] = useState(true);
+  
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // 추천/비추천 상태
   const [votes, setVotes] = useState({ upvotes: 0, downvotes: 0 });
   const [userVote, setUserVote] = useState<'up' | 'down' | null>(null);
   const [isVoteLoading, setIsVoteLoading] = useState(false);
 
-  // 1. 데이터 불러오기
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       const { data: { user } } = await supabase.auth.getUser();
       setCurrentUser(user);
+
+      if (user) {
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single();
+        
+        if (profile && profile.role === 'admin') {
+          setIsAdmin(true);
+        }
+      }
 
       const { data: postData } = await supabase.from('hot_deal_posts').select('*').eq('id', Number(id)).single();
       if (postData) {
@@ -48,9 +61,19 @@ export default function HotDealDetailPage() {
         setIsAuthor(postData.user_id === user?.id);
       }
 
+      // --- [수정] .single()을 제거하여 사용자가 투표하지 않은 경우에도 에러가 발생하지 않도록 수정 ---
       if (user && postData) {
-        const { data: voteData } = await supabase.from('hot_deal_votes').select('vote_type').eq('post_id', postData.id).eq('user_id', user.id).single();
-        if (voteData) setUserVote(voteData.vote_type as 'up' | 'down');
+        const { data: voteData, error: voteError } = await supabase
+          .from('hot_deal_votes')
+          .select('vote_type')
+          .eq('post_id', postData.id)
+          .eq('user_id', user.id);
+
+        if (voteError) {
+          console.error("Error fetching user vote:", voteError);
+        } else if (voteData && voteData.length > 0) {
+          setUserVote(voteData[0].vote_type as 'up' | 'down');
+        }
       }
 
       const { data: commentsData } = await supabase.from('hot_deal_comments').select('*').eq('post_id', Number(id)).order('created_at', { ascending: true });
@@ -60,7 +83,7 @@ export default function HotDealDetailPage() {
     fetchData();
   }, [id, supabase]);
 
-  // 2. 게시물 삭제, 수정 핸들러
+  // 게시물 삭제, 수정 핸들러
   const handleEdit = () => router.push(`/${locale}/hot-deal/write?id=${id}`);
   const handleDeletePost = async () => {
     if (!post || !window.confirm(t('deleteConfirm'))) return;
@@ -68,7 +91,7 @@ export default function HotDealDetailPage() {
     if (error) { alert(t('deleteError')); } else { router.push(`/${locale}/hot-deal`); }
   };
 
-  // 3. 댓글 작성 핸들러
+  // 댓글 작성 핸들러
   const handleCommentSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!newComment.trim() || !currentUser || !post) return;
@@ -78,14 +101,14 @@ export default function HotDealDetailPage() {
     if (error) { alert(t('commentError')); } else if (newCommentData) { setComments([...comments, newCommentData]); setNewComment(''); }
   };
 
-  // 4. 댓글 삭제 핸들러
+  // 댓글 삭제 핸들러
   const handleDeleteComment = async (commentId: number) => {
     if (!window.confirm(t('deleteCommentConfirm'))) return;
     const { error } = await supabase.from('hot_deal_comments').delete().eq('id', commentId);
     if (error) { alert(t('deleteCommentError')); } else { setComments(comments.filter(c => c.id !== commentId)); }
   };
 
-  // 5. 추천/비추천 핸들러
+  // 추천/비추천 핸들러
   const handleVote = async (voteType: 'up' | 'down') => {
     if (!currentUser) { alert(t('loginToVote')); return; }
     if (!post || isVoteLoading) return;
@@ -113,16 +136,12 @@ export default function HotDealDetailPage() {
   const safeContent = DOMPurify.sanitize(post.content || '');
 
   return (
-    // [수정됨] 페이지 전체를 감싸는 div를 main으로 변경하고, 스타일을 적용합니다.
     <main className="bg-gray-50 min-h-screen py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
       <div className="max-w-screen-lg mx-auto">
         <div className="mb-4">
           <button onClick={() => router.back()} className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900"><ArrowLeft className="w-5 h-5 mr-1.5" />{t('backToList')}</button>
         </div>
 
-
-
-        {/* 게시물과 댓글을 포함하는 흰색 배경의 컨테이너 */}
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
           <article className="p-6 sm:p-8">
             <h1 className="text-xl sm:text-2xl font-bold mb-2 text-gray-900">{post.title}</h1>
@@ -131,10 +150,15 @@ export default function HotDealDetailPage() {
             )}
             <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-gray-500 mb-6">
               <div><span>{t('by')} {post.user_nickname || t('anonymous')}</span><span className="mx-1.5">·</span><time dateTime={post.created_at}>{new Date(post.created_at).toLocaleString(locale, { dateStyle: 'long', timeStyle: 'short' })}</time></div>
-              {isAuthor && (<div className="flex items-center gap-4"><button onClick={handleEdit} className="flex items-center gap-1 text-gray-500 hover:text-teal-600"><Pencil size={14} /><span>{t('edit')}</span></button><button onClick={handleDeletePost} className="flex items-center gap-1 text-gray-500 hover:text-red-600"><Trash2 size={14} /><span>{t('delete')}</span></button></div>)}
+              
+              {(isAuthor || isAdmin) && (
+                <div className="flex items-center gap-4">
+                  <button onClick={handleEdit} className="flex items-center gap-1 text-gray-500 hover:text-teal-600"><Pencil size={14} /><span>{t('edit')}</span></button>
+                  <button onClick={handleDeletePost} className="flex items-center gap-1 text-gray-500 hover:text-red-600"><Trash2 size={14} /><span>{t('delete')}</span></button>
+                </div>
+              )}
             </div>
 
-            {/* [수정됨] 제목/정보와 본문 사이에 구분선을 추가합니다. */}
             <hr className="my-6 border-gray-300" />
 
             <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: safeContent }} />     
@@ -164,7 +188,9 @@ export default function HotDealDetailPage() {
                         <span className="font-semibold text-xs text-gray-800">{comment.user_nickname || t('anonymous')}</span>
                         <time className="text-xs text-gray-400 ml-2">{new Date(comment.created_at).toLocaleString(locale, { dateStyle: 'medium', timeStyle: 'short' })}</time>
                       </div>
-                      {comment.user_id === currentUser?.id && (<button onClick={() => handleDeleteComment(comment.id)} className="text-gray-400 hover:text-red-500"><Trash2 size={13} /></button>)}
+                      {(comment.user_id === currentUser?.id || isAdmin) && (
+                        <button onClick={() => handleDeleteComment(comment.id)} className="text-gray-400 hover:text-red-500"><Trash2 size={13} /></button>
+                      )}
                     </div>
                     <p className="text-sm text-gray-700 mt-0.5">{comment.content}</p>
                   </div>

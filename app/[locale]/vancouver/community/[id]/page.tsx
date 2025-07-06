@@ -26,6 +26,8 @@ export default function CommunityDetailPage() {
   const [isAuthor, setIsAuthor] = useState(false);
   const [loading, setLoading] = useState(true);
   
+  const [isAdmin, setIsAdmin] = useState(false);
+  
   const [votes, setVotes] = useState({ upvotes: 0, downvotes: 0 });
   const [userVote, setUserVote] = useState<'up' | 'down' | null>(null);
   const [isVoteLoading, setIsVoteLoading] = useState(false);
@@ -36,6 +38,18 @@ export default function CommunityDetailPage() {
       const { data: { user } } = await supabase.auth.getUser();
       setCurrentUser(user);
 
+      if (user) {
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single();
+        
+        if (profile && profile.role === 'admin') {
+          setIsAdmin(true);
+        }
+      }
+
       const { data: postData } = await supabase.from('vancouver_community').select('*').eq('id', Number(id)).single();
       if (postData) {
         setPost(postData);
@@ -43,10 +57,19 @@ export default function CommunityDetailPage() {
         setIsAuthor(postData.user_id === user?.id);
       }
 
+      // --- [수정] .single()을 제거하여 사용자가 투표하지 않은 경우에도 에러가 발생하지 않도록 수정 ---
       if (user && postData) {
-        const { data: voteData } = await supabase.from('vancouver_community_votes').select('vote_type').eq('post_id', postData.id).eq('user_id', user.id).single();
-        if (voteData) {
-          setUserVote(voteData.vote_type as 'up' | 'down');
+        const { data: voteData, error: voteError } = await supabase
+          .from('vancouver_community_votes')
+          .select('vote_type')
+          .eq('post_id', postData.id)
+          .eq('user_id', user.id);
+        
+        if (voteError) {
+          console.error("Error fetching user vote:", voteError);
+        } else if (voteData && voteData.length > 0) {
+          // 배열의 첫 번째 항목으로 투표 상태를 설정합니다.
+          setUserVote(voteData[0].vote_type as 'up' | 'down');
         }
       }
 
@@ -106,7 +129,6 @@ export default function CommunityDetailPage() {
   const safeContent = DOMPurify.sanitize(post.content || '');
 
   return (
-    // [수정됨] 페이지 전체를 감싸는 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
     <main className="bg-gray-50 min-h-screen py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
       <div className="max-w-screen-lg mx-auto">
         <div className="mb-4">
@@ -124,7 +146,7 @@ export default function CommunityDetailPage() {
                 <span className="mx-1.5">·</span>
                 <time dateTime={post.created_at}>{new Date(post.created_at).toLocaleString(locale, { dateStyle: 'long', timeStyle: 'short' })}</time>
               </div>
-              {isAuthor && (
+              {(isAuthor || isAdmin) && (
                 <div className="flex items-center gap-4">
                   <button onClick={() => router.push(`/${locale}/vancouver/community/write?id=${id}`)} className="flex items-center gap-1 text-gray-500 hover:text-teal-600"><Pencil size={14} /><span>{t('edit')}</span></button>
                   <button onClick={handleDeletePost} className="flex items-center gap-1 text-gray-500 hover:text-red-600"><Trash2 size={14} /><span>{t('delete')}</span></button>
@@ -132,7 +154,6 @@ export default function CommunityDetailPage() {
               )}
             </div>
 
-            {/* [수정됨] 제목/정보와 본문 사이에 구분선을 추가합니다. */}
             <hr className="my-6 border-gray-300" />
 
             <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: safeContent }} />
@@ -168,7 +189,7 @@ export default function CommunityDetailPage() {
                         <span className="font-semibold text-xs text-gray-800">{comment.user_nickname || t('anonymous')}</span>
                         <time className="text-xs text-gray-400 ml-2">{new Date(comment.created_at).toLocaleString(locale, { dateStyle: 'medium', timeStyle: 'short' })}</time>
                       </div>
-                      {comment.user_id === currentUser?.id && (<button onClick={() => handleDeleteComment(comment.id)} className="text-gray-400 hover:text-red-500"><Trash2 size={13} /></button>)}
+                      {(comment.user_id === currentUser?.id || isAdmin) && (<button onClick={() => handleDeleteComment(comment.id)} className="text-gray-400 hover:text-red-500"><Trash2 size={13} /></button>)}
                     </div>
                     <p className="text-sm text-gray-700 mt-0.5">{comment.content}</p>
                   </div>

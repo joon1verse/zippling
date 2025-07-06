@@ -14,7 +14,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   let messages;
   try {
-    // 사용하고 계신 기존 경로를 유지합니다.
     messages = (await import(`../../public/locales/${locale}/common.json`)).default;
   } catch (error) {
     messages = {}; 
@@ -60,34 +59,28 @@ export default async function LocaleLayout({
 }) {
   let messages;
   try {
-    // 사용하고 계신 기존 경로를 유지합니다.
     messages = (await import(`../../public/locales/${locale}/common.json`)).default;
   } catch (error) {
     notFound();
   }
 
-  // [FIXED] Next.js 규약에 맞게 <html>과 <body> 태그를 명시적으로 반환합니다.
+  // [FIXED] Root layout(app/layout.tsx)에서 <html>과 <body>를 이미 정의했으므로,
+  // 여기서는 해당 태그들을 제거하고 실제 컨텐츠만 반환합니다.
   return (
-    <html lang={locale}>
-      {/* Next.js가 메타데이터와 파비콘 링크를 여기에 자동으로 주입합니다. */}
-      <head /> 
-      <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <div className="flex flex-col min-h-screen">
-            <HeaderWithTopbar locale={locale} />
-            <main className="flex-grow">{children}</main>
-            <footer className="bg-white text-gray-500 text-center py-4 text-sm">
-              © 2025 Zippling Inc. All rights reserved.
-            </footer>
-            <Script
-              strategy="afterInteractive"
-              async
-              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID}`}
-              crossOrigin="anonymous"
-            />
-          </div>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <div className="flex flex-col min-h-screen">
+        <HeaderWithTopbar locale={locale} />
+        <main className="flex-grow">{children}</main>
+        <footer className="bg-white text-gray-500 text-center py-4 text-sm">
+          © 2025 Zippling Inc. All rights reserved.
+        </footer>
+        <Script
+          strategy="afterInteractive"
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID}`}
+          crossOrigin="anonymous"
+        />
+      </div>
+    </NextIntlClientProvider>
   );
 }

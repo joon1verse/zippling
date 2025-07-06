@@ -179,6 +179,11 @@
   "roompage_disclaimer": "Zippling은 신뢰할 수 있는 외부 플랫폼의 매물만 연결합니다. 원본 콘텐츠의 소유권을 존중하며, 전체 글을 제공하지 않습니다. 모든 중요한 정보는 반드시 출처 사이트에서 직접 확인하세요. Zippling은 계약 당사자가 아니며, 사용자 부주의로 인한 문제에 책임지지 않습니다.",
   "female": "여성",
   "male": "남성",
+  "delete_confirmation": "Are you sure you want to delete this post?",
+  "delete_success": "Post deleted successfully.",
+  "delete_fail": "Failed to delete the post. Please try again.",
+  "delete_post": "Delete post",
+  "delete_fail_with_reason": "Failed to delete post. Reason: {{reason}}",
 
   "vancouver_main": {
     "what_do_title": "밴쿠버에서 무엇을 하고 싶으신가요?",

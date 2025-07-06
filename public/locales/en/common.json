@@ -1,4 +1,5 @@
 {
+  "loading": "Loading...",
   "main": {
   "hello": "Find it easily in one place",
   "description": "Zippling brings together room share and homestay listings from multiple trusted platforms — making your search faster and simpler.",
@@ -177,6 +178,11 @@
   "roompage_disclaimer": "Zippling only connects listings from trusted platforms. We respect the ownership of original content and do not display full post details. Please visit the source site to verify all important information. Zippling is not involved in any contracts and holds no responsibility for issues caused by user negligence.",
   "female": "Female",
   "male": "Male",
+  "delete_confirmation": "Are you sure you want to delete this post?",
+  "delete_success": "Post deleted successfully.",
+  "delete_fail": "Failed to delete the post. Please try again.",
+  "delete_post": "Delete post",
+  "delete_fail_with_reason": "Failed to delete post. Reason: {{reason}}",
 
   "vancouver_main": {
     "what_do_title": "What would you like to do in Vancouver?",
