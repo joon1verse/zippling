@@ -199,10 +199,8 @@
     "comingSoon": "Coming Soon",
     "servicePreparing": "Service is being prepared.",
     "noRecentPosts": "No recent posts.",
-    "newcomer_guide_title": "Newcomer's Guide",
-    "guide_housing_title": "Housing Tips",
-    "guide_info_title": "Essential Info",
-    "guide_community_title": "Using Community",
+    "newcomer_guide_q": "First time here?",
+    "newcomer_guide_a": "Check out the essential guides for you!",
     "viewAll": "View All"
   },
 
