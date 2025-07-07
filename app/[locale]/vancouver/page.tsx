@@ -1,139 +1,220 @@
 // app/[locale]/vancouver/page.tsx
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { useRouter, useParams } from 'next/navigation';
-import { Home, Briefcase, MessageSquare, Flame } from 'lucide-react';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import { createBrowserSupabase } from '@server/supabaseBrowserClient';
+import { Home, Briefcase, MessageSquare, Flame, Building2, ShoppingCart, Users, ChevronRight, Compass } from 'lucide-react';
+import type { Database } from '@server/types';
 
+// 게시글 목록에 사용할 공용 타입 정의
+type Post = {
+  id: number | string;
+  title: string;
+  created_at?: string;
+  link?: string; // '방 구하기'용 외부 링크
+};
+
+// 새로운 게시판 미리보기 섹션 컴포넌트 Props 타입
+interface BoardPreviewRowProps {
+  title: string;
+  posts: Post[];
+  boardHref: string;
+  postBaseHref: string;
+  locale: string;
+  icon: React.ElementType;
+  iconColor: string;
+  isExternalLink?: boolean;
+  disabled?: boolean;
+}
+
+/**
+ * 각 게시판의 최신글 목록을 보여주는 새로운 레이아웃 컴포넌트
+ */
+const BoardPreviewRow: React.FC<BoardPreviewRowProps> = ({ title, posts, boardHref, postBaseHref, locale, icon: Icon, iconColor, isExternalLink = false, disabled = false }) => {
+    const t = useTranslations('van_main');
+    const formatDate = (dateString?: string) => {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toLocaleDateString(locale, { month: '2-digit', day: '2-digit' });
+    };
+
+    // 게시글이 24시간 이내에 작성되었는지 확인하는 함수
+    const isNewPost = (dateString?: string) => {
+        if (!dateString) return false;
+        const postDate = new Date(dateString);
+        const now = new Date();
+        const oneDayInMs = 24 * 60 * 60 * 1000;
+        return (now.getTime() - postDate.getTime()) < oneDayInMs;
+    };
+
+    return (
+        <div className={`flex flex-col md:flex-row bg-white border border-gray-200/80 rounded-xl shadow-sm overflow-hidden ${disabled ? 'opacity-60' : ''}`}>
+            {/* 왼쪽 버튼 영역 (사용자 수정 스타일 유지) */}
+            <Link href={disabled ? '#' : boardHref} className={`group md:w-52 flex-shrink-0 p-6 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-gray-200/80 bg-gray-100 transition-colors duration-200 hover:bg-teal-100/30 ${disabled ? 'cursor-not-allowed bg-gray-100 hover:bg-gray-100' : ''}`}>
+                <Icon className={`w-8 h-8 mb-2 ${iconColor} transition-transform duration-200 group-hover:scale-110`} />
+                <h3 className="text-lg font-semibold text-gray-700">{title}</h3>
+                
+                {disabled ? (
+                    <span className="mt-2 text-xs font-semibold bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full">{t('comingSoon')}</span>
+                ) : (
+                    <div className="mt-2 flex items-center text-sm text-gray-500 group-hover:text-gray-800 transition-colors duration-200">
+                        <span>{t('viewAll')}</span>
+                        <ChevronRight className="w-4 h-4 ml-1 transition-transform duration-200 group-hover:translate-x-1" />
+                    </div>
+                )}
+            </Link>
+            
+            <div className="flex-grow p-2 md:p-4">
+                <ul className="divide-y divide-gray-200/80">
+                    {posts && posts.length > 0 ? (
+                        posts.map((post) => (
+                             <li key={post.id}>
+                                <Link
+                                    href={disabled ? '#' : (isExternalLink ? post.link || '#' : `${postBaseHref}/${post.id}`)}
+                                    target={isExternalLink && post.link ? '_blank' : '_self'}
+                                    rel={isExternalLink && post.link ? 'noopener noreferrer' : ''}
+                                    className={`flex justify-between items-center p-3 rounded-md hover:bg-teal-50/50 transition-colors duration-200 ${disabled ? 'pointer-events-none' : ''}`}
+                                >
+                                    {/* 제목과 NEW 배지를 함께 묶음 */}
+                                    <div className="flex items-center min-w-0">
+                                        {/* [수정] NEW 배지를 제목 앞으로 이동 */}
+                                        {isNewPost(post.created_at) && (
+                                            <span className="mr-2 flex-shrink-0 px-2 py-0.5 text-xs font-bold text-white bg-teal-500 rounded-full">
+                                                NEW
+                                            </span>
+                                        )}
+                                        <p className="text-md text-gray-800 truncate">{post.title}</p>
+                                    </div>
+                                    <span className="ml-4 flex-shrink-0 text-sm text-gray-500 font-mono">
+                                        {formatDate(post.created_at)}
+                                    </span>
+                                </Link>
+                            </li>
+                        ))
+                    ) : (
+                        <li className="p-4 text-center text-gray-500 h-full flex items-center justify-center">
+                            {disabled ? t('servicePreparing') : t('noRecentPosts')}
+                        </li>
+                    )}
+                </ul>
+            </div>
+        </div>
+    );
+};
+
+
+/**
+ * 밴쿠버 허브 메인 페이지
+ */
 export default function VancouverHubPage() {
-  // useTranslations 훅을 'vancouver_main' 네임스페이스로 변경
-  const t = useTranslations('vancouver_main'); 
-  const router = useRouter();
+  const t = useTranslations('van_main');
   const { locale } = useParams() as { locale: string };
+  const supabase = createBrowserSupabase();
 
-  const navigate = (slug: string) => {
-    router.push(`/${locale}/vancouver/${slug}`);
-  };
+  const [recentRooms, setRecentRooms] = useState<Post[]>([]);
+  const [recentHotDeals, setRecentHotDeals] = useState<Post[]>([]);
+  const [recentCommunityPosts, setRecentCommunityPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAllRecentPosts = async () => {
+      setLoading(true);
+      try {
+        const { data: roomsData } = await supabase.from('vancouver_roomlistings').select('id, title, link, event_time').order('event_time', { ascending: false, nullsFirst: false }).limit(5);
+        const { data: hotDealsData } = await supabase.from('hot_deal_posts').select('id, title, created_at').order('created_at', { ascending: false }).limit(5);
+        const { data: communityData } = await supabase.from('vancouver_community').select('id, title, created_at').order('created_at', { ascending: false }).limit(5);
+        
+        if (roomsData) setRecentRooms(roomsData.map(p => ({ ...p, created_at: p.event_time || undefined })));
+        if (hotDealsData) setRecentHotDeals(hotDealsData);
+        if (communityData) setRecentCommunityPosts(communityData);
+
+      } catch (error) {
+        console.error('Error fetching recent posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAllRecentPosts();
+  }, [supabase]);
 
   return (
-    // [수정됨] 페이지 전체를 감싸는 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
-    <main className="max-w-6xl mx-auto px-4 py-2 pt-6">
-      {/* 페이지 제목 */}
-      <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 text-center">
-        {t('what_do_title')} {/* 새 번역키 적용 */}
-      </h2>
-      {/* 정겨운 환영인사 추가 */}
-      <p className="text-md sm:text-lg text-gray-600 mb-6 text-center">
-        {t('welcome_message')} {/* 새 번역키 적용 */}
-      </p>
-
-      {/* 3cols × 2rows 그리드 */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2 gap-4">
-
-        {/* 1) Room — 상단 전체 3col × 1row */}
-        <div
-          onClick={() => navigate('room')}
-          className="
-            cursor-pointer
-            md:col-span-3 md:row-start-1
-            flex flex-col justify-center items-center
-            rounded-2xl shadow-lg hover:shadow-xl
-            bg-gradient-to-br from-teal-400 to-blue-500
-            hover:from-teal-500 hover:to-blue-600
-            transition-all duration-200
-            p-4 md:p-6
-            min-h-[160px] md:min-h-[200px]
-          "
-        >
-          <Home className="w-10 h-10 md:w-14 md:h-14 mb-2 text-white drop-shadow" />
-          <span className="text-xl md:text-2xl font-bold mb-1 text-white drop-shadow">
-            {t('room_title')} {/* 새 번역키 적용 */}
-          </span>
-          <span className="text-white/90 text-sm md:text-base text-center">
-            {t('room_description')} {/* 새 번역키 적용 */}
-          </span>
-        </div>
-
-        {/* 2) Hot Deal — 하단 왼쪽 1col × 1row */}
-        <div
-          onClick={() => router.push(`/${locale}/hot-deal`)}
-          className="
-            cursor-pointer
-            md:col-start-1 md:row-start-2
-            p-1 rounded-2xl
-            bg-gradient-to-br from-orange-500 to-orange-600
-            hover:from-orange-600 hover:to-orange-700
-            hover:shadow-lg
-            transition-all duration-200
-            min-h-[160px] md:min-h-[200px]
-          "
-        >
-          <div className="
-            relative h-full flex flex-col justify-center items-center
-            bg-white rounded-xl p-4 md:p-6
-          ">
-            <Flame className="w-6 h-6 md:w-8 md:h-8 mb-2 text-orange-600" />
-            <span className="text-base md:text-lg font-semibold text-orange-600 mb-1">
-              {t('hot_deal_title')} {/* 새 번역키 적용 */}
-            </span>
-            <span className="text-xs md:text-sm text-gray-600 text-center">
-              {t('hot_deal_description')} {/* 새 번역키 적용 */}
-            </span>
-          </div>
-        </div>
-
-        {/* 3) Community — 하단 중앙 1col × 1row */}
-        <div
-          onClick={() => navigate('community')}
-          className="
-            cursor-pointer
-            md:col-start-2 md:row-start-2
-            flex flex-col justify-center items-center
-            rounded-xl shadow-md hover:shadow-lg
-            bg-white hover:bg-gray-100
-            transition-all duration-200
-            p-3 md:p-4
-            min-h-[120px] md:min-h-[150px]
-            border border-gray-200
-          "
-        >
-          <MessageSquare className="w-5 h-5 md:w-6 md:h-6 mb-1 text-teal-500" />
-          <span className="text-base md:text-lg font-semibold mb-1 text-gray-800">
-            {t('community_title')} {/* 새 번역키 적용 */}
-          </span>
-          <span className="text-xs md:text-sm text-gray-600 text-center">
-            {t('community_description')} {/* 새 번역키 적용 */}
-          </span>
-        </div>
-
-        {/* 4) Find a Job — 준비 중 상태로 변경 */}
-        <div
-          className="
-            relative md:col-start-3 md:row-start-2
-            flex flex-col justify-center items-center
-            rounded-xl shadow-sm
-            bg-gray-100
-            p-3 md:p-4
-            min-h-[120px] md:min-h-[150px]
-            border border-gray-200
-            cursor-not-allowed
-          "
-        >
-          {/* 'Coming Soon' 배지 */}
-          <div className="absolute top-2 right-2 bg-teal-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
-            {t('comingSoon')}
-          </div>
-
-          <Briefcase className="w-5 h-5 md:w-6 md:h-6 mb-1 text-gray-400" />
-          <span className="text-base md:text-lg font-semibold mb-1 text-gray-500">
-            {t('find_job_title')} {/* 새 번역키 적용 */}
-          </span>
-          <span className="text-xs md:text-sm text-gray-400 text-center">
-            {t('featureComingSoon')}
-          </span>
-        </div>
-
-      </div>
-    </main>
+    <div>
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+            <section className="text-center mb-10">
+                <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight">
+                {t('zipplingVancouver')}
+                </h1>
+                <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
+                {t('welcome_message')}
+                </p>
+            </section>
+            
+            <section className="text-center mb-8">
+                <p className="text-xl text-gray-700 font-semibold mb-2">
+                    <Compass className="w-6 h-6 inline-block mr-2 text-gray-500" />
+                    {t('newcomer_guide_q')}
+                </p>
+                <Link href="#">
+                    <span className="text-base text-teal-600 hover:text-teal-800 hover:underline font-medium transition-colors group inline-flex items-center">
+                        {t('newcomer_guide_a')}
+                        <ChevronRight className="w-5 h-5 ml-1 transition-transform duration-200 group-hover:translate-x-1" />
+                    </span>
+                </Link>
+            </section>
+        
+            <section className="space-y-5">
+                {loading ? (
+                <div className="text-center text-gray-500 py-10">
+                    <p>{t('loadingPosts')}</p>
+                </div>
+                ) : (
+                <>
+                    <BoardPreviewRow 
+                        title={t('room_title')}
+                        icon={Home}
+                        posts={recentRooms}
+                        boardHref={`/${locale}/vancouver/room`}
+                        postBaseHref=""
+                        locale={locale}
+                        iconColor="text-teal-500"
+                        isExternalLink={true}
+                    />
+                    <BoardPreviewRow 
+                        title={t('hot_deal_title')}
+                        icon={Flame}
+                        posts={recentHotDeals}
+                        boardHref={`/${locale}/hot-deal`}
+                        postBaseHref={`/${locale}/hot-deal`}
+                        locale={locale}
+                        iconColor="text-orange-500"
+                    />
+                    <BoardPreviewRow 
+                        title={t('community_title')}
+                        icon={MessageSquare}
+                        posts={recentCommunityPosts}
+                        boardHref={`/${locale}/vancouver/community`}
+                        postBaseHref={`/${locale}/vancouver/community`}
+                        locale={locale}
+                        iconColor="text-sky-500"
+                    />
+                    <BoardPreviewRow 
+                        title={t('find_job_title')}
+                        icon={Briefcase}
+                        posts={[]}
+                        boardHref="#"
+                        postBaseHref="#"
+                        locale={locale}
+                        iconColor="text-gray-400"
+                        disabled={true}
+                    />
+                </>
+                )}
+            </section>
+        </main>
+    </div>
   );
 }

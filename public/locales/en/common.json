@@ -184,19 +184,23 @@
   "delete_post": "Delete post",
   "delete_fail_with_reason": "Failed to delete post. Reason: {{reason}}",
 
-  "vancouver_main": {
-    "what_do_title": "What would you like to do in Vancouver?",
-    "welcome_message": "We're here to help you settle in and thrive in your new journey.",
-    "room_title": "Room",
-    "room_description": "Find your perfect accommodation in Vancouver.",
-    "hot_deal_title": "Hot Deal",
-    "hot_deal_description": "Discover exclusive deals and discounts.",
+  "van_main": {
+    "zipplingVancouver": "Zippling Vancouver",
+    "welcome_message": "Find all the information you need for your life in Vancouver at Zippling.",
+    "guide_life": "Life in Vancouver",
+    "guide_trade": "Marketplace",
+    "guide_club": "Clubs",
+    "loadingPosts": "Loading posts...",
+    "room_title": "Find a Room",
+    "hot_deal_title": "Hot Deals",
     "community_title": "Community",
-    "community_description": "Connect with fellow students and locals.",
     "find_job_title": "Find a Job",
-    "find_job_description": "Opportunities to work and gain experience.",
     "comingSoon": "Coming Soon",
-    "featureComingSoon": "This feature is coming soon!"
+    "servicePreparing": "Service is being prepared.",
+    "noRecentPosts": "No recent posts.",
+    "newcomer_guide_q": "First time here?",
+    "newcomer_guide_a": "Check out the essential guides for you!",
+    "viewAll": "View All"
   },
 
   "hotdeal": {

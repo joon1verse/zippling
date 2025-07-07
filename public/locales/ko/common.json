@@ -185,20 +185,27 @@
   "delete_post": "Delete post",
   "delete_fail_with_reason": "Failed to delete post. Reason: {{reason}}",
 
-  "vancouver_main": {
-    "what_do_title": "밴쿠버에서 무엇을 하고 싶으신가요?",
-    "welcome_message": "새로운 여정에서 여러분이 안정적으로 정착하고 성공적으로 지내실 수 있도록 저희가 돕겠습니다!",
-    "room_title": "숙소",
-    "room_description": "밴쿠버에서 여러분에게 딱 맞는 숙소를 찾아보세요.",
-    "hot_deal_title": "핫 딜",
-    "hot_deal_description": "특별한 할인과 혜택을 찾아보세요.",
-    "community_title": "커뮤니티",
-    "community_description": "다른 학생들과 현지인들을 만나 소통하세요.",
-    "find_job_title": "일자리 찾기",
-    "find_job_description": "일하고 경험을 쌓을 기회를 찾아보세요.",
-    "comingSoon": "출시 예정",
-    "featureComingSoon": "이 기능은 곧 출시됩니다!"
+  "van_main": {
+    "zipplingVancouver": "Zippling Vancouver",
+    "welcome_message": "Find all the information you need for your life in Vancouver at Zippling.",
+    "guide_life": "Life in Vancouver",
+    "guide_trade": "Marketplace",
+    "guide_club": "Clubs",
+    "loadingPosts": "Loading posts...",
+    "room_title": "Find a Room",
+    "hot_deal_title": "Hot Deals",
+    "community_title": "Community",
+    "find_job_title": "Find a Job",
+    "comingSoon": "Coming Soon",
+    "servicePreparing": "Service is being prepared.",
+    "noRecentPosts": "No recent posts.",
+    "newcomer_guide_title": "Newcomer's Guide",
+    "guide_housing_title": "Housing Tips",
+    "guide_info_title": "Essential Info",
+    "guide_community_title": "Using Community",
+    "viewAll": "View All"
   },
+
 
   "hotdeal": {
     "hotDeals": "Hot Deals",

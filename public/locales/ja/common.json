@@ -185,20 +185,27 @@
   "delete_post": "Delete post",
   "delete_fail_with_reason": "Failed to delete post. Reason: {{reason}}",
 
-  "vancouver_main": {
-    "what_do_title": "バンクーバーで何をしたいですか？",
-    "welcome_message": "新しい旅立ちにおいて、皆様が安心して生活し、活躍できるよう、私たちがお手伝いします！",
-    "room_title": "お部屋",
-    "room_description": "バンクーバーであなたにぴったりの宿泊先を見つけましょう。",
-    "hot_deal_title": "ホットディール",
-    "hot_deal_description": "限定のお得な情報や割引を見つけましょう。",
-    "community_title": "コミュニティ",
-    "community_description": "他の学生や地元の人々と繋がりましょう。",
-    "find_job_title": "仕事探し",
-    "find_job_description": "仕事をして経験を積む機会を見つけましょう。",
-    "comingSoon": "近日公開",
-    "featureComingSoon": "この機能は近日公開予定です！"
+  "van_main": {
+    "zipplingVancouver": "Zippling Vancouver",
+    "welcome_message": "Find all the information you need for your life in Vancouver at Zippling.",
+    "guide_life": "Life in Vancouver",
+    "guide_trade": "Marketplace",
+    "guide_club": "Clubs",
+    "loadingPosts": "Loading posts...",
+    "room_title": "Find a Room",
+    "hot_deal_title": "Hot Deals",
+    "community_title": "Community",
+    "find_job_title": "Find a Job",
+    "comingSoon": "Coming Soon",
+    "servicePreparing": "Service is being prepared.",
+    "noRecentPosts": "No recent posts.",
+    "newcomer_guide_title": "Newcomer's Guide",
+    "guide_housing_title": "Housing Tips",
+    "guide_info_title": "Essential Info",
+    "guide_community_title": "Using Community",
+    "viewAll": "View All"
   },
+
 
   "hotdeal": {
     "hotDeals": "Hot Deals",

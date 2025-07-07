@@ -25,7 +25,8 @@ export default function WriteForm() {
   // Form states
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [price, setPrice] = useState<number | ''>('');
+  // [수정 1] price 상태의 타입을 string으로 변경하여 소수점 입력을 원활하게 처리합니다.
+  const [price, setPrice] = useState<string>('');
   const [currency, setCurrency] = useState<string>('CA$');
   const [isNotice, setIsNotice] = useState(false);
 
@@ -59,7 +60,8 @@ export default function WriteForm() {
       if (data && !error) {
         setTitle(data.title);
         setContent(data.content);
-        setPrice(data.price ?? '');
+        // [수정 2] 불러온 숫자 가격을 문자열로 변환하여 상태에 저장합니다.
+        setPrice(data.price ? String(data.price) : '');
         setCurrency(data.currency_type ?? 'CA$');
         setIsNotice(data.is_notice || false);
       }
@@ -68,10 +70,21 @@ export default function WriteForm() {
     fetchPostData();
   }, [isEdit, idParam, supabase]);
 
+  // [수정 3] 가격 입력 변경을 처리하는 핸들러 함수 추가
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    // 숫자, 그리고 소수점 둘째 자리까지만 허용하는 정규식
+    const regex = /^\d*\.?\d{0,2}$/;
+    if (value === '' || regex.test(value)) {
+      setPrice(value);
+    }
+  };
+
   // 3. 폼 제출 핸들러
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !content.trim() || !price || price <= 0) {
+    // [수정 4] 유효성 검사 시, 문자열인 price를 숫자로 변환(parseFloat)하여 비교합니다.
+    if (!title.trim() || !content.trim() || !price || parseFloat(price) <= 0) {
       setError(t('titleContentPriceRequired'));
       return;
     }
@@ -98,7 +111,8 @@ export default function WriteForm() {
       title: title.trim(),
       content,
       thumbnail_url: autoThumb,
-      price: price,
+      // [수정 5] 데이터베이스에 저장하기 전, 문자열 가격을 숫자로 변환합니다.
+      price: parseFloat(price),
       currency_type: currency,
       user_nickname: profile.user_nickname,
       user_id: user.id,
@@ -126,7 +140,6 @@ export default function WriteForm() {
   const formats = [ 'header', 'bold', 'italic', 'underline', 'strike', 'list', 'bullet', 'link', 'image' ];
 
   return (
-    // [수정됨] 이 컴포넌트의 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
     <main className="pt-4 px-4 max-w-4xl mx-auto pb-24">
       <h1 className="text-3xl font-bold mb-8 pt-6">{isEdit ? t('editHotDeal') : t('writeHotDeal')}</h1>
       {error && <div className="mb-4 text-red-600 bg-red-100 p-3 rounded-md">{error}</div>}
@@ -145,7 +158,16 @@ export default function WriteForm() {
               <option value="JPY">JPY</option>
               <option value="KRW">KRW</option>
             </select>
-            <input type="number" value={price} onChange={e => setPrice(Number(e.target.value))} min={0} className="w-full border-gray-300 rounded-md shadow-sm px-4 py-3 text-base focus:ring-teal-500 focus:border-teal-500" placeholder={t('amountPlaceholder')} disabled={loading} />
+            {/* [수정 6] 가격 input의 타입을 'text'로 변경하고, inputMode를 'decimal'로 설정하며, 새로운 onChange 핸들러를 연결합니다. */}
+            <input 
+              type="text"
+              inputMode="decimal"
+              value={price}
+              onChange={handlePriceChange}
+              className="w-full border-gray-300 rounded-md shadow-sm px-4 py-3 text-base focus:ring-teal-500 focus:border-teal-500" 
+              placeholder={t('amountPlaceholder')} 
+              disabled={loading} 
+            />
           </div>
         </div>
 
