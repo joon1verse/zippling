@@ -70,7 +70,7 @@ export default function HomePage() {
                 </button>
                 {/* "밴쿠버가 처음이신가요?" 링크 버튼 */}
                 <button
-                  onClick={() => handleNavigate(`/${locale}/guides/vancouver-first-timers`)}
+                  onClick={() => handleNavigate(`/${locale}/vancouver/guides`)}
                   className="
                     group inline-flex items-center gap-1.5
                     text-sm font-semibold text-gray-600

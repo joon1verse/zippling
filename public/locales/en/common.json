@@ -203,6 +203,28 @@
     "viewAll": "View All"
   },
 
+  "van_guides": {
+      "pageTitle": "Your Vancouver Starter Guide",
+      "intro1": "I remember when I first arrived in Vancouver, all by myself, ready to start a new chapter. It was exciting, but also a bit overwhelming. I quickly learned that the more I knew about the city, the more comfortable and at home I felt. I spent countless hours gathering information, figuring things out one step at a time.",
+      "intro2": "This guide is built on the very lessons my friends and I learned along the way. We've been in your shoes. Our hope is that by sharing our collective experience, we can make your transition into this beautiful city a little smoother and help you avoid the same hurdles we faced. Welcome to your new beginning.",
+      "backToVancouver": "Back to Vancouver Hub",
+      "quote": "This guide is built on the very lessons my friends and I learned along the way. We've been in your shoes.",
+      "updatedDate": "Updated for 2025",
+      "languageSupport": "Supports English, Korean, and Japanese.",
+      "housing": {
+        "title": "Finding Your Place",
+        "description": "From renting basics to setting up utilities."
+      },
+      "shopping": {
+        "title": "Everyday Life & Shopping",
+        "description": "Your guide to local markets and daily essentials."
+      },
+      "work_finance": {
+        "title": "Work & Finances",
+        "description": "Job hunting, banking, and understanding taxes."
+      }
+  },
+
   "hotdeal": {
     "hotDeals": "Hot Deals",
     "hotDealsSubtitle": "“Handpicked hot deals for the smart shopper — updated daily.”",

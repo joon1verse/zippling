@@ -158,7 +158,7 @@ export default function VancouverHubPage() {
                     <Compass className="w-6 h-6 inline-block mr-2 text-gray-500" />
                     {t('newcomer_guide_q')}
                 </p>
-                <Link href="#">
+                <Link href={`/${locale}/vancouver/guides`}>
                     <span className="text-base text-teal-600 hover:text-teal-800 hover:underline font-medium transition-colors group inline-flex items-center">
                         {t('newcomer_guide_a')}
                         <ChevronRight className="w-5 h-5 ml-1 transition-transform duration-200 group-hover:translate-x-1" />
