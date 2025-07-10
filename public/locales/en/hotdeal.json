@@ -1,0 +1,51 @@
+{
+    "meta": {
+      "title": "Hot Deals & Marketplace | Zippling",
+      "description": "Find the best deals and secondhand items from the international student community in Canada. Save on your living expenses with Zippling's marketplace.",
+      "openGraph": {
+        "title": "Zippling Hot Deals: Smart Shopping for Students",
+        "description": "Discover great deals on furniture, electronics, and more in our safe and convenient community marketplace.",
+        "imageUrl": "https://zippling.net/og-image-hotdeal.png"
+      }
+    },
+    "pageTitle": "Hot Deals",
+    "pageSubtitle": "“Handpicked hot deals for the smart shopper — updated daily.”",
+    "loading": "Loading…",
+    "noDealsYet": "No hot deals yet.",
+    "anonymous": "Anonymous",
+    "write": {
+      "writeHotDeal": "Write Hot Deal",
+      "editHotDeal": "Edit Hot Deal",
+      "errorPrefix": "Error:",
+      "titleLabel": "Title",
+      "priceLabel": "Price",
+      "amountPlaceholder": "Price",
+      "contentLabel": "Content",
+      "contentPlaceholder": "Share your great hot deal detail...",
+      "thumbnailUrlLabel": "Thumbnail URL",
+      "thumbnailUrlPlaceholder": "https://example.com/image.png",
+      "thumbnailUrlHelp": "If left blank, the default image is used.",
+      "saving": "Saving…",
+      "save": "Save",
+      "update": "Update",
+      "postButton": "Post"
+    },
+    "detail": {
+      "backToList": "Back to List",
+      "by": "by",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleteConfirm": "Are you sure you want to delete this post? This action cannot be undone.",
+      "deleteError": "Failed to delete the post. Please try again.",
+      "loading": "Loading post...",
+      "postNotFound": "Post not found.",
+      "commentsTitle": "Comments",
+      "commentPlaceholder": "Write a comment...",
+      "loginToComment": "Please log in to write a comment.",
+      "noComments": "No comments yet.",
+      "commentError": "Failed to post the comment. Please try again.",
+      "deleteCommentConfirm": "Are you sure you want to delete this comment?",
+      "deleteCommentError": "Failed to delete the comment. Please try again.",
+      "loginToVote": "Please login to vote for contents."
+    }
+}

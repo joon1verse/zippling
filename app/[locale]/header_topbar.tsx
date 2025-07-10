@@ -1,7 +1,7 @@
 /*
- * 파일 2: header_topbar.tsx
- * * [수정 사항]
- * - 상위 컴포넌트로부터 session 대신 user 객체를 직접 받도록 props 인터페이스와 로직을 수정합니다.
+ * 파일: header_topbar.tsx
+ * [수정 사항]
+ * - useTranslations 훅이 새로운 common.json 구조를 따르도록 네임스페이스를 'header'에서 'Header'로 변경합니다.
  */
 'use client';
 
@@ -9,26 +9,24 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { createBrowserSupabase } from '@server/supabaseBrowserClient';
-import type { User } from '@supabase/supabase-js'; // Session 타입은 더 이상 필요 없습니다.
+import type { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 
-// [FIXED] initialSession 대신 initialUser를 받도록 props 인터페이스를 수정합니다.
 interface HeaderTopbarProps {
   locale: string;
   initialUser: User | null;
 }
 
 export default function HeaderTopbar({ locale, initialUser }: HeaderTopbarProps) {
-  const t = useTranslations('header');
+  // [수정] 'header' -> 'Header'로 네임스페이스를 변경하여 common.json의 구조와 일치시킵니다.
+  const t = useTranslations('common.Header');
   const router = useRouter();
   const supabase = createBrowserSupabase();
 
-  // [FIXED] initialUser를 사용하여 user 상태를 초기화합니다.
   const [user, setUser] = useState<User | null>(initialUser);
   const [nickname, setNickname] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // [FIXED] initialUser가 변경될 때 user 상태를 업데이트합니다.
   useEffect(() => {
     setUser(initialUser);
   }, [initialUser]);

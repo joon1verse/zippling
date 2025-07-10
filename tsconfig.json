@@ -27,6 +27,7 @@
     "paths": {
       "@server/*": ["utilities/serverutil/*"],
       "@client/*": ["utilities/clientutil/*"],      // 필요시
+      "@util/*": ["utilities/*"],      // 필요시
       "@components/*": ["components/*"]
     }
   },

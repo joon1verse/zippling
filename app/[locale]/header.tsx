@@ -1,8 +1,8 @@
 /*
- * 파일 2: header.tsx (신규 추가 및 수정)
- * * [수정 사항]
- * - usePathname 훅을 사용하여 현재 경로를 가져옵니다.
- * - 언어 변경 시, 현재 경로를 유지한 채로 locale만 변경하여 이동하도록 수정합니다.
+ * 파일: header.tsx
+ * [수정 사항]
+ * - LanguageDropdown 컴포넌트가 하드코딩된 언어 이름 대신,
+ * useTranslations 훅을 사용하여 common.json에서 동적으로 언어 이름을 가져오도록 수정합니다.
  */
 'use client'; 
 
@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl'; // [추가] useTranslations 훅을 import합니다.
 
 interface HeaderProps {
   locale: string;
@@ -45,24 +46,26 @@ function Logo({ locale }: { locale: string }) {
 
 function LanguageDropdown({ currentLocale }: { currentLocale: string }) {
   const router = useRouter();
-  const pathname = usePathname(); // 현재 경로를 가져옵니다.
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  
+  // [추가] 'Header.language' 네임스페이스를 사용하여 언어 번역을 가져옵니다.
+  const t = useTranslations('common.Header.language');
 
+  // [수정] 하드코딩된 label 대신 t() 함수를 사용하여 동적으로 언어 이름을 설정합니다.
   const languages = [
-    { code: 'en', label: 'English', flag: '🇬🇧' },
-    { code: 'ko', label: '한국어', flag: '🇰🇷' },
-    { code: 'ja', label: '日本語', flag: '🇯🇵' }
+    { code: 'en', label: t('en'), flag: '🇬🇧' },
+    { code: 'ko', label: t('ko'), flag: '🇰🇷' },
+    { code: 'ja', label: t('ja'), flag: '🇯🇵' }
   ];
 
   const currentLang = languages.find(l => l.code === currentLocale);
 
   const handleLocaleChange = (newLocale: string) => {
-    // 현재 경로에서 locale 부분을 제거합니다. 예: /ko/about -> /about
     const pathWithoutLocale = pathname.startsWith(`/${currentLocale}`)
       ? pathname.substring(currentLocale.length + 1)
       : pathname;
     
-    // 새로운 locale과 나머지 경로를 조합하여 새 URL을 만듭니다.
     const newPath = `/${newLocale}${pathWithoutLocale}`;
     
     router.push(newPath);

@@ -1,325 +1,47 @@
-// app/[locale]/signup/page.tsx
-'use client';
-import React, { useState, useMemo } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { createBrowserSupabase } from '@server/supabaseBrowserClient';
-// OTP 검증을 위한 서버 액션을 가져옵니다.
-import { verifyOtpAndSaveProfile } from './actions';
+/*
+================================================================================
+  3. 메인 페이지 (수정)
+  파일 경로: app/[locale]/signup/page.tsx
+  (기존 파일의 내용을 아래 코드로 교체해주세요.)
+================================================================================
+*/
+import { createServerSupabase } from '@server/supabaseServerClient';
+import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
+import type { Metadata } from 'next';
+import SignUpForm from './signup-form.client';
 
-export default function SignUpPage() {
-  const t         = useTranslations('signup');
-  const { locale }= useParams<{ locale: string }>();
-  const router    = useRouter();
-  const supabase  = createBrowserSupabase();
-
-  // --- 상태 관리 ---
-  const [step, setStep]           = useState<'form' | 'verify'>('form');
-  const [loading, setLoading]     = useState(false);
-  const [error, setError]         = useState<string | null>(null);
-  const [otp, setOtp]             = useState('');
-  
-  // Form State
-  const [email,      setEmail]      = useState('');
-  const [password,   setPassword]   = useState('');
-  const [confirmPwd, setConfirmPwd] = useState('');
-  const [fullName,   setFullName]   = useState('');
-  const [nickname,   setNickname]   = useState('');
-  const [phone,      setPhone]      = useState('');
-  const [birthdate,  setBirthdate]  = useState('');
-  const RESERVED_NAMES = [
-    'admin', 'administrator', '운영자', '관리자', 'master', 'root', 'system', 'zippling', 'superuser', '管理者', '管理人', 'fuck', 'shit', 'bitch', 'cunt', 'asshole', 'bastard', 'dick', 'pussy', 'wanker', 'slut', 'whore', '馬鹿', 'バカ', 'ばか', '阿呆', 'アホ', 'あほ', '糞', 'クソ', 'くそ', '死ね', 'しね', 'ブス', 'デブ', 'チビ', 'インポ', 'マンコ', 'チンコ', 'nigger', 'nigga', 'faggot', 'tranny', 'retard',
-  ];
-  
-  // 이메일 중복 확인을 위한 상태
-  const [isCheckingEmail, setIsCheckingEmail] = useState(false);
-  const [emailMessage,    setEmailMessage]    = useState({ text: '', type: '' }); 
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
-
-  // --- 유효성 검사 로직 ---
-  const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
-  const [passwordValid, setPasswordValid] = useState(true);
-
-  const hasJamo = (s: string) => /[ㄱ-ㅎㅏ-ㅣ]/.test(s);
-  const hasBadChar = (s: string) => /[^\p{L}\p{N}\-_ ]/u.test(s);
-
-  const nameError = useMemo(() => {
-    if (!fullName) return '';
-    if (RESERVED_NAMES.some(reserved => fullName.toLowerCase().includes(reserved))) {
-      return t('nameReservedError');
-    }
-    if (hasJamo(fullName)) return t('nameHangulError');
-    if (hasBadChar(fullName)) return t('nameSpecialError');
-    return '';
-  }, [fullName, t]);
-
-  const nickError = useMemo(() => {
-    if (!nickname) return '';
-    if (RESERVED_NAMES.some(reserved => nickname.toLowerCase().includes(reserved))) {
-      return t('nickReservedError');
-    }
-    if (hasJamo(nickname)) return t('nickHangulError');
-    if (/^[가-힣]+$/.test(nickname) && nickname.length < 2) return t('nickLenError');
-    if (hasBadChar(nickname)) return t('nickSpecialError');
-    return '';
-  }, [nickname, t]);
-  
-  const confirmPasswordError = useMemo(() => {
-    if (confirmPwd && confirmPwd !== password) {
-      return t('passwordMismatchError');
-    }
-    return '';
-  }, [password, confirmPwd, t]);
-
-  const isFormValid = useMemo(() => {
-    return (
-      email &&
-      password &&
-      confirmPwd &&
-      fullName &&
-      nickname &&
-      PASSWORD_REGEX.test(password) &&
-      password === confirmPwd &&
-      !nameError &&
-      !nickError
-    );
-  }, [email, password, confirmPwd, fullName, nickname, nameError, nickError]);
-
-
-  // --- 핸들러 함수들 ---
-  const handleCheckEmail = async () => {
-    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-      setEmailMessage({ text: t('invalidEmailFormat'), type: 'error' });
-      return;
-    }
-    setIsCheckingEmail(true);
-    setEmailMessage({ text: '', type: '' });
-    setIsEmailVerified(false);
-    try {
-      const response = await fetch(`/api/check-email?email=${encodeURIComponent(email)}`);
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || 'Server error');
-      if (result.isTaken) {
-        setEmailMessage({ text: t('emailTakenError'), type: 'error' });
-      } else {
-        setEmailMessage({ text: t('emailAvailable'), type: 'success' });
-        setIsEmailVerified(true);
-      }
-    } catch (err) {
-      console.error(err);
-      setEmailMessage({ text: t('emailCheckError'), type: 'error' });
-    } finally {
-      setIsCheckingEmail(false);
-    }
+// SEO 메타데이터 생성 (검색 엔진 제외)
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'Sign Up',
+    robots: {
+      index: false,
+      follow: false,
+    },
   };
-  
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!isEmailVerified) {
-      setEmailMessage({ text: t('emailNotVerified'), type: 'error' });
-      return;
-    }
-    setLoading(true);
-    setError(null);
+}
 
-    const { error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name:     fullName,
-          user_nickname: nickname,
-          phone,
-          birthdate,
-        },
-      },
-    });
+// 로딩 UI 컴포넌트
+function Loading() {
+    return <div className="h-full w-full flex items-center justify-center">Loading...</div>;
+}
 
-    if (signUpError) {
-      setError(signUpError.message);
-    } else {
-      setStep('verify');
-    }
-    setLoading(false);
-  };
+export default async function SignUpPage({ params: { locale } }: { params: { locale: string } }) {
+  const supabase = createServerSupabase();
+  const { data: { user } } = await supabase.auth.getUser();
 
-  const handleVerifyOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-    const formData = new FormData();
-    formData.append('email', email);
-    formData.append('token', otp);
-    const result = await verifyOtpAndSaveProfile(formData);
-    if (result.error) {
-      setError(result.error);
-    } else {
-      router.push(`/${locale}/signup/success`);
-    }
-    setLoading(false);
+  // 이미 로그인한 사용자는 홈페이지로 리디렉션
+  if (user) {
+    redirect(`/${locale}`);
   }
 
-  // OTP(인증) 폼 UI
-  if (step === 'verify') {
-    return (
-      // [수정됨] OTP 인증 폼의 최상위 div를 main으로 변경합니다.
-      <main className="pt-14 px-4 flex justify-center">
-        <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8">
-          <h1 className="text-2xl font-bold text-center mb-4">{t('verifyTitle')}</h1>
-          <p className="text-center text-gray-600 mb-6">{t('verifyInstructions', { email })}</p>
-          <form onSubmit={handleVerifyOtp} className="space-y-4">
-            <label className="block">
-              <span className="font-medium text-gray-700">Verification Code</span>
-              <input
-                type="text"
-                name="otp"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                required
-                className="mt-1 w-full p-3 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-              />
-            </label>
-            {error && <p className="text-red-600 mt-2">{error}</p>}
-            <button type="submit" disabled={loading} className="w-full p-3 bg-teal-600 text-white font-semibold rounded-lg disabled:bg-gray-400 transition-colors">
-              {loading ? t('verifying') : t('verifyButton')}
-            </button>
-          </form>
-        </div>
-      </main>
-    );
-  }
-
-  // 가입 폼 UI
   return (
-    // [수정됨] 회원가입 폼의 최상위 div를 main으로 변경합니다.
-    <main className="min-h-screen bg-gray-50 pt-12 flex items-start justify-center">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden">
-        <div className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-center py-4">
-          <h1 className="text-2xl font-bold">{t('title')}</h1>
-        </div>
-        <form onSubmit={handleSignUp} className="p-8 space-y-4">
-          {error && <div className="bg-red-100 text-red-800 p-2 rounded">{error}</div>}
-          
-          <label className="block">
-            <span className="font-medium text-gray-700">{t('email')} <span className="text-red-500">*</span></span>
-            <div className="flex items-center mt-1 space-x-2">
-              <input
-                type="email"
-                className="flex-grow w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"
-                value={email}
-                placeholder="you@example.com"
-                onChange={e => {
-                  setEmail(e.target.value);
-                  setIsEmailVerified(false);
-                  setEmailMessage({ text: '', type: '' });
-                }}
-                required
-              />
-              <button
-                type="button"
-                onClick={handleCheckEmail}
-                disabled={isCheckingEmail}
-                className="px-4 py-2 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
-              >
-                {isCheckingEmail ? t('checking') : t('checkButton')}
-              </button>
-            </div>
-            {emailMessage.text && (
-              <p className={`text-sm mt-1.5 ${emailMessage.type === 'error' ? 'text-red-600' : 'text-green-600'}`}>
-                {emailMessage.text}
-              </p>
-            )}
-          </label>
-
-          <label className="block">
-            <span className="font-medium text-gray-700">{t('password')} <span className="text-red-500">*</span></span>
-            <input
-              type="password"
-              className="mt-1 w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-              value={password}
-              onChange={e => {
-                setPassword(e.target.value);
-                setPasswordValid(PASSWORD_REGEX.test(e.target.value));
-              }}
-            />
-            {!passwordValid && <p className="text-sm mt-1.5 text-red-600">{t('passwordStrength')}</p>}
-          </label>
-          
-          <label className="block">
-            <span className="font-medium text-gray-700">{t('confirmPassword')} <span className="text-red-500">*</span></span>
-            <input
-              type="password"
-              className="mt-1 w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-              value={confirmPwd}
-              onChange={e => setConfirmPwd(e.target.value)}
-            />
-            {confirmPasswordError && (
-              <p className="text-sm mt-1.5 text-red-600">{confirmPasswordError}</p>
-            )}
-          </label>
-
-          <label className="block">
-            <span className="font-medium text-gray-700">{t('fullName')} <span className="text-red-500">*</span></span>
-            <input
-              type="text"
-              value={fullName}
-              onChange={e => setFullName(e.target.value)}
-              required
-              className="mt-1 w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-            />
-            {nameError && (
-              <p className="text-sm mt-1.5 text-red-600">{nameError}</p>
-            )}
-          </label>
-
-          <label className="block">
-            <span className="font-medium text-gray-700">{t('nickname')} <span className="text-red-500">*</span></span>
-            <input
-              type="text"
-              value={nickname}
-              onChange={e => setNickname(e.target.value)}
-              required
-              className="mt-1 w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-            />
-            {nickError && (
-              <p className="text-sm mt-1.5 text-red-600">{nickError}</p>
-            )}
-          </label>
-
-          <label className="block">
-            <span className="font-medium text-gray-700">{t('phone')}</span>
-            <input
-              type="tel"
-              value={phone}
-              onChange={e => setPhone(e.target.value.replace(/\D/g, ''))}
-              className="mt-1 w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-            />
-          </label>
-
-          <label className="block">
-            <span className="font-medium text-gray-700">{t('birthdate')}</span>
-            <input
-              type="date"
-              className="mt-1 w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-              value={birthdate}
-              onChange={e => setBirthdate(e.target.value)}
-            />
-          </label>
-
-          <p className="text-sm text-gray-500 mt-2">{t('requiredFieldsNote')}</p>
-
-          <button
-            type="submit"
-            disabled={!isFormValid || loading || !isEmailVerified}
-            className={`w-full p-3 text-white font-semibold rounded-lg transition-colors ${
-              (isFormValid && !loading && isEmailVerified)
-                ? 'bg-teal-600 hover:bg-teal-700'
-                : 'bg-gray-300 cursor-not-allowed'}`}
-          >
-            {loading ? t('signingUp') : t('signupButton')}
-          </button>
-        </form>
-      </div>
-    </main>
+    // [수정] 배경색을 제거하고, 상단 여백을 주어 레이아웃을 조정합니다.
+    <div className="w-full flex justify-center pt-8 sm:pt-12 px-4 pb-12">
+        <Suspense fallback={<Loading />}>
+          <SignUpForm locale={locale} />
+        </Suspense>
+    </div>
   );
 }

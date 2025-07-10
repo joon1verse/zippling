@@ -1,38 +1,49 @@
-// app/[locale]/signup/success/page.tsx
-'use client';
+/*
+================================================================================
+  2. 메인 페이지 (수정)
+  파일 경로: app/[locale]/signup/success/page.tsx
+  (기존 파일의 내용을 아래 코드로 교체해주세요.)
+================================================================================
+*/
+import { getTranslations } from 'next-intl/server';
+import type { Metadata } from 'next';
+import RedirectHandler from './redirect-handler.client'; // 방금 만든 클라이언트 컴포넌트 import
 
-import { useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+// SEO 메타데이터 생성 (검색 엔진 제외)
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+  // 이 페이지는 일회성이므로 검색 결과에 노출될 필요가 없습니다.
+  const t = await getTranslations({ locale, namespace: 'AuthPage.SignUpPage.success' });
+  return {
+    title: t('title'),
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
+}
 
-export default function SignUpSuccessPage() {
-  // 이 페이지 전용 번역 키를 사용하도록 수정
-  const t = useTranslations('signup.success');
-  const router = useRouter();
-  const { locale } = useParams<{ locale: string }>();
-
-  // 3초 후에 홈페이지로 자동 이동
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      router.replace(`/${locale}`);
-    }, 3000); // 5초 -> 3초로 수정
-    return () => clearTimeout(timer);
-  }, [router, locale]);
+// 회원가입 성공 페이지 (서버 컴포넌트)
+export default async function SignUpSuccessPage({ params: { locale } }: { params: { locale: string } }) {
+  // [수정] 번역 네임스페이스를 'signup.success' -> 'SignUpPage.success'로 변경
+  const t = await getTranslations('AuthPage.SignUpPage.success');
 
   return (
-    // [수정됨] 페이지 전체를 감싸는 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
-    <main className="pt-12 px-4 flex justify-center">
-      <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
+    // 요청하신 대로 bg-gray-50를 제거하고, 상단 여백으로 레이아웃을 조정합니다.
+    <div className="w-full flex justify-center pt-12 sm:pt-16 px-4">
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-lg p-8 max-w-md w-full text-center">
         <h1 className="text-2xl font-bold text-teal-600 mb-4">
-          {t('title')} {/* 예: "🎉 Welcome Aboard!" */}
+          {t('title')}
         </h1>
         <p className="text-gray-700 mb-6 leading-relaxed">
-          {t('description')} {/* 예: "Your account has been created successfully." */}
+          {t('description')}
         </p>
         <p className="text-sm text-gray-500">
-          {t('redirecting')} {/* 예: "Redirecting to the homepage in 3 seconds…" */}
+          {t('redirecting')}
         </p>
+        
+        {/* 리디렉션 로직을 담당하는 클라이언트 컴포넌트 렌더링 */}
+        <RedirectHandler locale={locale} />
       </div>
-    </main>
+    </div>
   );
 }

@@ -1,7 +1,6 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/[locale]/page": "app/[locale]/page.js",
-  "/[locale]/vancouver/page": "app/[locale]/vancouver/page.js",
-  "/[locale]/vancouver/guides/page": "app/[locale]/vancouver/guides/page.js",
-  "/[locale]/vancouver/room/page": "app/[locale]/vancouver/room/page.js"
+  "/[locale]/vancouver/page": "app/[locale]/vancouver/page.js"
 }

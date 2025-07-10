@@ -1,99 +1,51 @@
-// app/[locale]/about/page.tsx
-'use client';
-
-import { useTranslations } from 'next-intl';
+/*
+================================================================================
+  2. 기존 서버 컴포넌트 수정
+  파일 경로: app/[locale]/about/page.tsx
+  (이 파일의 내용을 아래 코드로 교체해주세요.)
+================================================================================
+*/
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
-import { useParams } from 'next/navigation'; // useParams 임포트 추가
+import Link from 'next/link';
+import HeroSection from './hero-section.client'; // 방금 생성한 클라이언트 컴포넌트를 import 합니다.
 
-export default function AboutUsPage() {
-  const t = useTranslations('about');
-  const { locale } = useParams() as { locale: string }; // 현재 로케일 가져오기
+// SEO 메타데이터 생성 (서버에서 실행)
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: 'AboutPage.meta' });
+  return {
+    title: t('title'),
+  };
+}
 
-  // 이미지 배열 (반복을 위해 사용)
-  const heroImages = [
-    // 이미지 크기를 150x200으로 통일하고, 확장자를 .jpg로 변경했습니다.
-    { src: "/images/about_hero_1.jpg", altKey: "hero.imageAlt1", width: 150, height: 200 }, 
-    { src: "/images/about_hero_2.jpg", altKey: "hero.imageAlt2", width: 150, height: 200 },
-    { src: "/images/about_hero_3.jpg", altKey: "hero.imageAlt3", width: 150, height: 200 },
-    { src: "/images/about_hero_4.jpg", altKey: "hero.imageAlt4", width: 150, height: 200,},
-    { src: "/images/about_hero_5.jpg", altKey: "hero.imageAlt5", width: 150, height: 200 },
-    // 새로 추가할 이미지들
-    { src: "/images/about_hero_6.jpg", altKey: "hero.imageAlt6", width: 150, height: 200 },
-    { src: "/images/about_hero_7.jpg", altKey: "hero.imageAlt7", width: 150, height: 200 },
-    { src: "/images/about_hero_8.jpg", altKey: "hero.imageAlt8", width: 150, height: 200 },
+// 페이지 컴포넌트 (서버 컴포넌트)
+export default async function AboutUsPage({ params: { locale } }: { params: { locale: string } }) {
+  const t = await getTranslations('AboutPage');
+
+  const heroImageKeys = [
+    "hero.imageAlt1", "hero.imageAlt2", "hero.imageAlt3", "hero.imageAlt4",
+    "hero.imageAlt5", "hero.imageAlt6", "hero.imageAlt7", "hero.imageAlt8"
   ];
+
+  // 클라이언트 컴포넌트에 전달할 이미지 데이터 배열을 서버에서 미리 생성합니다.
+  const heroImages = heroImageKeys.map((altKey, index) => ({
+    src: `/images/about_hero_${index + 1}.jpg`,
+    alt: t(altKey), // 번역된 텍스트를 직접 전달
+  }));
 
   return (
     <>
-      {/* CSS 애니메이션 정의 */}
-      <style jsx>{`
-        @keyframes scroll-left {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-50%); /* 이미지 세트가 두 번 복제되었으므로 50% 이동 */
-          }
-        }
+      {/* HeroSection 클라이언트 컴포넌트를 렌더링하고, 번역된 텍스트를 props로 전달합니다. */}
+      <HeroSection
+        headline={t('hero.headline')}
+        subheadline={t('hero.subheadline')}
+        images={heroImages}
+      />
 
-        .animate-scroll-left {
-          animation: scroll-left 40s linear infinite; /* 40초 동안 선형 무한 반복 */
-        }
-      `}</style>
-
-      {/* 🚀 히어로 섹션: 페이지의 첫인상 (메인 콘텐츠와는 별개의 도입부) */}
-      <section className="relative w-full py-12 sm:py-10 md:py-14 lg:py-18 px-4 bg-gradient-to-br from-white to-gray-50 overflow-hidden flex flex-col items-center">
-        <div className="text-center max-w-4xl mx-auto relative z-10 mb-10 sm:mb-12 md:mb-8">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 mb-6">
-            {t('hero.headline')}
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-600 leading-relaxed px-4">
-            {t('hero.subheadline')}
-          </p>
-        </div>
-        <div className="w-full relative z-0 py-6 bg-black text-center"> 
-            <div className="overflow-hidden">
-                <div className="flex flex-nowrap animate-scroll-left w-max items-center">
-                    {/* 첫 번째 이미지 세트 */}
-                    {heroImages.map((img, index) => (
-                        <div
-                            key={`original-${index}`}
-                            className={`relative shadow-xl rounded-lg overflow-hidden flex-shrink-0 mx-3 sm:mx-4 md:mx-5 lg:mx-5 xl:mx-5`}
-                            style={{ minWidth: `${img.width}px`, height: `${img.height}px` }}
-                        >
-                            <Image
-                                src={img.src}
-                                alt={t(img.altKey) || `About Us Image ${index + 1}`}
-                                width={img.width}
-                                height={img.height}
-                                className="object-cover w-full h-full"
-                            />
-                        </div>
-                    ))}
-                    {/* 두 번째 이미지 세트 (무한 반복을 위해 복제) */}
-                    {heroImages.map((img, index) => (
-                        <div
-                            key={`duplicate-${index}`}
-                            className={`relative shadow-xl rounded-lg overflow-hidden flex-shrink-0 mx-3 sm:mx-4 md:mx-5 lg:mx-5 xl:mx-5`}
-                            style={{ minWidth: `${img.width}px`, height: `${img.height}px` }}
-                        >
-                            <Image
-                                src={img.src}
-                                alt={t(img.altKey) || `About Us Image ${index + 1}`}
-                                width={img.width}
-                                height={img.height}
-                                className="object-cover w-full h-full"
-                            />
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
-      </section>
-
-      {/* [수정됨] 페이지의 핵심 콘텐츠를 <main> 태그로 감쌉니다. */}
+      {/* 메인 콘텐츠 (서버 컴포넌트로 유지) */}
       <main>
-        {/* 📖 우리의 이야기: Zippling의 탄생 배경 */}
+        {/* 우리의 이야기 섹션 */}
         <section className="w-full py-10 px-4 bg-white">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
@@ -122,7 +74,7 @@ export default function AboutUsPage() {
           </div>
         </section>
 
-        {/* 🎯 우리의 미션과 비전: Zippling의 방향성 */}
+        {/* 미션과 비전 섹션 */}
         <section className="w-full py-16 px-4 bg-gray-50">
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="p-8 bg-white rounded-xl shadow-md">
@@ -154,7 +106,7 @@ export default function AboutUsPage() {
           </div>
         </section>
 
-        {/* ⭐ Zippling의 핵심 가치: 우리가 일하는 방식 */}
+        {/* 핵심 가치 섹션 */}
         <section className="w-full py-16 px-4 bg-white">
           <div className="max-w-6xl mx-auto text-center">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-10">
@@ -181,7 +133,7 @@ export default function AboutUsPage() {
         </section>
       </main>
 
-      {/* 🌟 행동 유도 (Call to Action) 섹션 (메인 콘텐츠와는 별개의 마무리 영역) */}
+      {/* 행동 유도(CTA) 섹션 */}
       <section className="w-full py-16 px-4 bg-teal-600 text-white text-center">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold mb-6">
@@ -190,12 +142,12 @@ export default function AboutUsPage() {
           <p className="text-lg leading-relaxed mb-8">
             {t('cta.subheadline')}
           </p>
-          <a
-            href={`/${locale}`} // 로케일 기반 경로로 수정
+          <Link
+            href={`/${locale}`}
             className="inline-block bg-white text-teal-600 font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-100 transition-colors duration-300 shadow-lg"
           >
             {t('cta.buttonText')}
-          </a>
+          </Link>
         </div>
       </section>
     </>

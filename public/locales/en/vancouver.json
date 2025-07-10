@@ -1,0 +1,140 @@
+{
+
+  "//": "========================================================================",
+  "//": " 1. 밴쿠버 메인 랜딩 페이지 (`/vancouver`)",
+  "//": "========================================================================",
+  "LandingPage": {
+    "meta": {
+      "title": "Vancouver Student Info Hub | Zippling",
+      "description": "Find housing, lifestyle guides, community posts, and job listings for international students in Vancouver, Canada.",
+      "openGraph": {
+        "title": "Your Guide to Life in Vancouver | Zippling",
+        "description": "From finding a room to connecting with the community, start your Vancouver journey here.",
+        "imageUrl": "https://zippling.net/og-image-vancouver.png"
+      }
+    },
+    "heroTitle": "Zippling Vancouver",
+    "heroDescription": "Find all the information you need for your life in Vancouver at Zippling.",
+    "sections": {
+        "loadingPosts": "Loading posts...",
+        "room_title": "Find a Room",
+        "hot_deal_title": "Hot Deals",
+        "community_title": "Community",
+        "find_job_title": "Find a Job",
+        "comingSoon": "Coming Soon",
+        "servicePreparing": "Service is being prepared.",
+        "noRecentPosts": "No recent posts.",
+        "viewAll": "View All"
+    },
+    "newcomerGuide": {
+      "title": "First time here?",
+      "linkText": "Check out the essential guides for you!"
+    }
+  },
+
+  "//": "========================================================================",
+  "//": " 2. 밴쿠버 방 목록 페이지 (`/vancouver/rooms`)",
+  "//": "========================================================================",
+  "RoomPage": {
+    "meta": {
+      "title": "Vancouver Room & Share House Listings | Zippling",
+      "description": "Browse rooms for rent, share houses, and homestays in Vancouver. Updated daily for students and newcomers."
+    },
+    "disclaimer": "Zippling only connects listings from trusted platforms. We respect the ownership of original content and do not display full post details. Please visit the source site to verify all important information. Zippling is not involved in any contracts and holds no responsibility for issues caused by user negligence.",
+    "sections":{
+        "pageTitle": "Vancouver Room Listings",
+        "searchPlaceholder": "Search by title or neighborhood...",
+        "roomListTitle": "Vancouver Room Listings",
+        "roompage_searchbar": "Search by title...",
+        "roompage_disclaimer": "Zippling only connects listings from trusted platforms. We respect the ownership of original content and do not display full post details. Please visit the source site to verify all important information. Zippling is not involved in any contracts and holds no responsibility for issues caused by user negligence.",
+        "female": "Female",
+        "male": "Male",
+        "korea": "KR Site",
+        "canada": "CA Site",
+        "japan": "JP Site"
+    },
+    "delete_confirmation": "Are you sure you want to delete this post?",
+    "delete_success": "Post deleted successfully.",
+    "delete_fail": "Failed to delete the post. Please try again.",
+    "delete_post": "Delete post",
+    "delete_fail_with_reason": "Failed to delete post. Reason: {{reason}}"
+  },
+
+  "//": "========================================================================",
+  "//": " 4. 밴쿠버 가이드 페이지 (`/vancouver/guides`)",
+  "//": "========================================================================",
+  "GuidesPage": {
+    "meta": {
+      "title": "Your Vancouver Starter Guide | Zippling",
+      "description": "A complete guide for newcomers to Vancouver, from renting and shopping to banking and finding work."
+    },
+      "pageTitle": "Your Vancouver Starter Guide",
+      "intro1": "I remember when I first arrived in Vancouver, all by myself, ready to start a new chapter. It was exciting, but also a bit overwhelming. I quickly learned that the more I knew about the city, the more comfortable and at home I felt. I spent countless hours gathering information, figuring things out one step at a time.",
+      "intro2": "This guide is built on the very lessons my friends and I learned along the way. We've been in your shoes. Our hope is that by sharing our collective experience, we can make your transition into this beautiful city a little smoother and help you avoid the same hurdles we faced. Welcome to your new beginning.",
+      "backToVancouver": "Back to Vancouver Hub",
+      "quote": "This guide is built on the very lessons my friends and I learned along the way. We've been in your shoes.",
+      "updatedDate": "Updated for 2025",
+      "languageSupport": "Supports English, Korean, and Japanese.",
+      "housing": {
+        "title": "Finding Your Place",
+        "description": "From renting basics to setting up utilities."
+      },
+      "shopping": {
+        "title": "Everyday Life & Shopping",
+        "description": "Your guide to local markets and daily essentials."
+      },
+      "work_finance": {
+        "title": "Work & Finances",
+        "description": "Job hunting, banking, and understanding taxes."
+      }
+  },
+
+  "//": "========================================================================",
+  "//": " 3. 밴쿠버 커뮤니티 페이지 (`/vancouver/community`)",
+  "//": "========================================================================",
+  "CommunityPage": {
+    "meta": {
+      "title": "Vancouver Community Forum | Zippling",
+      "description": "Connect with other students in Vancouver. Ask questions, share information, and find study groups in our community forum."
+    },
+    "pageTitle": "Vancouver Community",
+    "pageSubtitle": "Share your stories and connect with others.",
+    "loading": "Loading...",
+    "noPostsYet": "No posts yet. Be the first one to write!",
+    "anonymous": "Anonymous",
+    "PostPage": {
+        "backToList": "Back to List",
+        "by": "by",
+        "edit": "Edit",
+        "delete": "Delete",
+        "deleteConfirm": "Are you sure you want to delete this post? This action cannot be undone.",
+        "deleteError": "Failed to delete the post. Please try again.",
+        "loading": "Loading post...",
+        "postNotFound": "Post not found.",
+        "commentsTitle": "Comments",
+        "commentPlaceholder": "Write a comment...",
+        "loginToComment": "Please log in to write a comment.",
+        "noComments": "No comments yet.",
+        "commentError": "Failed to post the comment. Please try again.",
+        "deleteCommentConfirm": "Are you sure you want to delete this comment?",
+        "deleteCommentError": "Failed to delete the comment. Please try again.",
+        "loginToVote": "Please login to vote for contents."
+    },
+    "WritePage": {
+        "editPost": "Edit Post",
+        "writePost": "Write a New Post",
+        "titleLabel": "Title",
+        "contentLabel": "Content",
+        "contentPlaceholder": "Share your story...",
+        "thumbnailHelp": "The first image in the content will be automatically used as the thumbnail.",
+        "saving": "Saving...",
+        "update": "Update Post",
+        "save": "Save Post",
+        "titleContentRequired": "Title and content are required.",
+        "loginRequired": "Login is required to write a post.",
+        "nicknameRequired": "A nickname is required to write a post. Please set it in your profile.",
+        "errorPrefix": "An error occurred:"
+    }
+  }
+  
+}

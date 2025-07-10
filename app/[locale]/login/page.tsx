@@ -1,109 +1,56 @@
-// app/[locale]/login/page.tsx
-'use client';
+/*
+================================================================================
+  3. 메인 페이지 (수정)
+  파일 경로: app/[locale]/login/page.tsx
+  (UI 레이아웃을 수정했습니다.)
+================================================================================
+*/
+import { createServerSupabase } from '@server/supabaseServerClient';
+import { redirect } from 'next/navigation';
+import LoginForm from './login-form.client';
+import type { Metadata } from 'next';
+import { Suspense } from 'react';
 
-import { useState } from 'react';
-import { useRouter, useParams, useSearchParams } from 'next/navigation'; // useSearchParams 추가
-import { useTranslations } from 'next-intl';
-import { createBrowserSupabase } from '@server/supabaseBrowserClient'; // Supabase 클라이언트 import 경로 수정
-
-export default function SignInPage() {
-  const t = useTranslations('signin');
-  const { locale } = useParams<{ locale: string }>();
-  const supabase = createBrowserSupabase();
-  const router = useRouter();
-  const searchParams = useSearchParams(); // 리다이렉트 URL을 가져오기 위해 추가
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-    const { data, error: authErr } = await supabase.auth.signInWithPassword({ email, password });
-    setLoading(false);
-    if (authErr) return setError(authErr.message);
-
-    // 이메일 인증 확인
-    if (!data.user?.email_confirmed_at) {
-      await supabase.auth.signOut();
-      return setError(t('mustConfirmEmail'));
-    }
-
-    // 리다이렉트 URL이 있으면 해당 경로로, 없으면 홈페이지로 이동
-    const redirectUrl = searchParams.get('redirect');
-    router.push(redirectUrl || `/${locale}`);
+// SEO 메타데이터 생성 (로그인 페이지는 검색 결과에서 제외)
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'Login',
+    robots: {
+      index: false,
+      follow: false,
+    },
   };
+}
+
+// 로딩 UI 컴포넌트
+function Loading() {
+    return <div className="h-full w-full flex items-center justify-center bg-gray-50">Loading...</div>;
+}
+
+export default async function LoginPage({
+  params: { locale },
+  searchParams,
+}: {
+  params: { locale: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const supabase = createServerSupabase();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // 이미 로그인한 사용자는 홈페이지로 리디렉션
+  if (user) {
+    redirect(`/${locale}`);
+  }
+
+  const redirectUrl = typeof searchParams.redirect === 'string' ? searchParams.redirect : null;
 
   return (
-    // [수정됨] 페이지 전체를 감싸는 최상위 div를 main으로 변경하여 시맨틱 의미를 강화합니다.
-    <main className="min-h-screen bg-gray-50 pt-2 flex items-start justify-center">
-      <div className="w-full px-12 pt-6 flex justify-center">
-        <div className="mt-8 w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden">
-          {/* 헤더 그라데이션 */}
-          <div className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-center py-4">
-            <h1 className="text-2xl font-bold">{t('title')}</h1>
-          </div>
-
-          {/* 폼 */}
-          <div className="px-8 py-4 space-y-4">
-            {error && (
-              <div className="bg-red-100 text-red-800 px-4 py-2 rounded-lg">
-                {error}
-              </div>
-            )}
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div>
-                <label className="block text-gray-700 mb-1 font-medium text-base">
-                  {t('email')}
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  required
-                  className="
-                    w-full pl-4 pr-14 py-2 text-base
-                    border border-gray-300 rounded-lg
-                    focus:outline-none focus:ring-2 focus:ring-teal-300
-                    transition
-                  "
-                />
-              </div>
-
-              <div>
-                <label className="block text-gray-700 mb-1 font-medium text-base">
-                  {t('password')}
-                </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  required
-                  className="
-                    w-full pl-4 pr-14 py-2 text-base
-                    border border-gray-300 rounded-lg
-                    focus:outline-none focus:ring-2 focus:ring-teal-300
-                    transition
-                  "
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3 bg-teal-600 hover:bg-teal-700 mt-6 mb-3 text-white font-semibold rounded-lg"
-              >
-                {loading ? t('loggingIn') : t('loginButton')}
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </main>
+    // [수정] main 대신 div를 사용하고, h-full로 부모(root layout의 main)의 전체 높이를 차지하도록 합니다.
+    // 이렇게 하면 페이지 전체 배경색이 회색으로 통일되고, 불필요한 하단 여백이 사라집니다.
+    <div className="h-full w-full flex justify-center pt-12 sm:pt-16 px-4">
+        <Suspense fallback={<Loading />}>
+          <LoginForm locale={locale} redirectUrl={redirectUrl} />
+        </Suspense>
+    </div>
   );
 }

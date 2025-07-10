@@ -1,204 +1,116 @@
-// app/[locale]/hot-deal/[id]/page.tsx
-'use client';
+/*
+================================================================================
+  3. 메인 페이지 (수정)
+  파일 경로: app/[locale]/hot-deal/[id]/page.tsx
+  (이 파일의 내용을 아래 코드로 교체해주세요.)
+================================================================================
+*/
+import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
+import { createServerSupabase } from '@server/supabaseServerClient';
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
+import PostInteractions from './post-interactions.client';
+import type { Metadata } from 'next';
 
-import { useEffect, useState, FormEvent } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { useSupabaseClient } from '@server/supabaseProvider';
-import type { Database } from '@server/types';
-import type { User } from '@supabase/supabase-js';
-import DOMPurify from 'dompurify';
-import { useTranslations } from 'next-intl';
-import { ArrowLeft, Pencil, Trash2, Send, ThumbsUp, ThumbsDown } from 'lucide-react';
+type Props = {
+  params: { id: string; locale: string };
+};
 
-// 타입 정의
-type HotDealPost = Database['public']['Tables']['hot_deal_posts']['Row'];
-type HotDealComment = Database['public']['Tables']['hot_deal_comments']['Row'];
+// SEO 메타데이터 생성
+export async function generateMetadata({ params: { id, locale } }: Props): Promise<Metadata> {
+  const supabase = createServerSupabase();
+  const { data: post } = await supabase.from('hot_deal_posts').select('title, content').eq('id', id).single();
 
-export default function HotDealDetailPage() {
-  // Hooks
-  const { id, locale } = useParams() as { id: string; locale: string };
-  const router = useRouter();
-  const supabase = useSupabaseClient();
-  const t = useTranslations('hotdeal.detail');
-
-  // State
-  const [post, setPost] = useState<HotDealPost | null>(null);
-  const [comments, setComments] = useState<HotDealComment[]>([]);
-  const [newComment, setNewComment] = useState('');
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [isAuthor, setIsAuthor] = useState(false);
-  const [loading, setLoading] = useState(true);
-  
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  // 추천/비추천 상태
-  const [votes, setVotes] = useState({ upvotes: 0, downvotes: 0 });
-  const [userVote, setUserVote] = useState<'up' | 'down' | null>(null);
-  const [isVoteLoading, setIsVoteLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
-      setCurrentUser(user);
-
-      if (user) {
-        const { data: profile } = await supabase
-          .from('user_profiles')
-          .select('role')
-          .eq('id', user.id)
-          .single();
-        
-        if (profile && profile.role === 'admin') {
-          setIsAdmin(true);
-        }
-      }
-
-      const { data: postData } = await supabase.from('hot_deal_posts').select('*').eq('id', Number(id)).single();
-      if (postData) {
-        setPost(postData);
-        setVotes({ upvotes: postData.upvotes, downvotes: postData.downvotes });
-        setIsAuthor(postData.user_id === user?.id);
-      }
-
-      // --- [수정] .single()을 제거하여 사용자가 투표하지 않은 경우에도 에러가 발생하지 않도록 수정 ---
-      if (user && postData) {
-        const { data: voteData, error: voteError } = await supabase
-          .from('hot_deal_votes')
-          .select('vote_type')
-          .eq('post_id', postData.id)
-          .eq('user_id', user.id);
-
-        if (voteError) {
-          console.error("Error fetching user vote:", voteError);
-        } else if (voteData && voteData.length > 0) {
-          setUserVote(voteData[0].vote_type as 'up' | 'down');
-        }
-      }
-
-      const { data: commentsData } = await supabase.from('hot_deal_comments').select('*').eq('post_id', Number(id)).order('created_at', { ascending: true });
-      setComments(commentsData || []);
-      setLoading(false);
+  if (!post) {
+    return {
+      title: 'Post Not Found',
     };
-    fetchData();
-  }, [id, supabase]);
+  }
 
-  // 게시물 삭제, 수정 핸들러
-  const handleEdit = () => router.push(`/${locale}/hot-deal/write?id=${id}`);
-  const handleDeletePost = async () => {
-    if (!post || !window.confirm(t('deleteConfirm'))) return;
-    const { error } = await supabase.from('hot_deal_posts').delete().eq('id', post.id);
-    if (error) { alert(t('deleteError')); } else { router.push(`/${locale}/hot-deal`); }
-  };
+  const description = post.content?.substring(0, 150).replace(/<[^>]*>?/gm, '') + '...';
 
-  // 댓글 작성 핸들러
-  const handleCommentSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!newComment.trim() || !currentUser || !post) return;
-    const { data: profileData } = await supabase.from('user_profiles').select('user_nickname').eq('id', currentUser.id).single();
-    const nickname = profileData?.user_nickname || t('anonymous');
-    const { data: newCommentData, error } = await supabase.from('hot_deal_comments').insert({ content: newComment, post_id: post.id, user_id: currentUser.id, user_nickname: nickname }).select().single();
-    if (error) { alert(t('commentError')); } else if (newCommentData) { setComments([...comments, newCommentData]); setNewComment(''); }
+  return {
+    title: `${post.title} | Zippling Hot Deals`,
+    description: description,
+    openGraph: {
+      title: post.title,
+      description: description,
+      type: 'article',
+    },
   };
+}
 
-  // 댓글 삭제 핸들러
-  const handleDeleteComment = async (commentId: number) => {
-    if (!window.confirm(t('deleteCommentConfirm'))) return;
-    const { error } = await supabase.from('hot_deal_comments').delete().eq('id', commentId);
-    if (error) { alert(t('deleteCommentError')); } else { setComments(comments.filter(c => c.id !== commentId)); }
-  };
+// 통화 코드 변환 유틸리티
+const getSafeCurrencyCode = (code: string | null): string => {
+  if (!code) return 'CAD';
+  const mapping: { [key: string]: string } = { 'CA$': 'CAD', 'US$': 'USD' };
+  return mapping[code] || code;
+};
 
-  // 추천/비추천 핸들러
-  const handleVote = async (voteType: 'up' | 'down') => {
-    if (!currentUser) { alert(t('loginToVote')); return; }
-    if (!post || isVoteLoading) return;
-    setIsVoteLoading(true);
-    const { data, error } = await supabase.rpc('handle_hotdeal_vote', { post_id_input: post.id, vote_type_input: voteType });
-    if (error) {
-      alert(t('voteError'));
-    } else {
-      setVotes({ upvotes: data.upvotes, downvotes: data.downvotes });
-      setUserVote(userVote === voteType ? null : voteType);
-    }
-    setIsVoteLoading(false);
-  };
+// Hot Deal 상세 페이지 (서버 컴포넌트)
+export default async function HotDealDetailPage({ params: { id, locale } }: Props) {
+  const t = await getTranslations('HotDealPage.detail');
+  const supabase = createServerSupabase();
+
+  // 서버에서 데이터 동시 조회
+  const { data: { user } } = await supabase.auth.getUser();
   
-  const getSafeCurrencyCode = (code: string | null): string => {
-    if (!code) return 'CAD';
-    if (code === 'CA$') return 'CAD';
-    if (code === 'US$') return 'USD';
-    return code;
-  };
+  const [postResponse, commentsResponse, voteResponse, profileResponse] = await Promise.all([
+    supabase.from('hot_deal_posts').select('*').eq('id', id).single(),
+    supabase.from('hot_deal_comments').select('*').eq('post_id', id).order('created_at', { ascending: true }),
+    user ? supabase.from('hot_deal_votes').select('vote_type').eq('post_id', id).eq('user_id', user.id).single() : Promise.resolve({ data: null }),
+    user ? supabase.from('user_profiles').select('role').eq('id', user.id).single() : Promise.resolve({ data: null })
+  ]);
 
-  if (loading) return <p className="py-20 text-center text-gray-500">{t('loading')}</p>;
-  if (!post) return <p className="py-20 text-center text-gray-500">{t('postNotFound')}</p>;
+  const { data: post, error: postError } = postResponse;
+  if (postError || !post) {
+    notFound();
+  }
 
-  const safeContent = DOMPurify.sanitize(post.content || '');
+  const { data: comments } = commentsResponse;
+  const { data: vote } = voteResponse;
+  const { data: profile } = profileResponse;
+
+  const isAuthor = post.user_id === user?.id;
+  const isAdmin = profile?.role === 'admin';
 
   return (
     <main className="bg-gray-50 min-h-screen py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
       <div className="max-w-screen-lg mx-auto">
         <div className="mb-4">
-          <button onClick={() => router.back()} className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900"><ArrowLeft className="w-5 h-5 mr-1.5" />{t('backToList')}</button>
+          <Link href={`/${locale}/hot-deal`} className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900">
+            <ArrowLeft className="w-5 h-5 mr-1.5" />
+            {t('backToList')}
+          </Link>
         </div>
-
+        
+        {/* 정적 래퍼와 클라이언트 컴포넌트 */}
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <article className="p-6 sm:p-8">
+          {/* 서버에서 렌더링하는 정적 부분 */}
+          <div className="p-6 sm:p-8">
             <h1 className="text-xl sm:text-2xl font-bold mb-2 text-gray-900">{post.title}</h1>
             {post.price != null && (
-              <p className="text-xl font-bold text-teal-600 mb-4">{new Intl.NumberFormat(locale, { style: 'currency', currency: getSafeCurrencyCode(post.currency_type), minimumFractionDigits: 2 }).format(post.price)}</p>
+              <p className="text-xl font-bold text-teal-600 mb-4">
+                {new Intl.NumberFormat(locale, {
+                  style: 'currency',
+                  currency: getSafeCurrencyCode(post.currency_type),
+                  minimumFractionDigits: 2,
+                }).format(post.price)}
+              </p>
             )}
-            <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-gray-500 mb-6">
-              <div><span>{t('by')} {post.user_nickname || t('anonymous')}</span><span className="mx-1.5">·</span><time dateTime={post.created_at}>{new Date(post.created_at).toLocaleString(locale, { dateStyle: 'long', timeStyle: 'short' })}</time></div>
-              
-              {(isAuthor || isAdmin) && (
-                <div className="flex items-center gap-4">
-                  <button onClick={handleEdit} className="flex items-center gap-1 text-gray-500 hover:text-teal-600"><Pencil size={14} /><span>{t('edit')}</span></button>
-                  <button onClick={handleDeletePost} className="flex items-center gap-1 text-gray-500 hover:text-red-600"><Trash2 size={14} /><span>{t('delete')}</span></button>
-                </div>
-              )}
-            </div>
-
-            <hr className="my-6 border-gray-300" />
-
-            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: safeContent }} />     
-
-            <div className="mt-8 pt-4 border-t flex items-center justify-center gap-6">
-              <button onClick={() => handleVote('up')} disabled={isVoteLoading} className={`flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors disabled:cursor-not-allowed ${userVote === 'up' ? 'text-green-600 font-bold' : ''}`}><ThumbsUp size={20} className={`${userVote === 'up' ? 'fill-current' : ''}`} /><span className="text-base">{votes.upvotes}</span></button>
-              <button onClick={() => handleVote('down')} disabled={isVoteLoading} className={`flex items-center gap-2 text-gray-600 hover:text-red-600 transition-colors disabled:cursor-not-allowed ${userVote === 'down' ? 'text-red-600 font-bold' : ''}`}><ThumbsDown size={20} className={`${userVote === 'down' ? 'fill-current' : ''}`} /><span className="text-base">{votes.downvotes}</span></button>
-            </div>
-          </article>
-
-          <section className="bg-gray-50/70 px-6 sm:px-8 py-4 border-t border-gray-200">
-            <h2 className="text-base font-bold mb-4">{t('commentsTitle')} ({comments.length})</h2>
-            {currentUser ? (
-              <form onSubmit={handleCommentSubmit} className="flex gap-3 mb-6 items-start">
-                <textarea value={newComment} onChange={(e) => setNewComment(e.target.value)} placeholder={t('commentPlaceholder')} className="flex-grow border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition resize-none" rows={3} />
-                <button type="submit" className="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex-shrink-0" disabled={!newComment.trim()} aria-label="Submit comment"><Send size={20} /></button>
-              </form>
-            ) : (
-              <p className="text-sm text-gray-500 mb-6 text-center bg-gray-100 p-4 rounded-md">{t('loginToComment')}</p>
-            )}
-            <div className="space-y-3">
-              {comments.map(comment => (
-                <div key={comment.id} className="flex items-start gap-3">
-                  <div className="flex-grow">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <span className="font-semibold text-xs text-gray-800">{comment.user_nickname || t('anonymous')}</span>
-                        <time className="text-xs text-gray-400 ml-2">{new Date(comment.created_at).toLocaleString(locale, { dateStyle: 'medium', timeStyle: 'short' })}</time>
-                      </div>
-                      {(comment.user_id === currentUser?.id || isAdmin) && (
-                        <button onClick={() => handleDeleteComment(comment.id)} className="text-gray-400 hover:text-red-500"><Trash2 size={13} /></button>
-                      )}
-                    </div>
-                    <p className="text-sm text-gray-700 mt-0.5">{comment.content}</p>
-                  </div>
-                </div>
-              ))}
-              {comments.length === 0 && !loading && <p className="text-sm text-center text-gray-400 py-4">{t('noComments')}</p>}
-            </div>
-          </section>
+          </div>
+          
+          {/* 인터랙션을 담당하는 클라이언트 컴포넌트 */}
+          <PostInteractions
+            post={post}
+            initialComments={comments || []}
+            currentUser={user}
+            userVote={vote?.vote_type as 'up' | 'down' | null}
+            isAuthor={isAuthor}
+            isAdmin={isAdmin}
+            locale={locale}
+          />
         </div>
       </div>
     </main>
