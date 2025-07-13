@@ -1,17 +1,11 @@
-/*
-================================================================================
-  2. 기존 서버 컴포넌트 수정
-  파일 경로: app/[locale]/about/page.tsx
-  (이 파일의 내용을 아래 코드로 교체해주세요.)
-================================================================================
-*/
+// app/[locale]/about/page.tsx
+
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import Link from 'next/link';
-import HeroSection from './hero-section.client'; // 방금 생성한 클라이언트 컴포넌트를 import 합니다.
+import HeroSection from './hero-section.client';
 
-// SEO 메타데이터 생성 (서버에서 실행)
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: 'AboutPage.meta' });
   return {
@@ -19,7 +13,6 @@ export async function generateMetadata({ params: { locale } }: { params: { local
   };
 }
 
-// 페이지 컴포넌트 (서버 컴포넌트)
 export default async function AboutUsPage({ params: { locale } }: { params: { locale: string } }) {
   const t = await getTranslations('AboutPage');
 
@@ -28,22 +21,19 @@ export default async function AboutUsPage({ params: { locale } }: { params: { lo
     "hero.imageAlt5", "hero.imageAlt6", "hero.imageAlt7", "hero.imageAlt8"
   ];
 
-  // 클라이언트 컴포넌트에 전달할 이미지 데이터 배열을 서버에서 미리 생성합니다.
   const heroImages = heroImageKeys.map((altKey, index) => ({
     src: `/images/about_hero_${index + 1}.jpg`,
-    alt: t(altKey), // 번역된 텍스트를 직접 전달
+    alt: t(altKey),
   }));
 
   return (
     <>
-      {/* HeroSection 클라이언트 컴포넌트를 렌더링하고, 번역된 텍스트를 props로 전달합니다. */}
       <HeroSection
         headline={t('hero.headline')}
         subheadline={t('hero.subheadline')}
         images={heroImages}
       />
 
-      {/* 메인 콘텐츠 (서버 컴포넌트로 유지) */}
       <main>
         {/* 우리의 이야기 섹션 */}
         <section className="w-full py-10 px-4 bg-white">
@@ -52,13 +42,17 @@ export default async function AboutUsPage({ params: { locale } }: { params: { lo
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-6">
                 {t('story.title')}
               </h2>
-              <p className="text-lg text-gray-700 leading-relaxed mb-4 break-keep">
+              {/* [수정] break-keep -> break-words 로 변경 */}
+              {/* [이유] 다국어 환경에서 텍스트가 컨테이너를 넘어가는 현상을 방지합니다. */}
+              <p className="text-lg text-gray-700 leading-relaxed mb-4 break-words">
                 {t('story.paragraph1')}
               </p>
-              <p className="text-lg text-gray-700 leading-relaxed mb-4 break-keep">
+              {/* [수정] break-keep -> break-words 로 변경 */}
+              <p className="text-lg text-gray-700 leading-relaxed mb-4 break-words">
                 {t('story.paragraph2')}
               </p>
-              <p className="text-lg text-gray-700 leading-relaxed break-keep">
+              {/* [수정] break-keep -> break-words 로 변경 */}
+              <p className="text-lg text-gray-700 leading-relaxed break-words">
                 {t('story.paragraph3')}
               </p>
             </div>

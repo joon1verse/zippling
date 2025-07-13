@@ -1,21 +1,5 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/api/check-email/route": "app/api/check-email/route.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/sitemap.xml/route": "app/sitemap.xml/route.js",
-  "/[locale]/about/page": "app/[locale]/about/page.js",
-  "/[locale]/hot-deal/write/page": "app/[locale]/hot-deal/write/page.js",
-  "/[locale]/page": "app/[locale]/page.js",
-  "/[locale]/login/page": "app/[locale]/login/page.js",
-  "/[locale]/contact/page": "app/[locale]/contact/page.js",
-  "/[locale]/hot-deal/[id]/page": "app/[locale]/hot-deal/[id]/page.js",
-  "/[locale]/hot-deal/page": "app/[locale]/hot-deal/page.js",
-  "/[locale]/signup/success/page": "app/[locale]/signup/success/page.js",
-  "/[locale]/signup/page": "app/[locale]/signup/page.js",
-  "/[locale]/vancouver/community/[id]/page": "app/[locale]/vancouver/community/[id]/page.js",
-  "/[locale]/vancouver/community/write/page": "app/[locale]/vancouver/community/write/page.js",
-  "/[locale]/vancouver/community/page": "app/[locale]/vancouver/community/page.js",
-  "/[locale]/vancouver/guides/page": "app/[locale]/vancouver/guides/page.js",
-  "/[locale]/vancouver/room/page": "app/[locale]/vancouver/room/page.js",
-  "/[locale]/vancouver/page": "app/[locale]/vancouver/page.js"
+  "/[locale]/page": "app/[locale]/page.js"
 }

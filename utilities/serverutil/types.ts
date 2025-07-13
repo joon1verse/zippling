@@ -15,6 +15,7 @@ export interface Database {
           upvotes: number;
           downvotes: number;
           is_notice: boolean;
+          thumbnail_url: any | null;
         };
         Insert: Partial<Omit<Database["public"]["Tables"]["vancouver_community"]["Row"], "id" | "created_at">>;
         Update: Partial<Database["public"]["Tables"]["vancouver_community"]["Row"]>;
@@ -95,6 +96,7 @@ export interface Database {
           upvotes: number;
           downvotes: number;
           is_notice: boolean;
+          site_url: any | null;
         };
         Insert: Partial<Omit<Database["public"]["Tables"]["hot_deal_posts"]["Row"], "id" | "created_at">>;
         Update: Partial<Database["public"]["Tables"]["hot_deal_posts"]["Row"]>;
@@ -108,9 +110,27 @@ export interface Database {
           birthdate: string | null;
           phone: any | null;
           created_at: string | null;
+          role: any;
+          nationality: any;
         };
         Insert: Partial<Omit<Database["public"]["Tables"]["user_profiles"]["Row"], "id" | "created_at">>;
         Update: Partial<Database["public"]["Tables"]["user_profiles"]["Row"]>;
+      };
+      "vancouver_roomlistings_new": {
+        Row: {
+          id: number;
+          title: any | null;
+          link: any | null;
+          price: any | null;
+          tag: any | null;
+          source: any | null;
+          postedat: string | null;
+          crawledat: string | null;
+          event_time: string | null;
+          is_notice: boolean;
+        };
+        Insert: Partial<Omit<Database["public"]["Tables"]["vancouver_roomlistings_new"]["Row"], "id" | "created_at">>;
+        Update: Partial<Database["public"]["Tables"]["vancouver_roomlistings_new"]["Row"]>;
       };
     };
     Views: {};
