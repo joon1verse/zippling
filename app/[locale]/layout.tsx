@@ -7,6 +7,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Script from "next/script";
 import HeaderWithTopbar from "./header_with_topbar";
 
+
 /**
  * 사이트의 기본 메타데이터를 생성합니다.
  * 이 메타데이터는 하위 페이지에서 별도로 메타데이터를 정의하지 않았을 때 사용됩니다.
@@ -74,9 +75,6 @@ export function generateViewport(): Viewport {
   };
 }
 
-/**
- * 각 언어별 페이지에 공통으로 적용될 레이아웃입니다.
- */
 export default function LocaleLayout({
   children,
   params: { locale },
@@ -84,12 +82,10 @@ export default function LocaleLayout({
   children: ReactNode;
   params: { locale: string };
 }) {
-  // 현재 요청의 locale을 설정하여 하위 서버 컴포넌트들이 인식할 수 있게 합니다.
   setRequestLocale(locale);
-
-  // i18n.ts에서 병합된 모든 메시지를 가져와 클라이언트 컴포넌트에 제공합니다.
   const messages = useMessages();
-
+  
+  // SessionProvider 래퍼를 제거합니다.
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <div className="flex flex-col min-h-screen">

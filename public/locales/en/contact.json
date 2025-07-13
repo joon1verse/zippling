@@ -1,27 +1,27 @@
 {
-    "meta": {
-      "title": "Contact Us | Zippling"
-    },
-    "hero": {
-      "title": "We’re Here to Help!",
-      "subtitle": "Have a question or an idea? We’re all ears!"
-    },
-    "details": {
-      "heading": "Email Us",
-      "emailLabel": "Drop us a line at:",
-      "notice": "We’ll get back to you within 1–2 business days.",
-      "description": "Whether it’s partnership ideas, feedback, or just a friendly hello, we’d love to hear from you!"
-    },
-    "social": {
-      "heading": "Stay Connected",
-      "instagram": "Follow us on Instagram"
-    },
-    "form": {
-      "formHeading": "Send Us a Message",
-      "namePlaceholder": "Your Name",
-      "emailPlaceholder": "Your Email",
-      "messagePlaceholder": "Type your message here…",
-      "submit": "Send Message",
-      "successMessage": "Thanks for reaching out! We’ll be in touch shortly."
-    }
+  "meta": {
+    "title": "Contact Us | Zippling"
+  },
+  "hero": {
+    "title": "We’re Here to Help!",
+    "subtitle": "Have a question or an idea? We’re all ears!"
+  },
+  "details": {
+    "heading": "Email Us",
+    "emailLabel": "Drop us a line at:",
+    "notice": "We’ll get back to you within 1–2 business days.",
+    "description": "Whether it’s partnership ideas, feedback, or just a friendly hello, we’d love to hear from you!"
+  },
+  "social": {
+    "heading": "Stay Connected",
+    "instagram": "Follow us on Instagram"
+  },
+  "form": {
+    "formHeading": "Send Us a Message",
+    "namePlaceholder": "Your Name",
+    "emailPlaceholder": "Your Email",
+    "messagePlaceholder": "Type your message here…",
+    "submit": "Send Message",
+    "successMessage": "Thanks for reaching out! We’ll be in touch shortly."
+  }
 }

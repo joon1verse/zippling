@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "title": "お問い合わせ | Zippling"
+  },
+  "hero": {
+    "title": "お手伝いします！",
+    "subtitle": "ご質問やアイデアはありますか？ぜひお聞かせください！"
+  },
+  "details": {
+    "heading": "メールでのお問い合わせ",
+    "emailLabel": "メールはこちらへ：",
+    "notice": "1～2営業日以内にご返信いたします。",
+    "description": "パートナーシップのご提案、フィードバック、またはお気軽なご挨拶でも大歓迎です！"
+  },
+  "social": {
+    "heading": "つながりを保つ",
+    "instagram": "Instagramでフォローする"
+  },
+  "form": {
+    "formHeading": "メッセージを送信",
+    "namePlaceholder": "お名前",
+    "emailPlaceholder": "メールアドレス",
+    "messagePlaceholder": "メッセージを入力してください…",
+    "submit": "送信",
+    "successMessage": "お問い合わせありがとうございます！まもなくご連絡いたします。"
+  }
+}

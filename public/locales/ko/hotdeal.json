@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "title": "핫딜 정보 & 마켓플레이스 | Zippling",
+    "description": "캐나다에서 찾을 수 있는 알뜰 쇼핑 정보와 중고 거래를 Zippling 마켓플레이스에서 확인하세요. 생활비를 현명하게 절약해 보세요.",
+    "openGraph": {
+      "title": "Zippling 핫딜 정보: 학생에게 친화적인 현명한 쇼핑",
+      "description": "가구, 전자 기기 등 숨겨진 보물을 안전하고 편리한 커뮤니티 마켓플레이스에서 찾아보세요.",
+      "imageUrl": "https://zippling.net/og-image-hotdeal.png"
+    }
+  },
+  "pageTitle": "핫딜 정보",
+  "pageSubtitle": "매일 업데이트! 현명한 쇼핑을 돕는 엄선된 핫딜",
+  "loading": "불러오는 중…",
+  "noDealsYet": "아직 핫딜 정보가 없습니다.",
+  "anonymous": "익명",
+  "write": {
+    "writeHotDeal": "핫딜 정보 게시",
+    "editHotDeal": "게시물 수정",
+    "errorPrefix": "오류:",
+    "titleLabel": "제목",
+    "priceLabel": "가격",
+    "amountPlaceholder": "가격을 입력하세요",
+    "contentLabel": "내용",
+    "contentPlaceholder": "핫딜 상세 정보를 공유하세요…",
+    "thumbnailUrlLabel": "썸네일 이미지 URL",
+    "thumbnailUrlPlaceholder": "https://example.com/image.png",
+    "thumbnailUrlHelp": "입력하지 않으면 기본 이미지가 사용됩니다.",
+    "saving": "저장 중…",
+    "save": "저장",
+    "update": "업데이트",
+    "postButton": "게시"
+  },
+  "detail": {
+    "backToList": "목록으로 돌아가기",
+    "by": "작성자:",
+    "edit": "수정",
+    "delete": "삭제",
+    "deleteConfirm": "정말로 이 게시물을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+    "deleteError": "게시물 삭제에 실패했습니다. 다시 시도해주세요.",
+    "loading": "게시물 불러오는 중…",
+    "postNotFound": "게시물을 찾을 수 없습니다.",
+    "commentsTitle": "댓글",
+    "commentPlaceholder": "댓글을 입력하세요…",
+    "loginToComment": "댓글을 작성하려면 로그인해주세요.",
+    "noComments": "아직 댓글이 없습니다.",
+    "commentError": "댓글 작성에 실패했습니다. 다시 시도해주세요.",
+    "deleteCommentConfirm": "정말로 이 댓글을 삭제하시겠습니까?",
+    "deleteCommentError": "댓글 삭제에 실패했습니다. 다시 시도해주세요.",
+    "loginToVote": "투표하려면 로그인해주세요."
+  }
+}

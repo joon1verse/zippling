@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "title": "문의하기 | Zippling"
+  },
+  "hero": {
+    "title": "도와드리겠습니다!",
+    "subtitle": "궁금한 점이나 아이디어가 있으신가요? 언제든지 들려주세요!"
+  },
+  "details": {
+    "heading": "이메일 문의",
+    "emailLabel": "이곳으로 이메일을 보내주세요:",
+    "notice": "1~2영업일 이내에 답변드리겠습니다.",
+    "description": "파트너십 제안, 피드백, 또는 간단한 인사도 환영합니다!"
+  },
+  "social": {
+    "heading": "연결 유지",
+    "instagram": "Instagram 팔로우하기"
+  },
+  "form": {
+    "formHeading": "메시지 보내기",
+    "namePlaceholder": "이름",
+    "emailPlaceholder": "이메일 주소",
+    "messagePlaceholder": "메시지를 입력해주세요…",
+    "submit": "보내기",
+    "successMessage": "문의해 주셔서 감사합니다! 곧 연락드리겠습니다."
+  }
+}

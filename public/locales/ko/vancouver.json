@@ -1,0 +1,123 @@
+{
+  "LandingPage": {
+    "meta": {
+      "title": "밴쿠버 유저 커뮤니티 & 생활정보 허브 | Zippling",
+      "description": "집 찾기부터 생활 가이드, 커뮤니티 게시물, 채용 정보까지 밴쿠버의 새로운 생활에 필요한 모든 정보가 여기 있습니다.",
+      "openGraph": {
+        "title": "밴쿠버 생활 가이드 | Zippling",
+        "description": "방 찾기부터 커뮤니티와의 연결까지, Zippling으로 밴쿠버 생활을 시작하세요!",
+        "imageUrl": "https://zippling.net/og-image-vancouver.png"
+      }
+    },
+    "heroTitle": "Zippling Vancouver",
+    "heroDescription": "밴쿠버 생활에 필요한 모든 정보가 Zippling에 있습니다.",
+    "sections": {
+      "loadingPosts": "게시물 불러오는 중…",
+      "room_title": "방 찾기",
+      "hot_deal_title": "핫딜 정보",
+      "community_title": "커뮤니티",
+      "find_job_title": "일자리 찾기",
+      "comingSoon": "준비 중",
+      "servicePreparing": "서비스 준비 중입니다.",
+      "noRecentPosts": "새로운 게시물이 없습니다.",
+      "viewAll": "모두 보기"
+    },
+    "newcomerGuide": {
+      "title": "처음이신가요?",
+      "linkText": "먼저 필수 가이드를 확인해보세요!"
+    }
+  },
+  "RoomPage": {
+    "meta": {
+      "title": "밴쿠버의 방 & 쉐어하우스 목록 | Zippling",
+      "description": "룸 렌탈, 쉐어하우스, 홈스테이 정보가 매일 업데이트됩니다. 밴쿠버에서의 새로운 생활을 지원합니다."
+    },
+    "disclaimer": "Zippling은 신뢰할 수 있는 플랫폼의 정보를 연결만 합니다. 원본 사이트의 권리를 존중하며, 자세한 내용은 각 사이트에서 확인해주세요. Zippling은 계약에 관여하지 않으며, 사용자 과실로 인한 문제에 대해 책임지지 않습니다.",
+    "sections": {
+      "pageTitle": "밴쿠버 방 목록",
+      "searchPlaceholder": "제목이나 지역으로 검색…",
+      "roomListTitle": "밴쿠버 방 목록",
+      "roompage_searchbar": "제목으로 검색…",
+      "roompage_disclaimer": "Zippling은 신뢰할 수 있는 플랫폼의 정보를 연결만 합니다. 원본 사이트의 권리를 존중하며, 자세한 내용은 각 사이트에서 확인해주세요. Zippling은 계약에 관여하지 않으며, 사용자 과실로 인한 문제에 대해 책임지지 않습니다.",
+      "female": "여성",
+      "male": "남성",
+      "korea": "KR 사이트",
+      "canada": "CA 사이트",
+      "japan": "JP 사이트"
+    },
+    "delete_confirmation": "정말로 이 게시물을 삭제하시겠습니까?",
+    "delete_success": "게시물이 삭제되었습니다.",
+    "delete_fail": "게시물 삭제에 실패했습니다. 다시 시도해주세요.",
+    "delete_post": "게시물 삭제",
+    "delete_fail_with_reason": "게시물 삭제에 실패했습니다. 이유: {{reason}}"
+  },
+  "GuidesPage": {
+    "meta": {
+      "title": "밴쿠버 스타터 가이드 | Zippling",
+      "description": "임대부터 쇼핑, 은행 계좌 개설, 일자리 찾기까지, 밴쿠버 새 생활에 필요한 정보를 완벽하게 담았습니다."
+    },
+    "pageTitle": "밴쿠버 스타터 가이드",
+    "intro1": "밴쿠버에 처음 발을 디뎠을 때, 기대만큼 불안감도 컸습니다. 하지만 도시를 알아갈수록 안심이 되었던 기억이 납니다. 정보를 모으느라 몇 시간을 보내며 한 걸음씩 익숙해졌습니다.",
+    "intro2": "이 가이드는 저와 동료들이 경험을 통해 배운 교훈을 바탕으로 만들었습니다. 여러분의 새로운 생활이 순조롭게 시작될 수 있도록, 같은 실수를 반복하지 않기 위한 팁을 전해드립니다. 새로운 한 걸음을 함께 내딛어 보세요.",
+    "backToVancouver": "밴쿠버 허브로 돌아가기",
+    "quote": "이 가이드는 우리 자신의 경험에서 태어났습니다. 여러분의 입장에서 작성했습니다.",
+    "updatedDate": "2025년 버전",
+    "languageSupport": "영어, 한국어, 일본어 지원",
+    "housing": {
+      "title": "집 찾기",
+      "description": "임대의 기본부터 공과금 절차까지."
+    },
+    "shopping": {
+      "title": "일상생활 & 쇼핑",
+      "description": "현지 슈퍼마켓 및 생필품 정보 가이드."
+    },
+    "work_finance": {
+      "title": "일자리 & 돈",
+      "description": "일자리 찾기, 은행 계좌, 세금의 기초 지식."
+    }
+  },
+  "CommunityPage": {
+    "meta": {
+      "title": "밴쿠버 커뮤니티 포럼 | Zippling",
+      "description": "밴쿠버의 친구들과 연결하세요. 질문, 정보 공유, 그룹 찾기를 할 수 있는 커뮤니티 포럼입니다."
+    },
+    "pageTitle": "밴쿠버 커뮤니티",
+    "pageSubtitle": "경험을 공유하고, 연결을 넓혀보세요.",
+    "loading": "불러오는 중…",
+    "noPostsYet": "아직 게시물이 없습니다. 첫걸음을 내딛어보세요!",
+    "anonymous": "익명",
+    "PostPage": {
+      "backToList": "목록으로 돌아가기",
+      "by": "작성자:",
+      "edit": "수정",
+      "delete": "삭제",
+      "deleteConfirm": "정말로 이 게시물을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+      "deleteError": "게시물 삭제에 실패했습니다. 다시 시도해주세요.",
+      "loading": "게시물 불러오는 중…",
+      "postNotFound": "게시물을 찾을 수 없습니다.",
+      "commentsTitle": "댓글",
+      "commentPlaceholder": "댓글을 입력하세요…",
+      "loginToComment": "댓글을 작성하려면 로그인해야 합니다.",
+      "noComments": "아직 댓글이 없습니다.",
+      "commentError": "댓글 작성에 실패했습니다. 다시 시도해주세요.",
+      "deleteCommentConfirm": "정말로 이 댓글을 삭제하시겠습니까?",
+      "deleteCommentError": "댓글 삭제에 실패했습니다. 다시 시도해주세요.",
+      "loginToVote": "투표하려면 로그인해야 합니다."
+    },
+    "WritePage": {
+      "editPost": "게시물 수정",
+      "writePost": "새 게시물 작성",
+      "titleLabel": "제목",
+      "contentLabel": "내용",
+      "contentPlaceholder": "당신의 경험을 공유해주세요…",
+      "thumbnailHelp": "본문에 처음 표시된 이미지가 썸네일로 사용됩니다.",
+      "saving": "저장 중…",
+      "update": "업데이트",
+      "save": "저장",
+      "titleContentRequired": "제목과 내용은 필수입니다.",
+      "loginRequired": "게시물을 작성하려면 로그인해야 합니다.",
+      "nicknameRequired": "닉네임을 설정해주세요. 프로필에서 설정할 수 있습니다.",
+      "errorPrefix": "오류:"
+    }
+  }
+}

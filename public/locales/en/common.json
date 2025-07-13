@@ -4,11 +4,11 @@
   "//": " 이 값들은 app/[locale]/layout.tsx에서 기본으로 사용됩니다.",
   "//": "========================================================================",
   "Metadata": {
-    "title": "Zippling | Canada's Community & Info Hub for International Students",
-    "description": "Preparing to study in Canada? Find everything from housing and secondhand deals to essential life tips in major cities like Vancouver and Toronto, all on Zippling.",
+    "title": "Zippling | Canada's Community & Info Hub for Newcomers",
+    "description": "Preparing to move to Canada? Find everything from housing and secondhand deals to essential life tips in major cities like Vancouver and Toronto, all on Zippling.",
     "openGraph": {
-      "title": "Zippling: Your Essential Community for Studying in Canada",
-      "description": "Life as an international student is easier with Zippling. Join now!",
+      "title": "Zippling: Your Essential Community for Starting Life in Canada!",
+      "description": "Life as a newcomer is easier with Zippling. Join now!",
       "imageUrl": "https://zippling.net/og-image-main.png"
     }
   },

@@ -1,287 +1,74 @@
-// vancouver/page.tsx
-'use client';
-
-import { useEffect, useState, useCallback, Suspense } from 'react';
-import { useTranslations } from 'next-intl';
-import { formatDistanceToNow } from 'date-fns';
-import { AlertTriangle, Mars, Venus, Info, ChevronLeft, ChevronRight, Trash2 } from 'lucide-react'; 
-import type { Database } from '@server/types';
-import { createBrowserClient } from '@supabase/ssr';
-import { useRouter, useSearchParams } from 'next/navigation';
-
-type RoomPost = Database['public']['Tables']['vancouver_roomlistings']['Row'];
+import { createCacheFirstSupabaseServer } from '@server/supabaseCacheServer';
+import { getTranslations } from 'next-intl/server';
+import type { Metadata } from 'next';
+import RoomListings from './room-listings.client';
 
 const POSTS_PER_PAGE = 20;
 
-function VancouverRoomContent() {
-  const t = useTranslations();
-  const router = useRouter();
-  const searchParams = useSearchParams();
+type Props = {
+  params: { locale: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
-  const [listings, setListings] = useState<RoomPost[]>([]);
-  const [loading, setLoading] = useState(true);
-  
-  const [currentPage, setCurrentPage] = useState(Number(searchParams.get('page')) || 1);
-  const [totalPosts, setTotalPosts] = useState(0);
-
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
-  const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
-
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-
-  useEffect(() => {
-    const checkUserRole = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        const { data: profile, error } = await supabase
-          .from('user_profiles')
-          .select('role')
-          .eq('id', user.id)
-          .single();
-
-        if (error) {
-          console.error('Error fetching user profile:', error);
-          return;
-        }
-        
-        if (profile && profile.role === 'admin') {
-          setIsAdmin(true);
-        }
-      }
-    };
-
-    checkUserRole();
-  }, [supabase]);
-
-
-  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
-
-  const fetchListings = useCallback(async (page: number) => {
-    setLoading(true);
-    const from = (page - 1) * POSTS_PER_PAGE;
-    const to = from + POSTS_PER_PAGE - 1;
-
-    let query = supabase
-      .from('vancouver_roomlistings')
-      .select('*', { count: 'exact' });
-
-    if (searchQuery) {
-      query = query.ilike('title', `%${searchQuery}%`);
-    }
-    if (selectedRegions.length > 0) {
-      query = query.contains('tag', selectedRegions);
-    }
-    if (selectedGenders.length > 0) {
-      query = query.contains('tag', selectedGenders);
-    }
-
-    const { data, error, count } = await query
-      .order('event_time', { ascending: false })
-      .range(from, to);
-
-    if (error) {
-      console.error(error.message);
-    } else {
-      const normalized = (data ?? []).map((row) => ({
-        ...row,
-        tag: Array.isArray(row.tag)
-          ? row.tag
-          : typeof row.tag === 'string'
-            ? row.tag.replace(/[{}"]/g, '').split(',').map((v) => v.trim()).filter(Boolean)
-            : []
-      })) as (RoomPost & { tag: string[] })[];
-      setListings(normalized);
-      if (count !== null) {
-        setTotalPosts(count);
-      }
-    }
-    setLoading(false);
-  }, [supabase, searchQuery, selectedRegions, selectedGenders]);
-
-  useEffect(() => {
-    fetchListings(currentPage);
-  }, [currentPage, fetchListings]);
-
-  // [FIXED] 게시물 삭제 핸들러 수정
-  const handleDelete = async (postId: number) => {
-    if (!window.confirm(t('delete_confirmation'))) {
-        return;
-    }
-
-    // .match() 대신 .eq()를 사용하여 id를 정확하게 지정합니다.
-    const { error } = await supabase
-      .from('vancouver_roomlistings')
-      .delete()
-      .eq('id', postId);
-
-    if (error) {
-        // 에러 발생 시 사용자에게 알리고, 콘솔에 자세한 내용을 출력합니다.
-        console.error('Error deleting post:', error);
-        alert(t('delete_fail_with_reason', { reason: error.message }));
-    } else {
-        alert(t('delete_success'));
-        // 삭제 성공 후 목록을 새로고침합니다.
-        fetchListings(currentPage);
-    }
+export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: 'vancouver.RoomPage.meta' });
+  return {
+    title: t('title'),
+    description: t('description'),
   };
-
-
-  const toggleFilter = (tag: string, type: 'region' | 'gender') => {
-    const setter = type === 'region' ? setSelectedRegions : setSelectedGenders;
-    setter((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
-    handlePageChange(1);
-  };
-  
-  const handlePageChange = (newPage: number) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-      const newSearchParams = new URLSearchParams(searchParams.toString());
-      newSearchParams.set('page', newPage.toString());
-      router.push(`?${newSearchParams.toString()}`);
-      window.scrollTo(0, 0);
-    }
-  };
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    handlePageChange(1);
-  }
-
-  const renderTime = (p: RoomPost) =>
-    p.event_time ? formatDistanceToNow(new Date(p.event_time), { addSuffix: true }) : '';
-
-  const renderGender = (tags: string[]) => {
-    if (tags.includes('female'))
-      return <span className="flex items-center gap-1 text-pink-500 font-medium"><Venus className="w-3 h-3" />{t('female')}</span>;
-    if (tags.includes('male'))
-      return <span className="flex items-center gap-1 text-blue-500 font-medium"><Mars className="w-3 h-3" />{t('male')}</span>;
-    return null;
-  };
-
-  const renderSourceTag = (tags: string[]) => {
-    if (tags.includes('korea')) return t('site.korea');
-    if (tags.includes('canada')) return t('site.canada');
-    if (tags.includes('japan')) return t('site.japan');
-    return '';
-  };
-
-  return (
-    <main className="w-full max-w-screen-lg mx-auto px-2 py-2 pt-6">
-      <div className="bg-yellow-50 border border-yellow-300 text-yellow-800 p-4 rounded-md mb-6">
-        <div className="flex items-start gap-3">
-          <AlertTriangle className="w-6 h-6 text-yellow-600 mt-1 shrink-0" />
-          <p className="text-sm leading-relaxed whitespace-pre-line">{t('roompage_disclaimer')}</p>
-        </div>
-      </div>
-      <header className="mb-4 flex flex-col gap-1">
-        <h1 className="text-2xl font-bold tracking-tight">🏠 {t('roomListTitle')}</h1>
-      </header>
-      <section className="bg-white border p-4 rounded-xl shadow-sm mb-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <input
-            type="text"
-            placeholder={t('roompage_searchbar')}
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className="w-full px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-teal-500"
-          />
-          <div className="flex flex-col gap-3 text-sm">
-            <div className="flex flex-wrap gap-2">
-              {['korea', 'canada', 'japan'].map((r) => {
-                const sel = selectedRegions.includes(r);
-                return <button key={r} onClick={() => toggleFilter(r, 'region')} className={`px-3 py-1 rounded-full border transition ${sel ? 'bg-teal-500 text-white border-teal-500' : 'bg-white text-gray-700 border-gray-300'} hover:border-teal-500 hover:text-teal-600`}>{t(`site.${r}`)}</button>;
-              })}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {['male', 'female'].map((g) => {
-                const sel = selectedGenders.includes(g);
-                return <button key={g} onClick={() => toggleFilter(g, 'gender')} className={`px-3 py-1 rounded-full border transition ${sel ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-gray-700 border-gray-300'} hover:border-blue-500 hover:text-blue-600`}>{t(g)}</button>;
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {loading ? (
-        <p className="py-20 text-center text-base">Loading...</p>
-      ) : listings.length === 0 ? (
-        <p className="py-20 text-center text-gray-500 text-base">No listings found.</p>
-      ) : (
-        <>
-          <ul className="divide-y divide-gray-200 bg-white rounded-2xl border shadow-sm overflow-hidden">
-            {listings.map((post) => (
-              <li key={post.id} className="px-3 py-2 hover:bg-gray-50 transition group">
-                <div className="flex flex-row items-center w-full">
-                  <a href={post.link ?? '#'} target="_blank" rel="noreferrer" className="font-semibold text-sm group-hover:underline text-blue-700 flex-1 min-w-0">{post.title}</a>
-                  
-                  {isAdmin && (
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        handleDelete(post.id);
-                      }}
-                      className="p-1.5 rounded-full hover:bg-red-100 text-red-500 ml-2"
-                      aria-label={t('delete_post')}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  )}
-
-                  {post.source && <span className="flex items-center gap-1 text-xs italic text-gray-500 flex-shrink-0 ml-3"><Info className="w-3.5 h-3.5 text-gray-400" />{post.source}</span>}
-                </div>
-                <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400 mt-0.5">
-                  {post.price && <span className="text-gray-600">{`CA${post.price}`}</span>}
-                  <span>{renderTime(post)}</span>
-                  <span>· {renderSourceTag(post.tag)}</span>
-                  <span className="flex gap-1 items-center">{renderGender(post.tag)}</span>
-                </div>
-              </li>
-            ))}
-          </ul>
-          {totalPages > 1 && (
-            <div className="flex justify-center items-center mt-8 space-x-2">
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="p-2 rounded-md hover:bg-gray-100 disabled:opacity-50"
-              >
-                <ChevronLeft size={20} />
-              </button>
-              <span className="text-sm font-medium">
-                Page {currentPage} of {totalPages}
-              </span>
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="p-2 rounded-md hover:bg-gray-100 disabled:opacity-50"
-              >
-                <ChevronRight size={20} />
-              </button>
-            </div>
-          )}
-        </>
-      )}
-    </main>
-  );
 }
 
-export default function VancouverRoomPage() {
-  const t = useTranslations();
+export default async function VancouverRoomPage({ params: { locale }, searchParams }: Props) {
+  const supabase = createCacheFirstSupabaseServer();
+
+  // [수정] searchParams 값을 안전하게 배열로 변환하는 헬퍼 함수
+  const getArrayValues = (param: string | string[] | undefined): string[] => {
+    if (Array.isArray(param)) return param;
+    if (typeof param === 'string') return param.split(',');
+    return [];
+  };
+
+  const page = Number(searchParams.page) || 1;
+  const searchQuery = typeof searchParams.q === 'string' ? searchParams.q : '';
+  const regions = getArrayValues(searchParams.regions);
+  const genders = getArrayValues(searchParams.genders);
+
+  const from = (page - 1) * POSTS_PER_PAGE;
+  const to = from + POSTS_PER_PAGE - 1;
+
+  let query = supabase.from('vancouver_roomlistings').select('*', { count: 'exact' });
+
+  if (searchQuery) query = query.ilike('title', `%${searchQuery}%`);
+  
+  const allFilters = [...regions, ...genders];
+  if (allFilters.length > 0) {
+    query = query.contains('tag', allFilters);
+  }
+
+  const { data, error, count } = await query
+    .order('event_time', { ascending: false })
+    .range(from, to);
+
+  if (error) {
+    console.error("Error fetching room listings:", error.message);
+  }
+
+  const initialListings = data || [];
+  const totalPosts = count || 0;
+
+  const { data: { user } } = await supabase.auth.getUser();
+  let isAdmin = false;
+  if (user) {
+    const { data: profile } = await supabase.from('user_profiles').select('role').eq('id', user.id).single();
+    isAdmin = profile?.role === 'admin';
+  }
 
   return (
-    <Suspense fallback={
-      <div className="py-20 text-center text-base">
-        {t("loading")}
-      </div>
-    }>
-      <VancouverRoomContent />
-    </Suspense>
+    <RoomListings
+      initialListings={initialListings}
+      totalPosts={totalPosts}
+      isAdmin={isAdmin}
+      locale={locale} // [수정] 누락되었던 locale prop 추가
+    />
   );
 }

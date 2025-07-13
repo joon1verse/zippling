@@ -12,6 +12,7 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import PostInteractions from './post-interactions.client';
 import type { Metadata } from 'next';
+import DOMPurify from 'isomorphic-dompurify'; // [수정]
 
 type Props = {
   params: { id: string; locale: string };
@@ -68,6 +69,9 @@ export default async function HotDealDetailPage({ params: { id, locale } }: Prop
     notFound();
   }
 
+  // [추가] 서버에서 HTML을 안전하게 정제합니다.
+  const safeContent = DOMPurify.sanitize(post.content || '');
+
   const { data: comments } = commentsResponse;
   const { data: vote } = voteResponse;
   const { data: profile } = profileResponse;
@@ -104,6 +108,7 @@ export default async function HotDealDetailPage({ params: { id, locale } }: Prop
           {/* 인터랙션을 담당하는 클라이언트 컴포넌트 */}
           <PostInteractions
             post={post}
+            safeContent={safeContent} // [추가]
             initialComments={comments || []}
             currentUser={user}
             userVote={vote?.vote_type as 'up' | 'down' | null}

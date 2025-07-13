@@ -5,8 +5,8 @@
   "//": "========================================================================",
   "LandingPage": {
     "meta": {
-      "title": "Vancouver Student Info Hub | Zippling",
-      "description": "Find housing, lifestyle guides, community posts, and job listings for international students in Vancouver, Canada.",
+      "title": "Vancouver Newcomer Info Hub | Zippling",
+      "description": "Find housing, lifestyle guides, community posts, and job listings for newcomers in Vancouver, Canada.",
       "openGraph": {
         "title": "Your Guide to Life in Vancouver | Zippling",
         "description": "From finding a room to connecting with the community, start your Vancouver journey here.",
@@ -38,7 +38,7 @@
   "RoomPage": {
     "meta": {
       "title": "Vancouver Room & Share House Listings | Zippling",
-      "description": "Browse rooms for rent, share houses, and homestays in Vancouver. Updated daily for students and newcomers."
+      "description": "Browse rooms for rent, share houses, and homestays in Vancouver. Updated daily for newcomers."
     },
     "disclaimer": "Zippling only connects listings from trusted platforms. We respect the ownership of original content and do not display full post details. Please visit the source site to verify all important information. Zippling is not involved in any contracts and holds no responsibility for issues caused by user negligence.",
     "sections":{
@@ -95,7 +95,7 @@
   "CommunityPage": {
     "meta": {
       "title": "Vancouver Community Forum | Zippling",
-      "description": "Connect with other students in Vancouver. Ask questions, share information, and find study groups in our community forum."
+      "description": "Connect with others in Vancouver. Ask questions, share information, and find groups in our community forum."
     },
     "pageTitle": "Vancouver Community",
     "pageSubtitle": "Share your stories and connect with others.",
