@@ -2,8 +2,7 @@
     "crons": [
       {
         "path": "/api/cron/visitor-acc",
-        "schedule": "0 9 * * *", 
-        "timezone": "America/Vancouver" 
+        "schedule": "0 9 * * *"
       }
     ]
   }
