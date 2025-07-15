@@ -1,48 +1,14 @@
 {
   "node": {
-    "23734e8a519c55a14fb741ace64351b6ae032a0c": {
-      "workers": {
-        "app/[locale]/hot-deal/[id]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5C%5Blocale%5D%5C%5Chot-deal%5C%5C%5Bid%5D%5C%5Cactions.ts%22%2C%5B%22addCommentAction%22%2C%22handleVoteAction%22%2C%22deletePostAction%22%2C%22deleteCommentAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/[locale]/hot-deal/[id]/page": "action-browser"
-      }
-    },
-    "38fe9e88c2b91f2bc253aca50398810cef7ed3c0": {
-      "workers": {
-        "app/[locale]/hot-deal/[id]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5C%5Blocale%5D%5C%5Chot-deal%5C%5C%5Bid%5D%5C%5Cactions.ts%22%2C%5B%22addCommentAction%22%2C%22handleVoteAction%22%2C%22deletePostAction%22%2C%22deleteCommentAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/[locale]/hot-deal/[id]/page": "action-browser"
-      }
-    },
-    "d28c929f40ee9c70ebd20a82dabaeea99939ada4": {
-      "workers": {
-        "app/[locale]/hot-deal/[id]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5C%5Blocale%5D%5C%5Chot-deal%5C%5C%5Bid%5D%5C%5Cactions.ts%22%2C%5B%22addCommentAction%22%2C%22handleVoteAction%22%2C%22deletePostAction%22%2C%22deleteCommentAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/[locale]/hot-deal/[id]/page": "action-browser"
-      }
-    },
-    "d641fc0b4725e26c4e6329823d4d4fe215e2b72d": {
-      "workers": {
-        "app/[locale]/hot-deal/[id]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5C%5Blocale%5D%5C%5Chot-deal%5C%5C%5Bid%5D%5C%5Cactions.ts%22%2C%5B%22addCommentAction%22%2C%22handleVoteAction%22%2C%22deletePostAction%22%2C%22deleteCommentAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/[locale]/hot-deal/[id]/page": "action-browser"
-      }
-    },
     "807130be877a7e9ca795cc955fcd2e4bc8f01987": {
       "workers": {
-        "app/[locale]/hot-deal/[id]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5C%5Blocale%5D%5C%5Chot-deal%5C%5C%5Bid%5D%5C%5Cactions.ts%22%2C%5B%22addCommentAction%22%2C%22handleVoteAction%22%2C%22deletePostAction%22%2C%22deleteCommentAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!",
         "app/[locale]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
-        "app/[locale]/hot-deal/[id]/page": "action-browser",
         "app/[locale]/page": "action-browser"
       }
     }
   },
   "edge": {},
-  "encryptionKey": "uyz4ehSDcQBIjQfLUjoxx9yDa4gVMGI7e0kgQmpQ0FM="
+  "encryptionKey": "VBAEsIRkLOt7cZzXR2DRYczZ1vrj9F9Q58WJwPpeR28="
 }

@@ -1,0 +1,67 @@
+/* 키프레임 애니메이션 정의 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes backgroundPan {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+}
+
+/* [추가] 섹션 전체를 부드럽게 드러내는 애니메이션 */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+
+/* 애니메이션을 적용할 클래스 */
+.opacity0 {
+  opacity: 0;
+}
+
+.fadeInUp {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.backgroundPan {
+  background-size: 200%;
+  animation: backgroundPan 3s linear infinite;
+}
+
+.sparkle {
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+/* [추가] 새로운 reveal 애니메이션 클래스 */
+.reveal {
+  animation: reveal 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}

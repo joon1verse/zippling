@@ -25,10 +25,11 @@
     ],
     "baseUrl": ".", // 프로젝트 루트 기준
     "paths": {
+      "@main/*": ["app/[locale]/*"],
       "@server/*": ["utilities/serverutil/*"],
       "@client/*": ["utilities/clientutil/*"],      // 필요시
       "@util/*": ["utilities/*"],      // 필요시
-      "@components/*": ["components/*"]
+      "@components/*": ["utilities/components/*"]
     }
   },
   "include": [
