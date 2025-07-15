@@ -4,6 +4,8 @@
 import { updateMaindashData } from '@components/update-maindashboard-data';
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic'; // 👈 이 줄을 추가하세요.
+
 export async function GET() {
   try {
     console.log("🤖 Cron Job: Starting main dashboard data update...");
