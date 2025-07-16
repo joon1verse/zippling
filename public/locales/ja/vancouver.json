@@ -1,75 +1,70 @@
 {
   "LandingPage": {
     "meta": {
-      "title": "バンクーバー新生活ハブ | Zippling",
-      "description": "住まい探しから生活ガイド、コミュニティ投稿、求人情報まで、バンクーバーの新生活に必要な情報がすべて揃います。",
-      "openGraph": {
-        "title": "バンクーバー生活ガイド | Zippling",
-        "description": "部屋探しからコミュニティとのつながりまで、Zipplingでバンクーバー生活をスタート！",
-        "imageUrl": "https://zippling.net/og-image-vancouver.png"
-      }
+      "title": "バンクーバーユーザーコミュニティ＆生活情報ハブ | Zippling",
+      "description": "家探しから生活ガイド、コミュニティ投稿、求人情報まで、バンクーバーでの新しい生活に必要なすべての情報がここにあります。"
     },
     "heroTitle": "Zippling Vancouver",
-    "heroDescription": "バンクーバー生活に必要な情報がZipplingで見つかります。",
+    "heroDescription": "初めてのバンクーバー生活に必要なすべての情報がZipplingにあります！",
     "sections": {
       "loadingPosts": "投稿を読み込み中…",
-      "room_title": "部屋を探す",
+      "room_title": "部屋探し",
       "hot_deal_title": "お得情報",
       "community_title": "コミュニティ",
-      "find_job_title": "仕事を探す",
+      "find_job_title": "仕事探し",
       "comingSoon": "準備中",
       "servicePreparing": "サービス準備中です。",
       "noRecentPosts": "新しい投稿はありません。",
-      "viewAll": "すべて見る"
+      "viewAll": "すべて表示"
     },
     "newcomerGuide": {
-      "title": "はじめてですか？",
-      "linkText": "まずは必須ガイドをチェック！"
+      "title": "ここが初めてですか？",
+      "linkText": "まず必須ガイドを確認してください！"
     }
   },
   "RoomPage": {
     "meta": {
-      "title": "バンクーバーの部屋＆シェアハウス一覧 | Zippling",
-      "description": "ルームレンタル、シェアハウス、ホームステイ情報を毎日更新。バンクーバーの新生活をサポートします。"
+      "title": "バンクーバーの部屋・シェアハウス一覧 | Zippling",
+      "description": "ルームレンタル、シェアハウス、ホームステイ情報が毎日更新されます。バンクーバーでの新しい生活をサポートします。"
     },
-    "disclaimer": "Zipplingは信頼できるプラットフォームの情報をつなぐだけです。元サイトの権利を尊重し、詳細は各サイトでご確認ください。Zipplingは契約に関与せず、ユーザーの過失による問題について責任を負いません。",
+    "disclaimer": "Zipplingは信頼できるプラットフォームからの情報をリンクするのみです。元のサイトの権利を尊重しており、詳細は各サイトでご確認ください。Zipplingは契約には関与せず、ユーザーの過失による問題には責任を負いません。",
     "sections": {
-      "pageTitle": "バンクーバー部屋一覧",
-      "searchPlaceholder": "タイトルやエリアで検索…",
-      "roomListTitle": "バンクーバー部屋一覧",
+      "pageTitle": "バンクーバーの部屋一覧",
+      "searchPlaceholder": "タイトルまたは地域で検索…",
+      "roomListTitle": "バンクーバーの部屋一覧",
       "roompage_searchbar": "タイトルで検索…",
-      "roompage_disclaimer": "Zipplingは信頼できるプラットフォームの情報をつなぐだけです。元サイトの権利を尊重し、詳細は各サイトでご確認ください。Zipplingは契約に関与せず、ユーザーの過失による問題について責任を負いません。",
+      "roompage_disclaimer": "Zipplingは信頼できるプラットフォームからの情報をリンクするのみです。元のサイトの権利を尊重しており、詳細は各サイトでご確認ください。Zipplingは契約には関与せず、ユーザーの過失による問題には責任を負いません。",
       "female": "女性",
       "male": "男性",
-      "korea": "KRサイト",
-      "canada": "CAサイト",
-      "japan": "JPサイト"
+      "korea": "韓国サイト",
+      "canada": "カナダサイト",
+      "japan": "日本サイト"
     },
     "delete_confirmation": "本当にこの投稿を削除しますか？",
-    "delete_success": "投稿を削除しました。",
-    "delete_fail": "投稿の削除に失敗しました。再度お試しください。",
+    "delete_success": "投稿が削除されました。",
+    "delete_fail": "投稿の削除に失敗しました。もう一度お試しください。",
     "delete_post": "投稿を削除",
-    "delete_fail_with_reason": "投稿の削除に失敗しました。理由：{{reason}}"
+    "delete_fail_with_reason": "投稿の削除に失敗しました。理由: {{reason}}"
   },
   "GuidesPage": {
     "meta": {
-      "title": "バンクーバースターターガイド | Zippling",
-      "description": "賃貸から買い物、銀行口座開設や仕事探しまで、バンクーバー新生活に必要な情報を完全網羅。"
+      "title": "バンクーバーでの新生活、定住ガイド | Zippling",
+      "description": "ルームレンタルからショッピング、銀行口座開設、仕事探しまで、バンクーバーでの新生活に必要な情報が完璧に詰まっています。"
     },
-    "pageTitle": "バンクーバースターターガイド",
-    "intro1": "初めてバンクーバーに降り立ったとき、期待と同じくらい不安もありました。街のことを知るほど、安心感が増していったのを覚えています。情報収集に何時間も費やし、一歩ずつ慣れていきました。",
-    "intro2": "このガイドは、私や仲間たちが経験から学んだ教訓をもとに作成しました。皆さんの新生活がスムーズに始められるよう、同じ過ちを繰り返さないためのヒントをお届けします。新たな一歩を共に踏み出しましょう。",
+    "pageTitle": "バンクーバーでの新生活、定住ガイド",
+    "intro1": "バンクーバーに初めて到着した時、何の縁もない場所に一人で来ただけに、期待も大きく不安も大きかったです。しかし、この街を知るにつれてより大きな魅力を感じ、ここでの生活が便利になっていくのを感じることができました。もちろん、最初の数ヶ月間は情報を集めるのに苦労し、生活に慣れるのに精一杯でしたが、その過程を経てからはバンクーバー生活において誰よりも慣れ親しみ、快適に過ごせるようになりました。",
+    "intro2": "これがこのガイドが書かれた最大の理由です。私と同じ道を歩む皆さんが、少しでも生活に便利さを感じ、バンクーバーという街にもっと愛情が湧き、その分良い経験をしてほしいと願っています。皆さんの新たな一歩に少しでも力になれれば幸いです。一緒に進んでみませんか？",
     "backToVancouver": "バンクーバーハブに戻る",
-    "quote": "このガイドは、私たち自身の経験から生まれました。皆さんの立場に立って作成しています。",
-    "updatedDate": "2025年版",
+    "quote": "「見知らぬ場所での初めてのスタートを最も便利にしよう！」",
+    "updatedDate": "2025年更新",
     "languageSupport": "英語、韓国語、日本語対応",
     "housing": {
-      "title": "住まいを見つける",
+      "title": "家探し",
       "description": "賃貸の基本から光熱費の手続きまで。"
     },
     "shopping": {
-      "title": "日常生活＆買い物",
-      "description": "地元スーパーや日用品の情報ガイド。"
+      "title": "日常生活＆ショッピング",
+      "description": "現地のスーパーマーケットや生活必需品情報ガイド。"
     },
     "work_finance": {
       "title": "仕事＆お金",
@@ -79,45 +74,45 @@
   "CommunityPage": {
     "meta": {
       "title": "バンクーバーコミュニティフォーラム | Zippling",
-      "description": "バンクーバーの仲間とつながろう。質問や情報共有、グループ探しができるコミュニティフォーラムです。"
+      "description": "バンクーバーの友達とつながろう。質問、情報共有、グループ探しができるコミュニティフォーラムです。"
     },
     "pageTitle": "バンクーバーコミュニティ",
-    "pageSubtitle": "体験を共有し、つながりを広げよう。",
+    "pageSubtitle": "経験を共有し、つながりを広げましょう。",
     "loading": "読み込み中…",
-    "noPostsYet": "まだ投稿がありません。最初の一歩を踏み出しましょう！",
+    "noPostsYet": "まだ投稿がありません。最初の一歩を踏み出してみましょう！",
     "anonymous": "匿名",
     "PostPage": {
-      "backToList": "一覧に戻る",
-      "by": "投稿者：",
+      "backToList": "リストに戻る",
+      "by": "作成者:",
       "edit": "編集",
       "delete": "削除",
-      "deleteConfirm": "本当にこの投稿を削除しますか？この操作は取り消せません。",
-      "deleteError": "投稿の削除に失敗しました。再度お試しください。",
+      "deleteConfirm": "本当にこの投稿を削除しますか？この操作は元に戻せません。",
+      "deleteError": "投稿の削除に失敗しました。もう一度お試しください。",
       "loading": "投稿を読み込み中…",
       "postNotFound": "投稿が見つかりません。",
       "commentsTitle": "コメント",
-      "commentPlaceholder": "コメントを入力…",
-      "loginToComment": "コメントするにはログインが必要です。",
-      "noComments": "まだコメントはありません。",
-      "commentError": "コメントの投稿に失敗しました。再度お試しください。",
+      "commentPlaceholder": "コメントを入力してください…",
+      "loginToComment": "コメントするにはログインする必要があります。",
+      "noComments": "まだコメントがありません。",
+      "commentError": "コメントの作成に失敗しました。もう一度お試しください。",
       "deleteCommentConfirm": "本当にこのコメントを削除しますか？",
-      "deleteCommentError": "コメントの削除に失敗しました。再度お試しください。",
-      "loginToVote": "投票するにはログインが必要です。"
+      "deleteCommentError": "コメントの削除に失敗しました。もう一度お試しください。",
+      "loginToVote": "投票するにはログインする必要があります。"
     },
     "WritePage": {
       "editPost": "投稿を編集",
       "writePost": "新しい投稿を作成",
       "titleLabel": "タイトル",
       "contentLabel": "内容",
-      "contentPlaceholder": "あなたの体験を共有しましょう…",
-      "thumbnailHelp": "本文で最初に表示された画像がサムネイルとして使われます。",
+      "contentPlaceholder": "あなたの経験を共有してください…",
+      "thumbnailHelp": "本文に最初に表示される画像がサムネイルとして使用されます。",
       "saving": "保存中…",
       "update": "更新",
       "save": "保存",
       "titleContentRequired": "タイトルと内容は必須です。",
-      "loginRequired": "投稿するにはログインが必要です。",
-      "nicknameRequired": "ニックネームを設定してください。プロフィールで設定できます。",
-      "errorPrefix": "エラー："
+      "loginRequired": "投稿を作成するにはログインする必要があります。",
+      "nicknameRequired": "ニックネームを設定してください。プロフィールから設定できます。",
+      "errorPrefix": "エラー:"
     }
   }
 }

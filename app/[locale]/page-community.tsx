@@ -1,12 +1,13 @@
 // app/[locale]/page-community.tsx
 
+import { getTranslations } from 'next-intl/server';
 import { createServerSupabase } from '@server/supabaseServerClient';
-import CommunitySectionClient from './page-communitysection'; // [수정] 파일명 변경에 따라 import 경로 수정
+import CommunitySectionClient from './page-communitysection';
 
 export default async function CommunitySection() {
+  const t = await getTranslations('MainPage');
   const supabase = createServerSupabase();
   
-  // 서버에서 데이터 로딩
   const [
     { data: dailyVisitors },
     { data: accumulatedMetrics },
@@ -17,18 +18,44 @@ export default async function CommunitySection() {
     supabase.from('main_review').select(`*, user_profiles (user_nickname, nationality, avatar_url)`).eq('is_featured', true).limit(5)
   ]);
 
-  // 필요한 데이터만 가공
   const totalUsers = accumulatedMetrics?.find(m => m.metric_key === 'total_users')?.metric_value || 0;
-  const totalVisitors = accumulatedMetrics?.find(m => m.metric_key === 'total_visitors')?.metric_value || 0;
+  const latestDailyVisitors = dailyVisitors?.[0]?.visitors || 0;
   const currentTestimonial = testimonials?.[0];
 
+  // [수정 1] 번역 파일에서 그래프 라벨을 불러옵니다.
+  const cumulativeVisitorLabel = t('cumulativeVisitorLabel');
+
+  let cumulativeTotal = 0;
+  const cumulativeVisitorData = (dailyVisitors || [])
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    .map(day => {
+      cumulativeTotal += day.visitors;
+      // [수정 2] 하드코딩된 한글 대신, 번역된 라벨을 데이터의 '키'로 사용합니다.
+      return { date: day.date, [cumulativeVisitorLabel]: cumulativeTotal };
+    });
+
+  const communityTranslations = {
+    title: t('communityTitle'),
+    descriptionPart1: t('communityDescriptionPart1'),
+    highlightText: t('serviceHighlightText'),
+    descriptionPart2: t('communityDescriptionPart2'),
+    totalUsersCardTitle: t('totalUsersCardTitle'),
+    todayVisitorsCardTitle: t('todayVisitorsCardTitle'),
+    cumulativeGraphTitle: t('cumulativeGraphTitle'),
+    noVisitorDataText: t('noVisitorDataText'),
+    testimonialCardTitle: t('testimonialCardTitle'),
+    testimonialCardDescription: t.markup('testimonialCardDescription'),
+  };
+
   return (
-    // [수정] 컴포넌트명 변경
     <CommunitySectionClient
-      dailyVisitors={dailyVisitors}
+      translations={communityTranslations}
+      cumulativeVisitorData={cumulativeVisitorData}
       totalUsers={totalUsers}
-      totalVisitors={totalVisitors}
+      latestDailyVisitors={latestDailyVisitors}
       currentTestimonial={currentTestimonial}
+      // [수정 3] 번역된 라벨(키 이름)을 클라이언트 컴포넌트로 전달합니다.
+      graphLabel={cumulativeVisitorLabel}
     />
   );
 }

@@ -1,19 +1,18 @@
-// app/[locale]/page-visitorchart.tsx (수정된 코드)
-
+// app/[locale]/page-visitorchart.tsx
 'use client'; 
 
-// [수정] AreaChart와 Area를 추가로 import 합니다.
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
+// [수정 1] props 타입을 수정하여 dataKey를 받도록 합니다.
 type VisitorChartProps = {
   data: {
     date: string;
-    visitors: number;
+    [key: string]: any;
   }[];
+  dataKey: string;
 };
 
-export default function VisitorChart({ data }: VisitorChartProps) {
-  // 날짜 형식 변경 로직은 기존과 동일하게 유지합니다.
+export default function VisitorChart({ data, dataKey }: VisitorChartProps) {
   const formattedData = data.map(item => ({
     ...item,
     date: new Date(item.date).toLocaleDateString('en-CA', { month: '2-digit', day: '2-digit' }).replace('/', '-'),
@@ -21,9 +20,7 @@ export default function VisitorChart({ data }: VisitorChartProps) {
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      {/* [수정] LineChart를 AreaChart로 변경 */}
       <AreaChart data={formattedData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-        {/* [수정] 그라데이션 색상을 정의합니다. */}
         <defs>
           <linearGradient id="colorVisitors" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="#14b8a6" stopOpacity={0.8}/>
@@ -44,12 +41,12 @@ export default function VisitorChart({ data }: VisitorChartProps) {
           labelStyle={{ fontWeight: 'bold', color: '#111827' }}
           cursor={{ stroke: '#14b8a6', strokeWidth: 1, strokeDasharray: '3 3' }}
         />
-        {/* [수정] Line을 Area로 변경하고, 정의한 그라데이션(fill)을 적용합니다. */}
+        {/* [수정 2] dataKey와 name을 props로 받은 값으로 동적으로 설정합니다. */}
         <Area 
           type="monotone" 
-          dataKey="visitors" 
-          name="방문자" 
-          stroke="#0f766e" // 라인 색상을 조금 더 진하게
+          dataKey={dataKey} 
+          name={dataKey} 
+          stroke="#0f766e"
           strokeWidth={2} 
           fillOpacity={1} 
           fill="url(#colorVisitors)" 

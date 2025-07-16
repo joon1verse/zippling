@@ -1,29 +1,41 @@
 // app/[locale]/page-communitysection.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 import { Star } from 'lucide-react';
 import VisitorChart from './page-visitorchart';
-import WaveSeparator from './WaveSeparator'; // [수정] WaveSeparator를 import합니다.
+import WaveSeparator from './WaveSeparator';
 import styles from '../assets/css/animations.module.css';
 
+// [수정 1] description 관련 타입을 텍스트 조각들로 변경
 type CommunityDataProps = {
-    dailyVisitors: any[];
+    translations: {
+        title: string;
+        descriptionPart1: string;
+        highlightText: string;
+        descriptionPart2: string;
+        totalUsersCardTitle: string;
+        todayVisitorsCardTitle: string;
+        cumulativeGraphTitle: string;
+        noVisitorDataText: string;
+        testimonialCardTitle: string;
+        testimonialCardDescription: ReactNode;
+    };
+    cumulativeVisitorData: any[];
     totalUsers: number;
-    totalVisitors: number;
+    latestDailyVisitors: number;
     currentTestimonial: any;
+    graphLabel: string;
 };
 
-export default function CommunitySectionClient({ dailyVisitors, totalUsers, totalVisitors, currentTestimonial }: CommunityDataProps) {
+export default function CommunitySectionClient({ translations, cumulativeVisitorData, totalUsers, latestDailyVisitors, currentTestimonial, graphLabel }: CommunityDataProps) {
   const [isVisible, setVisible] = useState(false);
   useEffect(() => {
-    // [수정] HeroSection보다 1초 늦게 애니메이션이 시작되도록 지연 시간을 1100ms로 변경합니다.
-    const timer = setTimeout(() => setVisible(true), 800); 
+    const timer = setTimeout(() => setVisible(true), 1100); 
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    // [수정] WaveSeparator와 Community Section이 함께 애니메이션되도록 구조를 잡습니다.
     <div className={isVisible ? styles.fadeInUp : styles.opacity0}>
       <WaveSeparator className="fill-gray-50" />
       <section className="bg-gray-50 py-16 sm:py-20">
@@ -31,14 +43,15 @@ export default function CommunitySectionClient({ dailyVisitors, totalUsers, tota
           
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 tracking-tight">
-              Zippling은 당신의 목소리에 귀 기울입니다
+              {translations.title}
             </h2>
+            {/* [수정 2] 전달받은 텍스트 조각들을 조합하여 렌더링 */}
             <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-              사용자 여러분의 소중한 피드백과 요청을 바탕으로 Zippling은{' '}
+              {translations.descriptionPart1}
               <span className="font-bold bg-gradient-to-r from-teal-500 to-cyan-500 bg-clip-text text-transparent">
-                매일 더 나은 서비스
+                {translations.highlightText}
               </span>
-              를 만들어갑니다. 저희는 일방적인 정보 제공을 넘어, 여러분과 함께 성장하는 커뮤니티를 지향합니다.
+              {translations.descriptionPart2}
             </p>
           </div>
 
@@ -46,28 +59,29 @@ export default function CommunitySectionClient({ dailyVisitors, totalUsers, tota
             <div className="lg:col-span-2 space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white p-6 rounded-2xl shadow-lg text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                  <h3 className="text-base font-semibold text-gray-600">총 가입자 수</h3>
+                  <h3 className="text-base font-semibold text-gray-600">{translations.totalUsersCardTitle}</h3>
                   <p className="text-4xl font-extrabold text-teal-600 mt-2">
                     {totalUsers.toLocaleString()}
                   </p>
                 </div>
                 <div className="bg-white p-6 rounded-2xl shadow-lg text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                  <h3 className="text-base font-semibold text-gray-600">총 누적 방문자</h3>
-                  <p className="text-4xl font-extrabold text-cyan-600 mt-2">
-                    {totalVisitors.toLocaleString()}
+                  <h3 className="text-base font-semibold text-gray-600">{translations.todayVisitorsCardTitle}</h3>
+                  <p className="text-4xl font-extrabold text-indigo-600 mt-2">
+                    {latestDailyVisitors.toLocaleString()}
                   </p>
                 </div>
               </div>
 
               <div className="bg-white p-6 rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                <h3 className="text-lg font-bold text-gray-800 mb-4 text-center sm:text-left">최근 방문자 트렌드</h3>
+                <h3 className="text-lg font-bold text-gray-800 mb-4 text-center sm:text-left">{translations.cumulativeGraphTitle}</h3>
                 <div className="h-48 sm:h-56">
-                  {dailyVisitors && dailyVisitors.length > 0 ? (
-                    <VisitorChart data={dailyVisitors.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())} />
-                  ) : (
-                    <div className="flex items-center justify-center h-full text-sm text-gray-400">방문자 데이터가 없습니다.</div>
-                  )}
-                </div>
+                {cumulativeVisitorData && cumulativeVisitorData.length > 0 ? (
+            // [수정 2] VisitorChart에 graphLabel을 dataKey로 전달합니다.
+            <VisitorChart data={cumulativeVisitorData} dataKey={graphLabel} />
+          ) : (
+            <div className="flex items-center justify-center h-full text-sm text-gray-400">{translations.noVisitorDataText}</div>
+          )}
+        </div>
               </div>
             </div>
 
@@ -97,9 +111,10 @@ export default function CommunitySectionClient({ dailyVisitors, totalUsers, tota
               ) : (
                 <div className="flex flex-col items-center justify-center text-center h-full">
                   <Star className="w-12 h-12 text-gray-300" />
-                  <h3 className="mt-4 font-semibold text-gray-700">첫 후기를 기다립니다</h3>
+                  <h3 className="mt-4 font-semibold text-gray-700">{translations.testimonialCardTitle}</h3>
+                  {/* [수정 2] dangerouslySetInnerHTML 대신, ReactNode를 직접 렌더링합니다. */}
                   <p className="mt-2 text-sm text-gray-500">
-                    여러분의 소중한 경험이<br />Zippling의 큰 자산이 됩니다.
+                    {translations.testimonialCardDescription}
                   </p>
                 </div>
               )}

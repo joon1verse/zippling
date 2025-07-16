@@ -3,25 +3,26 @@
     "title": "Contact Us | Zippling"
   },
   "hero": {
-    "title": "We’re Here to Help!",
-    "subtitle": "Have a question or an idea? We’re all ears!"
+    "title": "Need help?",
+    "subtitle": "If you have any questions or ideas, please let us know!",
+    "subtitle2": "Zippling looks forward to hearing from you."
   },
   "details": {
-    "heading": "Email Us",
-    "emailLabel": "Drop us a line at:",
-    "notice": "We’ll get back to you within 1–2 business days.",
-    "description": "Whether it’s partnership ideas, feedback, or just a friendly hello, we’d love to hear from you!"
+    "heading": "Email Inquiry",
+    "emailLabel": "Send us an email here:",
+    "notice": "The Zippling Team will review your inquiry and respond within 3-7 days.",
+    "description": "Partnership proposals, feedback, or just a simple hello are all welcome!"
   },
   "social": {
-    "heading": "Stay Connected",
+    "heading": "Social Media",
     "instagram": "Follow us on Instagram"
   },
   "form": {
-    "formHeading": "Send Us a Message",
-    "namePlaceholder": "Your Name",
-    "emailPlaceholder": "Your Email",
-    "messagePlaceholder": "Type your message here…",
-    "submit": "Send Message",
-    "successMessage": "Thanks for reaching out! We’ll be in touch shortly."
+    "formHeading": "Send a Message",
+    "namePlaceholder": "Name",
+    "emailPlaceholder": "Email Address",
+    "messagePlaceholder": "Enter your message…",
+    "submit": "Send",
+    "successMessage": "Thank you for your inquiry! We will get back to you soon."
   }
 }

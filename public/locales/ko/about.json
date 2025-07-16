@@ -3,7 +3,7 @@
     "title": "Zippling 소개 - 새로운 시작을 돕는 파트너"
   },
   "hero": {
-    "headline": "Zippling: 복잡한 집 찾기를 넘어, 새로운 시작을 쉽게 연결합니다!",
+    "headline": "Zippling: 복잡한 집 찾기를 넘어, 새로운 시작을 함께 도와드립니다!",
     "subheadline": "전 세계 어디서든 당신에게 딱 맞는 집을 찾아보세요.",
     "memoriesTitle": "캐나다에서의 추억",
     "imageAlt1": "캐나다 풍경 1",
@@ -53,6 +53,6 @@
   "cta": {
     "headline": "지금 바로 당신의 이상적인 집을 찾아보세요!",
     "subheadline": "쉽고 편리하게 새로운 삶을 시작하세요. Zippling과 함께 시작해요.",
-    "buttonText": "집 찾기"
+    "buttonText": "둘러보기"
   }
 }

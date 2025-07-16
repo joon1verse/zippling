@@ -37,13 +37,16 @@ export default async function ContactPage() {
     <>
       {/* Hero Section */}
       <section className="py-6">
-        <div className="max-w-3xl mx-auto text-center px-4 pt-6">
+        <div className="max-w-3xl mx-auto text-center px-4 pt-6 pb-2">
           <MessageCircle className="w-10 h-10 text-teal-600 mx-auto mb-3" />
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
+          <h1 className="text-3xl sm:text-4xl pb-2 font-bold text-gray-900">
             {t('hero.title')}
           </h1>
           <p className="text-base sm:text-lg text-gray-500 mt-1">
             {t('hero.subtitle')}
+          </p>
+          <p className="text-base sm:text-lg text-gray-500 mt-1">
+            {t('hero.subtitle2')}
           </p>
         </div>
       </section>
