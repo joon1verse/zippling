@@ -1,7 +1,7 @@
-'use client';
+'use client'; // 클라이언트 컴포넌트로 명시합니다.
 
 import { useState, useEffect, useTransition } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation'; // next/navigation에서 useRouter와 useParams를 가져옵니다.
 import { useTranslations } from 'next-intl';
 import { ArrowLeft, Pencil, Trash2, Send, ThumbsUp, ThumbsDown } from 'lucide-react';
 import type { Database } from '@server/types';
@@ -30,9 +30,10 @@ export default function CommunityInteractions({
   initialUserVote,
   locale,
 }: Props) {
-  // [수정] 'vancouver' 네임스페이스를 사용합니다.
+  // [수정 반영] 'vancouver' 네임스페이스를 사용합니다.
   const t = useTranslations('vancouver');
   const router = useRouter();
+  const params = useParams(); // useParams 훅을 사용하여 현재 URL의 동적 파라미터를 가져옵니다.
   const [isPending, startTransition] = useTransition();
 
   const [comments, setComments] = useState(initialComments);
@@ -48,7 +49,7 @@ export default function CommunityInteractions({
     startTransition(async () => {
       const result = await addCommentAction(formData);
       if (result?.error) {
-        // [수정] JSON 파일의 전체 경로로 키값에 접근합니다.
+        // [수정 반영] JSON 파일의 전체 경로로 키값에 접근합니다.
         alert(t('CommunityPage.PostPage.commentError'));
       } else {
         setNewComment('');
@@ -64,7 +65,8 @@ export default function CommunityInteractions({
     startTransition(async () => {
       const result = await handleVoteAction(post.id, voteType);
       if (result?.error) {
-        alert(t('CommunityPage.PostPage.voteError'));
+        // [수정] voteError 메시지가 JSON에 없으므로, 기본 메시지 또는 직접 추가해야 함
+        alert('Voting failed. Please try again.'); // t('CommunityPage.PostPage.voteError')가 JSON에 없으므로 임시 메시지 사용
       } else if (result?.data) {
         setVotes({ upvotes: result.data.upvotes, downvotes: result.data.downvotes });
         setUserVote(userVote === voteType ? null : voteType);
@@ -96,11 +98,18 @@ export default function CommunityInteractions({
     }
   };
 
+  // 상위 페이지 (커뮤니티 목록)로 이동하는 함수
+  const navigateToCommunityList = () => {
+    const currentLocale = params.locale; // useParams로 현재 locale을 가져옵니다.
+    router.push(`/${currentLocale}/vancouver/community`); // 명시적인 경로로 push합니다.
+  };
+
   return (
     <main className="bg-gray-50 min-h-screen py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
       <div className="max-w-screen-lg mx-auto">
         <div className="mb-4">
-          <button onClick={() => router.back()} className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+          {/* router.back() 대신 navigateToCommunityList 함수를 호출하도록 변경 */}
+          <button onClick={navigateToCommunityList} className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
             <ArrowLeft className="w-5 h-5 mr-1.5" />
             {t('CommunityPage.PostPage.backToList')}
           </button>
@@ -147,6 +156,7 @@ export default function CommunityInteractions({
               <p className="text-sm text-gray-500 mb-6 text-center bg-gray-100 p-4 rounded-md">{t('CommunityPage.PostPage.loginToComment')}</p>
             )}
             <div className="space-y-3">
+              {comments.length === 0 && <p className="text-sm text-center text-gray-400 py-4">{t('CommunityPage.PostPage.noComments')}</p>}
               {comments.map(comment => (
                 <div key={comment.id} className="flex items-start gap-3">
                   <div className="flex-grow">
@@ -161,7 +171,6 @@ export default function CommunityInteractions({
                   </div>
                 </div>
               ))}
-              {comments.length === 0 && <p className="text-sm text-center text-gray-400 py-4">{t('CommunityPage.PostPage.noComments')}</p>}
             </div>
           </section>
         </div>
