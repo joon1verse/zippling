@@ -1,11 +1,12 @@
 // i18n.ts (네임스페이스 규칙 복구)
 
-import { getRequestConfig } from 'next-intl/server';
+import { getRequestConfig, requestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
  
 const locales = ['en', 'ko', 'ja'];
  
-export default getRequestConfig(async ({ locale }) => {
+export default getRequestConfig(async () => {
+  const locale = await requestLocale();
  
   if (!locales.includes(locale as any)) notFound();
  

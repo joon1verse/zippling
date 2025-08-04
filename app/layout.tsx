@@ -3,7 +3,7 @@
 import "./globals.css";
 import type { ReactNode } from "react";
 import { Noto_Sans_KR } from "next/font/google";
-import { getLocale } from "next-intl/server";
+import { getLocale, setRequestLocale } from "next-intl/server";
 import VisitTracker from '@components/VisitTracker';
 
 // 폰트 설정은 전역으로 유지합니다.
@@ -21,6 +21,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const locale = await getLocale();
+  setRequestLocale(locale);
 
   return (
     // <html>과 <body> 태그는 여기에만 존재합니다.
