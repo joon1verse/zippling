@@ -1,15 +1,13 @@
 // i18n.ts (네임스페이스 규칙 복구)
 
-import { getRequestConfig, requestLocale } from 'next-intl/server';
+import { getRequestConfig } from 'next-intl/server';
 import { notFound } from 'next/navigation';
- 
+
 const locales = ['en', 'ko', 'ja'];
- 
-export default getRequestConfig(async () => {
-  const locale = await requestLocale();
- 
+
+export default getRequestConfig(async ({ locale }) => {
   if (!locales.includes(locale as any)) notFound();
- 
+
   return {
     messages: {
       // 사용자 정의 네임스페이스 규칙(PascalCase)을 다시 적용합니다.
