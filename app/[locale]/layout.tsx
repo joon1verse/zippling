@@ -6,61 +6,49 @@ import { NextIntlClientProvider, useMessages } from "next-intl";
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Script from "next/script";
 import HeaderWithTopbar from "./header_with_topbar";
+import { getCanonical, getAlternateLanguages, toAbsolute } from '@util/localeMap';
 
-
-/**
- * 사이트의 기본 메타데이터를 생성합니다.
- * 이 메타데이터는 하위 페이지에서 별도로 메타데이터를 정의하지 않았을 때 사용됩니다.
- * 하위 페이지에서 generateMetadata를 정의하면 이 설정값을 덮어쓰게 됩니다.
- */
-export async function generateMetadata({
-  params: { locale },
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
-  // [핵심] 직접 파일을 import하는 대신, i18n.ts를 통해 getTranslations를 사용합니다.
-  // 기본 메타데이터는 common.json에 정의된 'Metadata' 네임스페이스에서 가져옵니다.
+export async function generateMetadata({ params: { locale } }): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: "common.Metadata" });
   const og = await getTranslations({ locale, namespace: "common.Metadata.openGraph" });
-  
+
+  // [참고] metadataBase는 그대로 두어도 무방하나, canonical은 절대경로로 직접 지정
   const siteUrl = new URL("https://zippling.net");
 
   return {
     metadataBase: siteUrl,
     title: t('title'),
     description: t('description'),
-    
-    // SEO 설정
     robots: { index: true, follow: true },
+
+    // [SEO FIX] canonical/alternates 절대경로
     alternates: {
-      canonical: `/${locale}`,
-      languages: { "en-CA": "/en", "ko-KR": "/ko", "ja-JP": "/ja" },
+      canonical: getCanonical(locale, ''),          // ex) https://zippling.net/ko
+      languages: getAlternateLanguages(''),         // ex) { 'ko-KR': 'https://zippling.net/ko', ... }
     },
-    
-    // 소셜 미디어 공유(Open Graph) 설정
+
+    // [권장] OG url 절대경로
     openGraph: {
       title: og('title'),
       description: og('description'),
-      url: siteUrl,
-      siteName: "Zippling",
-      images: [
-        { 
-          url: og('imageUrl'), // common.json에서 가져온 이미지 URL
-          width: 1200, 
-          height: 630, 
-          alt: "Zippling 로고" 
-        }
-      ],
+        url: getCanonical(locale, ''),                 // 루트는 /{locale}
+        images: [
+          {
+            url: toAbsolute(og('imageUrl')),          // [수정] 이중 도메인 방지
+            width: 1200,
+            height: 630,
+            alt: 'Zippling 로고'
+          }
+        ],
       locale: locale === 'ko' ? 'ko_KR' : (locale === 'ja' ? 'ja_JP' : 'en_CA'),
       type: "website",
     },
-    
-    // 트위터 공유 설정
+
     twitter: {
       card: "summary_large_image",
       title: og('title'),
       description: og('description'),
-      images: [og('imageUrl')],
+      images: [toAbsolute(og('imageUrl'))],            // [권장] 절대경로
     },
   };
 }

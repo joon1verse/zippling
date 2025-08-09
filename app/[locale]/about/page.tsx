@@ -2,14 +2,46 @@
 
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
+import { getAlternateLanguages, getCanonical, toAbsolute } from '@util/localeMap'; // [추가]
 import Image from 'next/image';
 import Link from 'next/link';
 import HeroSection from './hero-section.client';
 
-export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
   const t = await getTranslations({ locale, namespace: 'AboutPage.meta' });
+
+  const path = '/about';
+
   return {
     title: t('title'),
+    description: t('description'),
+    alternates: {
+      canonical: getCanonical(locale, path),
+      languages: getAlternateLanguages(path),
+      // 필요 시 x-default를 util에서 내려주도록 수정(아래 참고)
+    },
+    // [중요] 레이아웃의 openGraph를 덮어쓰지 않도록 필요한 필드(이미지)까지 함께 지정
+    openGraph: {
+      url: getCanonical(locale, path),
+      images: [
+        {
+          // 상대경로/절대경로 섞여도 안전하게 절대화
+          url: toAbsolute('/og-image-main.png'), // 필요 시 페이지 전용 이미지로 교체
+          width: 1200,
+          height: 630,
+          alt: 'Zippling 대표 이미지',
+        },
+      ],
+      title: t('title'),
+      description: t('description'),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('title'),          // [정렬] 페이지 타이틀과 동일
+      description: t('description'),
+      images: [toAbsolute('/og-image-main.png')],
+    },
   };
 }
 

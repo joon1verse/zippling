@@ -1,50 +1,14 @@
 {
   "node": {
-    "807130be877a7e9ca795cc955fcd2e4bc8f01987": {
+    "983f0048d6e0ed6fa6d82193fb51593c2b217e71": {
       "workers": {
-        "app/[locale]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!",
-        "app/[locale]/vancouver/guides/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!",
-        "app/[locale]/vancouver/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!",
-        "app/[locale]/vancouver/room/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5C%5Blocale%5D%5C%5Cvancouver%5C%5Croom%5C%5Cactions.ts%22%2C%5B%22deleteRoomListingAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!",
-        "app/[locale]/hot-deal/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!",
-        "app/[locale]/contact/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5C%5Blocale%5D%5C%5Ccontact%5C%5Cactions.ts%22%2C%5B%22sendContactEmail%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!",
-        "app/[locale]/about/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!"
+        "app/[locale]/about/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cdev%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
-        "app/[locale]/page": "action-browser",
-        "app/[locale]/vancouver/guides/page": "action-browser",
-        "app/[locale]/vancouver/page": "action-browser",
-        "app/[locale]/vancouver/room/page": "action-browser",
-        "app/[locale]/hot-deal/page": "action-browser",
-        "app/[locale]/contact/page": "action-browser",
         "app/[locale]/about/page": "action-browser"
-      }
-    },
-    "d2817244b58356a39ce36626a173401d7d949044": {
-      "workers": {
-        "app/[locale]/vancouver/guides/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5C%5Blocale%5D%5C%5Cvancouver%5C%5Cguides%5C%5Cguide-link.tsx%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=!"
-      },
-      "layer": {
-        "app/[locale]/vancouver/guides/page": "rsc"
-      }
-    },
-    "08be52b3a33b7d5b29bb7ef3212a03dcf47bf524": {
-      "workers": {
-        "app/[locale]/vancouver/room/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5C%5Blocale%5D%5C%5Cvancouver%5C%5Croom%5C%5Cactions.ts%22%2C%5B%22deleteRoomListingAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/[locale]/vancouver/room/page": "action-browser"
-      }
-    },
-    "3fa8589d5fb781f334a3f41eae1bb48dd69fd1c3": {
-      "workers": {
-        "app/[locale]/contact/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5C%5Blocale%5D%5C%5Ccontact%5C%5Cactions.ts%22%2C%5B%22sendContactEmail%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CAdministrator%5C%5CDesktop%5C%5CDoBest%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/[locale]/contact/page": "action-browser"
       }
     }
   },
   "edge": {},
-  "encryptionKey": "dfenlar4chWiuVtwlHMYIQsg519A8lo2Nu9wmZYfEgk="
+  "encryptionKey": "uZsaiWBFWFzDCNC64QQXtg6eCUYcp1e7cEKPpQO3g7E="
 }
