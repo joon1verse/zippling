@@ -51,6 +51,7 @@
     "delete_post": "Delete Post",
     "delete_fail_with_reason": "Failed to delete post. Reason: {{reason}}"
   },
+
   "GuidesPage": {
     "meta": {
       "title": "First Steps in Vancouver: Settlement Guide | Zippling",
@@ -59,6 +60,7 @@
     "pageTitle": "First Steps in Vancouver: Settlement Guide",
     "intro1": "When I first arrived in Vancouver, coming alone to an unfamiliar place, my expectations were high, but so was my anxiety. However, the more I got to know this city, the more charm I felt, and my life here became more convenient. Of course, for the first few months, I struggled to gather information and adapt to life, but after going through that process, I was able to live in Vancouver more familiar and comfortable than anyone else.",
     "intro2": "This is the biggest reason why this guide was written. I hope that those of you who will follow the same path as me will feel a little more convenience in your daily lives, grow to love Vancouver more, and have many good experiences. I will be a small source of strength for your new journey. Shall we move forward together?",
+    "intro3": "Remember, this guide is only a starting point. Vancouver is a diverse city with countless opportunities and hidden gems. Take your time to explore, connect with people, and make this city your own.",
     "backToVancouver": "Back to Vancouver Hub",
     "quote": "'Let's make your first start in a new place as convenient as possible!'",
     "updatedDate": "Updated 2025",
@@ -119,5 +121,93 @@
       "nicknameRequired": "Please set your nickname. You can do this in your profile.",
       "errorPrefix": "Error:"
     }
+  },
+
+    "HousingGuide": {
+      "meta": {
+        "title": "Vancouver Housing Guide | Starter Handbook",
+        "description": "A plain-English walkthrough for first-time renters in Vancouver—basics, viewing tips, paperwork, utilities, and must-know terms."
+      },
+      "backToGuides": "Back to Guides",
+      "pageTitle": "Vancouver Housing Guide",
+      "subtitle": "Practical basics and peer-tested tips for first-time renters.",
+      "languageSupport": "English, Korean, Japanese",
+      "updatedDate": "Updated 2025",
+      "readingTime": "A 5-minute read",
+      "intro": "When you start looking for a place in Vancouver, information often feels scattered across different sites and groups. The terms are unfamiliar and it’s hard to tell what actually matters. This guide gathers the essentials—from search to lease—so you can make clearer decisions, faster.",
+      "toc": {
+        "title": "Contents",
+        "rentBasics": "Rent Basics",
+        "whereToSearch": "Where to Search",
+        "viewingChecklist": "Viewing Checklist",
+        "application": "Application & Docs",
+        "leaseUtilities": "Lease & Utilities",
+        "moveIn": "Move-in",
+        "safetyScams": "Safety & Scams",
+        "glossary": "Common Terms"
+      },
+      "sections": {
+        "rentBasics": {
+          "title": "Rent Basics",
+          "p1": "Most leases are 12 months. At signing you typically pay first month’s rent plus a damage deposit (often 50% of one month). If you have pets, a separate pet deposit may be required.",
+          "li1": "Furnished vs. unfurnished affects price and flexibility.",
+          "li2": "Share houses are cheaper and often flexible in term length, but they come with house rules—please review them carefully.",
+          "li3": "If you live in a condo (apartment-style building), you may be required to follow the strata rules/bylaws."
+        },
+        "whereToSearch": {
+          "title": "Where to Search",
+          "p1": "Use multiple sources. Platforms differ more in convenience than safety, so cross-check before you commit.",
+          "li1": "Craigslist: huge inventory and long history—verify carefully.",
+          "li2": "Facebook Marketplace & local community groups: active and fast, but watch for duplicate or misleading posts.",
+          "li3": "Building managers: calling directly sometimes reveals vacancies not posted online.",
+          "ctaButton": "See combined listings on Zippling",
+          "ctaSub": "Skim recent titles from Craigslist, Facebook groups, and other sources in one place."
+        },
+        "viewingChecklist": {
+          "title": "Viewing Checklist",
+          "p1": "Don’t stop at layout—check everyday essentials and record everything with photos.",
+          "li1": "Water pressure & hot water, laundry, noise, cell reception.",
+          "li2": "Heating type, insulation/windows, signs of mold or odors.",
+          "li3": "What’s included: parking, storage, internet, utilities.",
+          "li4": "For shares, check cleaning rules and bathroom usage. If there’s only one bathroom, it can get inconvenient with many housemates."
+        },
+        "application": {
+          "title": "Application & Docs",
+          "p1": "Landlords usually ask for an application, ID, income proof, and references. Credit checks are common.",
+          "li1": "Prepare pay stubs or a job offer; students can provide proof of funds/tuition.",
+          "li2": "References from a previous landlord or manager help a lot.",
+          "li3": "Never send a deposit before signing a lease."
+        },
+        "leaseUtilities": {
+          "title": "Lease & Utilities",
+          "p1": "Confirm start/end dates, renewal, subletting, and early termination. Clarify which utilities are included.",
+          "li1": "Electricity (BC Hydro) and internet are typically tenant-set and tenant-paid.",
+          "li2": "Ask the heating type (electric/baseboard or gas) and average monthly cost.",
+          "li3": "Document the unit’s condition at move-in with time-stamped photos."
+        },
+        "moveIn": {
+          "title": "Move-in",
+          "p1": "After signing, schedule the practical steps early.",
+          "li1": "Condos may require elevator booking—check with building management.",
+          "li2": "Confirm keys/fobs and mailbox info with the landlord.",
+          "li3": "If you’re signing your own lease (not a share), we recommend obtaining renter’s insurance."
+        },
+        "safetyScams": {
+          "title": "Safety & Scams",
+          "p1": "If a deal looks too good, assume due diligence is needed.",
+          "li1": "Do not pay any deposit before viewing the place in person.",
+          "li2": "Use e-Transfer only to verified Canadian accounts you can identify.",
+          "li3": "Search the address/phone/email online for past scam reports."
+        },
+        "glossary": {
+          "title": "Common Terms",
+          "p1": "A few listing terms that often confuse newcomers:",
+          "li1": "Deposit: Money held as security; typically ~50% of one month’s rent and refundable if conditions are met.",
+          "li2": "Den: Small room/alcove—often not a legal bedroom.",
+          "li3": "Solarium: Glass-enclosed room or extended balcony; bright but hot/cold and rarely a legal bedroom.",
+          "li4": "Primary Bedroom (formerly “Master Room”): Largest bedroom, often with an ensuite; usually the priciest room in shares.",
+          "li5": "Strata: Condo owners’ association and building rules."
+        }
+      }
+    }
   }
-}

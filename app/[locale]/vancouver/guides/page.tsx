@@ -1,3 +1,4 @@
+// app/[locale]/vancouver/guides/page.tsx
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { Home, ShoppingCart, Briefcase, ArrowLeft, Globe } from 'lucide-react';
@@ -7,9 +8,9 @@ import type { Metadata } from 'next';
 
 type Props = {
   params: { locale: string };
-}
+};
 
-// SEO를 위한 동적 메타데이터 생성
+// SEO를 위한 동적 메타데이터 생성 (ESM/Next 14 호환)
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: 'vancouver.GuidesPage.meta' });
   return {
@@ -22,6 +23,7 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
 export default async function VancouverGuidesPage({ params: { locale } }: Props) {
   const t = await getTranslations('vancouver.GuidesPage');
 
+  // 가이드 링크 데이터
   const guides = [
     {
       href: '/vancouver/guides/housing',
@@ -45,58 +47,65 @@ export default async function VancouverGuidesPage({ params: { locale } }: Props)
 
   return (
     <main className="bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
-        
-        <div className="mb-8">
-            <Link href={`/${locale}/vancouver`} className="inline-flex items-center text-sm font-medium text-gray-600 hover:text-teal-600 transition-colors">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                {t('backToVancouver')}
-            </Link>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* 상단 뒤로가기 */}
+        <div className="mb-6">
+          <Link
+            href={`/${locale}/vancouver`}
+            className="inline-flex items-center text-sm font-medium text-gray-600 hover:text-teal-600 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            {t('backToVancouver')}
+          </Link>
         </div>
 
-        <div className="bg-white p-8 sm:p-12 rounded-2xl shadow-sm">
-            <div className="lg:grid lg:grid-cols-3 lg:gap-x-16">
-            
-            <div className="lg:col-span-2">
-                <header>
-                    <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight">
-                        {t('pageTitle')}
-                    </h1>
-                    <div className="mt-6 flex flex-col gap-y-3 sm:flex-row sm:items-center sm:justify-between text-sm text-gray-600">
-                        <div className="inline-flex items-center bg-teal-50 text-teal-800 rounded-full px-4 py-1.5">
-                            <Globe className="w-4 h-4 mr-2.5" />
-                            <span className="font-semibold">{t('languageSupport')}</span>
-                        </div>
-                        <span className="font-medium text-gray-500">{t('updatedDate')}</span> 
-                    </div>
-                    <hr className="my-8 border-gray-200" />
-                    <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed space-y-6">
-                        <p>{t('intro1')}</p>
-                        <blockquote className="border-l-4 border-teal-400 pl-6 py-2 my-6 text-gray-700 italic">
-                          {t('quote')}
-                        </blockquote>
-                        <p>{t('intro2')}</p>
-                    </div>
-                </header>
+        {/* [수정] 하나의 카드 박스로 통일 → 그리드/우측 컬럼 제거 */}
+        <section className="bg-white p-8 sm:p-12 rounded-2xl shadow-sm">
+          {/* 헤더 */}
+          <header>
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight">
+              {t('pageTitle')}
+            </h1>
+
+            {/* 배지/업데이트 날짜 */}
+            <div className="mt-6 flex flex-col gap-y-3 sm:flex-row sm:items-center sm:justify-between text-sm text-gray-600">
+              <div className="inline-flex items-center bg-teal-50 text-teal-800 rounded-full px-4 py-1.5">
+                <Globe className="w-4 h-4 mr-2.5" />
+                <span className="font-semibold">{t('languageSupport')}</span>
+              </div>
+              <span className="font-medium text-gray-500">{t('updatedDate')}</span>
             </div>
 
-            <aside className="lg:col-span-1 mt-16 lg:mt-0">
-                <div className="space-y-5">
-                {guides.map((guide) => (
-                    <GuideLink
-                    key={guide.href}
-                    href={guide.href}
-                    icon={guide.icon}
-                    title={guide.title}
-                    description={guide.description}
-                    locale={locale}
-                    />
-                ))}
-                </div>
-            </aside>
+            <hr className="my-8 border-gray-200" />
+          </header>
 
-            </div>
-        </div>
+          {/* 본문 */}
+          <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed space-y-6">
+            <p>{t('intro1')}</p>
+
+            <blockquote className="border-l-4 border-teal-400 pl-6 py-2 my-6 text-gray-700 italic">
+              {t('quote')}
+            </blockquote>
+
+            <p>{t('intro2')}</p>
+
+            {/* [수정] 보완 문단(번역키 intro3 필요). 키가 없으면 키 문자열이 보일 수 있음 */}
+            <p>{t('intro3')}</p>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {guides.map((guide) => (
+              <GuideLink
+                key={guide.href}
+                href={guide.href}
+                icon={guide.icon}
+                title={guide.title}
+                description={guide.description}
+                locale={locale}
+              />
+            ))}
+          </div>
+        </section>
       </div>
     </main>
   );

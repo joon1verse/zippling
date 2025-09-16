@@ -1,14 +1,24 @@
 {
   "node": {
-    "983f0048d6e0ed6fa6d82193fb51593c2b217e71": {
+    "f559606d2602cda953ac95be6528f73a8246cd9b": {
       "workers": {
-        "app/[locale]/about/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cdev%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!"
+        "app/[locale]/vancouver/guides/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cdev%5C%5Czippling%5C%5Capp%5C%5C%5Blocale%5D%5C%5Cvancouver%5C%5Cguides%5C%5Cguide-link.tsx%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=!"
       },
       "layer": {
-        "app/[locale]/about/page": "action-browser"
+        "app/[locale]/vancouver/guides/page": "rsc"
+      }
+    },
+    "983f0048d6e0ed6fa6d82193fb51593c2b217e71": {
+      "workers": {
+        "app/[locale]/vancouver/guides/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cdev%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!",
+        "app/[locale]/vancouver/guides/housing/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cdev%5C%5Czippling%5C%5Capp%5C%5Cactions%5C%5Cauth.actions.ts%22%2C%5B%22logoutAction%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/[locale]/vancouver/guides/page": "action-browser",
+        "app/[locale]/vancouver/guides/housing/page": "action-browser"
       }
     }
   },
   "edge": {},
-  "encryptionKey": "uZsaiWBFWFzDCNC64QQXtg6eCUYcp1e7cEKPpQO3g7E="
+  "encryptionKey": "c/YaPgzMaU1Z7BaA/m70SlOmSjvgY1JC+RDSFxsIgdQ="
 }

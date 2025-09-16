@@ -1,3 +1,4 @@
 {
-  "/[locale]/about/page": "app/[locale]/about/page.js"
+  "/[locale]/vancouver/guides/page": "app/[locale]/vancouver/guides/page.js",
+  "/[locale]/vancouver/guides/housing/page": "app/[locale]/vancouver/guides/housing/page.js"
 }
