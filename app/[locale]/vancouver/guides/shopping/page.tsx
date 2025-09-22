@@ -248,12 +248,12 @@ export default async function ShoppingGuidePage({ params: { locale } }: Props) {
 
           {/* 하단 CTA */}
           <div className="not-prose mt-10 sm:mt-12 grid grid-cols-1 gap-3 sm:gap-4 sm:grid-cols-2">
-            <Link href={`/${locale}/vancouver/guides/life`} aria-label={t('nextGuides.life')} className="no-underline group flex items-center justify-between rounded-2xl border border-gray-200 bg-white/80 px-5 py-3 sm:px-6 sm:py-4 text-sm sm:text-base font-semibold text-gray-900 shadow-sm ring-1 ring-black/5 transition-colors hover:border-teal-300 hover:bg-teal-50/60">
+            <Link href={`/${locale}/vancouver/guides/housing`} aria-label={t('nextGuides.life')} className="no-underline group flex items-center justify-between rounded-2xl border border-gray-200 bg-white/80 px-5 py-3 sm:px-6 sm:py-4 text-sm sm:text-base font-semibold text-gray-900 shadow-sm ring-1 ring-black/5 transition-colors hover:border-teal-300 hover:bg-teal-50/60">
               <span className="inline-flex items-center gap-2">
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-teal-100">
                   <MapPin className="h-4 w-4 text-teal-700" />
                 </span>
-                {t('nextGuides.life')}
+                {t('nextGuides.housing')}
               </span>
               <ArrowRight className="h-5 w-5 text-gray-500 transition-transform group-hover:translate-x-0.5" />
             </Link>
