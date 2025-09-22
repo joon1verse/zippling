@@ -209,5 +209,106 @@
           "li5": "Strata: Condo owners’ association and building rules."
         }
       }
+    },
+    "ShoppingGuide": {
+      "meta": {
+        "title": "Vancouver Shopping & Living Guide",
+        "description": "From supermarkets and electronics to household goods, Asian markets, convenience stores, and online shopping, here’s a quick overview of Vancouver’s most useful stores."
+      },
+      "backToGuides": "Back to Guides",
+      "pageTitle": "Vancouver Shopping Guide",
+      "subtitle": "Check out the essential shopping spots for everyday life in Vancouver.",
+      "languageSupport": "Available in Korean, English, and Japanese",
+      "updatedDate": "Updated 2025",
+      "readingTime": "3 min read",
+      "intro": "When you first start living in Vancouver, you may wonder where to shop for groceries, electronics, or household goods. This page summarizes the main stores at a glance.",
+      "toc": {
+        "title": "Contents",
+        "overview": "Overview",
+        "supermarkets": "Supermarkets",
+        "electronics": "Electronics",
+        "household": "Household Goods",
+        "asian": "Asian Markets",
+        "convenience": "Convenience Stores",
+        "online": "Online Shopping"
+      },
+      "sections": {
+        "supermarkets": {
+          "title": "Supermarkets",
+          "desc": "From large Canadian chains to budget discount stores, Vancouver offers a wide variety of supermarkets. Fresh food and daily necessities are easy to find, but prices and selection vary by location."
+        },
+        "electronics": {
+          "title": "Electronics",
+          "desc": "Electronics and appliances are usually purchased at large specialty retailers. From home appliances to computers and mobile devices, you’ll find a wide selection. Big seasonal sales can bring deep discounts."
+        },
+        "household": {
+          "title": "Household Goods",
+          "desc": "In Canada, it’s common to see chains that combine pharmacies with household goods. They stock medicines, cosmetics, cleaning supplies, and daily necessities all in one place."
+        },
+        "asian": {
+          "title": "Asian Markets",
+          "desc": "With strong Korean, Japanese, and Chinese communities, Vancouver has well-established Asian markets. You’ll find Korean groceries, Japanese snacks, Chinese seasonings, and other items not usually available in regular supermarkets."
+        },
+        "convenience": {
+          "title": "Convenience Stores",
+          "desc": "24-hour convenience stores are less common than in Korea, but in downtown you’ll find Japanese specialty stores and small convenience shops, perfect for quick snacks and late-night purchases."
+        },
+        "online": {
+          "title": "Online Shopping",
+          "desc": "Amazon, Walmart Online, Best Buy Online, and other platforms make it easy to buy almost anything. Be sure to check delivery times, fees, and return policies carefully.",
+          "placeholder": "Online shopping details coming soon."
+        }
+      },
+      "stores": {
+        "iga": {
+          "name": "IGA",
+          "summary": "Located throughout downtown, convenient but generally a bit more expensive."
+        },
+        "noFrills": {
+          "name": "No Frills",
+          "summary": "Discount supermarket known for its private label brands such as President’s Choice."
+        },
+        "hMart": {
+          "name": "H-Mart",
+          "summary": "Popular for Korean and Asian groceries. Often crowded on weekends."
+        },
+        "konbiniya": {
+          "name": "Konbiniya",
+          "summary": "Japanese grocery store specializing in snacks and ready-to-eat foods."
+        },
+        "bestBuy": {
+          "name": "Best Buy",
+          "summary": "Major electronics retailer offering appliances, computers, and mobile devices."
+        },
+        "londonDrugs": {
+          "name": "London Drugs",
+          "summary": "Canadian chain selling household goods, pharmaceuticals, and electronics."
+        },
+        "shoppersDrug": {
+          "name": "Shoppers Drug Mart",
+          "summary": "Pharmacy and drugstore chain with medicines, beauty products, and everyday essentials."
+        },
+        "sevenEleven": {
+          "name": "7-Eleven",
+          "summary": "24-hour convenience store with snacks, drinks, and quick meals, handy anytime."
+        },
+        "hannamMart": {
+          "name": "Hannam Mart",
+          "summary": "Korean and Asian grocery store with fresh produce and a wide range of Asian snacks."
+        },
+        "safeWay": {
+          "name": "Safeway",
+          "summary": "A typical Canadian supermarket offering fresh produce, household goods, and weekly sales, plus online shopping."
+        },
+        "tAndT": {
+          "name": "T&T Supermarket",
+          "summary": "Large Asian supermarket with a wide variety of groceries, deli foods, sushi, and ready-to-eat options."
+        }
+      },
+      "nextGuides": {
+        "life": "Life Guide",
+        "workFinance": "Work & Finance Guide"
+      },
+      "mapLink": "View on Google Maps →"
     }
   }

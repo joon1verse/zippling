@@ -1,4 +1,7 @@
 {
-  "/[locale]/vancouver/guides/page": "app/[locale]/vancouver/guides/page.js",
-  "/[locale]/vancouver/guides/housing/page": "app/[locale]/vancouver/guides/housing/page.js"
+  "/api/track-visit/route": "app/api/track-visit/route.js",
+  "/[locale]/page": "app/[locale]/page.js",
+  "/[locale]/vancouver/guides/shopping/page": "app/[locale]/vancouver/guides/shopping/page.js",
+  "/[locale]/vancouver/guides/housing/page": "app/[locale]/vancouver/guides/housing/page.js",
+  "/[locale]/vancouver/guides/page": "app/[locale]/vancouver/guides/page.js"
 }
